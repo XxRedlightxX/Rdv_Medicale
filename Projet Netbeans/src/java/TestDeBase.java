@@ -26,10 +26,10 @@ public class TestDeBase {
         //testExistsByEmailAndPassword();
         //testFindAllByNameRole();
         System.out.println("tset");
-        PreparedStatement ps = ConnexionBD.getConnection().prepareStatement("select* from test");
+        PreparedStatement ps = ConnexionBD.getConnection().prepareStatement("select* from clinique");
         ResultSet result = ps.executeQuery();
         while (result.next()) {
-                System.out.println(result);
+                System.out.println(result.getString("nom"));
             }
             ConnexionBD.closeConnection();
         
