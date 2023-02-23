@@ -10,24 +10,32 @@ package com.medic.entities;
  * @author 1482910
  */
 public class Medecin {
+    private int numeroProfessionel;
     private String nom;
     private String prenom;
     private String specialite;
-    private int numeroProfessionel;
     private float facturation;
-    private String coordonnées;
-    private String coordonnéesTravail;
+    private String coordonnees;
+    private String nomClinique;
     private String motDePasse;
 
-    public Medecin(String nom, String prenom, String specialite, int numeroProfessionel, float facturation, String coordonnées, String coordonnéesTravail, String motDePasse) {
+    public Medecin(int numeroProfessionel, String nom, String prenom, String specialite, float facturation, String coordonnees, String nomClinique, String motDePasse) {
+        this.numeroProfessionel = numeroProfessionel;
         this.nom = nom;
         this.prenom = prenom;
         this.specialite = specialite;
-        this.numeroProfessionel = numeroProfessionel;
         this.facturation = facturation;
-        this.coordonnées = coordonnées;
-        this.coordonnéesTravail = coordonnéesTravail;
+        this.coordonnees = coordonnees;
+        this.nomClinique = nomClinique;
         this.motDePasse = motDePasse;
+    }
+
+    public int getNumeroProfessionel() {
+        return numeroProfessionel;
+    }
+
+    public void setNumeroProfessionel(int numeroProfessionel) {
+        this.numeroProfessionel = numeroProfessionel;
     }
 
     public String getNom() {
@@ -54,14 +62,6 @@ public class Medecin {
         this.specialite = specialite;
     }
 
-    public int getNumeroProfessionel() {
-        return numeroProfessionel;
-    }
-
-    public void setNumeroProfessionel(int numeroProfessionel) {
-        this.numeroProfessionel = numeroProfessionel;
-    }
-
     public float getFacturation() {
         return facturation;
     }
@@ -70,20 +70,20 @@ public class Medecin {
         this.facturation = facturation;
     }
 
-    public String getCoordonnées() {
-        return coordonnées;
+    public String getCoordonnees() {
+        return coordonnees;
     }
 
-    public void setCoordonnées(String coordonnées) {
-        this.coordonnées = coordonnées;
+    public void setCoordonnees(String coordonnees) {
+        this.coordonnees = coordonnees;
     }
 
-    public String getCoordonnéesTravail() {
-        return coordonnéesTravail;
+    public String getNomClinique() {
+        return nomClinique;
     }
 
-    public void setCoordonnéesTravail(String coordonnéesTravail) {
-        this.coordonnéesTravail = coordonnéesTravail;
+    public void setNomClinique(String nomClinique) {
+        this.nomClinique = nomClinique;
     }
 
     public String getMotDePasse() {
@@ -96,7 +96,6 @@ public class Medecin {
 
     @Override
     public String toString() {
-        return "Medecin{" + "nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", numeroProfessionel=" + numeroProfessionel + ", facturation=" + facturation + ", coordonn\u00e9es=" + coordonnées + ", coordonn\u00e9esTravail=" + coordonnéesTravail + ", motDePasse=" + motDePasse + '}';
+        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", coordonnees=" + coordonnees + ", nomClinique=" + nomClinique + ", motDePasse=" + motDePasse + '}';
     }
-
 }

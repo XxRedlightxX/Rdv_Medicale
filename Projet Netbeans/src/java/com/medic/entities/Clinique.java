@@ -12,6 +12,7 @@ import java.util.List;
  * @author 1482910
  */
 public class Clinique {
+    private int id;
     private String nom;
     private String coordonnées;
     private List<String> servicesOfferts;
@@ -20,6 +21,14 @@ public class Clinique {
         this.nom = nom;
         this.coordonnées = coordonnées;
         this.servicesOfferts = servicesOfferts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -45,7 +54,9 @@ public class Clinique {
     public void setServicesOfferts(List<String> servicesOfferts) {
         this.servicesOfferts = servicesOfferts;
     }
-    
-    
 
+    @Override
+    public String toString() {
+        return "Clinique{" + "id=" + id + ", nom=" + nom + ", coordonn\u00e9es=" + coordonnées + ", servicesOfferts=" + servicesOfferts + '}';
+    }
 }

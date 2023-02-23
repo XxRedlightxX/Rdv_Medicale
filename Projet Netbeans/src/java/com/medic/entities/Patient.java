@@ -10,6 +10,7 @@ package com.medic.entities;
  * @author 1482910
  */
 public class Patient {
+    private String id;
     private String nom;
     private String prenom;
     private String numeroAssuranceMaladie;
@@ -18,7 +19,8 @@ public class Patient {
     private String sexe;
     private String motDePasse;
 
-    public Patient(String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse) {
+    public Patient(String id, String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.numeroAssuranceMaladie = numeroAssuranceMaladie;
@@ -28,14 +30,14 @@ public class Patient {
         this.motDePasse = motDePasse;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    public String getId() {
+        return id;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+    public void setId(String id) {
+        this.id = id;
     }
-    
+
     public String getNom() {
         return nom;
     }
@@ -84,10 +86,20 @@ public class Patient {
         this.sexe = sexe;
     }
 
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
+
     @Override
     public String toString() {
-        return "Patient{" + "nom=" + nom + ", prenom=" + prenom + ", numeroAssuranceMaladie=" + numeroAssuranceMaladie + ", numeroSequentiel=" + numeroSequentiel + ", dateNaissance=" + dateNaissance + ", sexe=" + sexe + ", motDePasse=" + motDePasse + '}';
+        return "Patient{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroAssuranceMaladie=" + numeroAssuranceMaladie + ", numeroSequentiel=" + numeroSequentiel + ", dateNaissance=" + dateNaissance + ", sexe=" + sexe + ", motDePasse=" + motDePasse + '}';
     }
+
+   
 
    
     
