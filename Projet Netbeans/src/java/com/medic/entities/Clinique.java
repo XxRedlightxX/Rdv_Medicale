@@ -17,15 +17,21 @@ public class Clinique {
     private String nom;
     private String coordonnées;
     List<String> servicesOfferts;
+    List<Medecin> medecinDansClinique;
+    List<Patient> patientDeClinique;
 
-    public Clinique(String nom, String coordonnées, List<String> servicesOfferts) {
+    public Clinique(String nom, String coordonnées, List<String> servicesOfferts,List<Medecin> medecinDansClinique,         List<Patient> patientDeClinique;;) {
         this.nom = nom;
         this.coordonnées = coordonnées;
         this.servicesOfferts = servicesOfferts;
+        this.medecinDansClinique = medecinDansClinique;
+        this.patientDeClinique = patientDeClinique;
     }
 
     public Clinique() {
         servicesOfferts = new ArrayList<String>();
+        medecinDansClinique = new ArrayList<Medecin>();
+        patientDeClinique = new ArrayList<Patient>();
     }
 
    
