@@ -20,7 +20,7 @@ public class Clinique {
     List<Medecin> medecinDansClinique;
     List<Patient> patientDeClinique;
 
-    public Clinique(String nom, String coordonnées, List<String> servicesOfferts,List<Medecin> medecinDansClinique,         List<Patient> patientDeClinique;;) {
+    public Clinique(String nom, String coordonnées, List<String> servicesOfferts,List<Medecin> medecinDansClinique,         List<Patient> patientDeClinique) {
         this.nom = nom;
         this.coordonnées = coordonnées;
         this.servicesOfferts = servicesOfferts;
