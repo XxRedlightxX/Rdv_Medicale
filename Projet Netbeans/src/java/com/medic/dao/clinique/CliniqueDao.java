@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author hundl
+ * @author 1482910
  */
 public interface CliniqueDao {
     List<Clinique> findAll();
@@ -17,4 +17,9 @@ public interface CliniqueDao {
     Clinique findByName(String nom);
     Clinique findByCoordonnes(String coordonnees);
     Clinique findByService(String service);
+    List<String> findAllServices();
+    Clinique findByService(String service);
+    //
+    List<Medecin> findAllMedecin();
+    List<Patient> findAllPatients();
 }
