@@ -34,6 +34,9 @@ public class Medecin {
         return numeroProfessionel;
     }
 
+    public Medecin() {
+    }
+
     public void setNumeroProfessionel(int numeroProfessionel) {
         this.numeroProfessionel = numeroProfessionel;
     }

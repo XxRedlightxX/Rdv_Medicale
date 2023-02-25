@@ -15,13 +15,18 @@ public class Clinique {
     private int id;
     private String nom;
     private String coordonnées;
-    private List<String> servicesOfferts;
+    List<String> servicesOfferts;
 
     public Clinique(String nom, String coordonnées, List<String> servicesOfferts) {
         this.nom = nom;
         this.coordonnées = coordonnées;
         this.servicesOfferts = servicesOfferts;
     }
+
+    public Clinique() {
+    }
+
+   
 
     public int getId() {
         return id;

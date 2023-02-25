@@ -30,6 +30,9 @@ public class Patient {
         this.motDePasse = motDePasse;
     }
 
+    public Patient() {
+    }
+
     public String getId() {
         return id;
     }
