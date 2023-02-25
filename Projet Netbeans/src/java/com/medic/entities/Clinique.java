@@ -6,6 +6,7 @@
 package com.medic.entities;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Clinique {
     }
 
     public Clinique() {
+        servicesOfferts = new ArrayList<String>();
     }
 
    
@@ -58,6 +60,18 @@ public class Clinique {
 
     public void setServicesOfferts(List<String> servicesOfferts) {
         this.servicesOfferts = servicesOfferts;
+    }
+
+     public void ajouterService(String unService) {
+        this.servicesOfferts.add(unService);
+    }
+
+    public void supprimerService(String unService) {
+        for (int i = 0; i<this.servicesOfferts.length();i++) {
+            if(this.servicesOfferts.get(i).equals(unService)){
+                this.servicesOfferts.remove(i);
+            }
+        }
     }
 
     @Override
