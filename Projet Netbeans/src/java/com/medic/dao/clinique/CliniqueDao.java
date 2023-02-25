@@ -17,9 +17,8 @@ public interface CliniqueDao {
     Clinique findByName(String nom);
     Clinique findByCoordonnes(String coordonnees);
     Clinique findByService(String service);
-    List<String> findAllServices();
-    Clinique findByService(String service);
-    //
-    List<Medecin> findAllMedecin();
-    List<Patient> findAllPatients();
+    List<String> findAllServicesClinique();
+    List<Medecin> findAllMedecinsClinique();
+    List<Medecin> findAllPatientsClinique();
+    
 }

@@ -153,7 +153,12 @@ public class CliniqueImpDao implements CliniqueDao {
     }
 
     @Override
-    public Clinique findByService(String service) {
+    public Clinique findService(String service) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Clinique findService(String service) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
