@@ -17,15 +17,21 @@ public class Clinique {
     private String nom;
     private String coordonnées;
     List<String> servicesOfferts;
+    List<Medecin> medecinDansClinique;
+    List<Patient> patientDeClinique;
 
-    public Clinique(String nom, String coordonnées, List<String> servicesOfferts) {
+    public Clinique(String nom, String coordonnées, List<String> servicesOfferts,List<Medecin> medecinDansClinique,         List<Patient> patientDeClinique) {
         this.nom = nom;
         this.coordonnées = coordonnées;
         this.servicesOfferts = servicesOfferts;
+        this.medecinDansClinique = medecinDansClinique;
+        this.patientDeClinique = patientDeClinique;
     }
 
     public Clinique() {
         servicesOfferts = new ArrayList<String>();
+        medecinDansClinique = new ArrayList<Medecin>();
+        patientDeClinique = new ArrayList<Patient>();
     }
 
    
@@ -67,7 +73,7 @@ public class Clinique {
     }
 
     public void supprimerService(String unService) {
-        for (int i = 0; i<this.servicesOfferts.length();i++) {
+        for (int i = 0; i<this.servicesOfferts.size();i++) {
             if(this.servicesOfferts.get(i).equals(unService)){
                 this.servicesOfferts.remove(i);
             }

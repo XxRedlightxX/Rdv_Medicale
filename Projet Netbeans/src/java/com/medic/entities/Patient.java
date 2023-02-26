@@ -5,6 +5,9 @@
  */
 package com.medic.entities;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  *
  * @author 1482910
@@ -18,8 +21,9 @@ public class Patient {
     private String dateNaissance;
     private String sexe;
     private String motDePasse;
+    private int idMedecinFamille;
 
-    public Patient(String id, String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse) {
+    public Patient(String id, String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse,int idMedecinFamille) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -28,6 +32,7 @@ public class Patient {
         this.dateNaissance = dateNaissance;
         this.sexe = sexe;
         this.motDePasse = motDePasse;
+        this.idMedecinFamille = idMedecinFamille;
     }
 
     public Patient() {

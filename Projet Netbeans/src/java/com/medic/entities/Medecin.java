@@ -5,6 +5,9 @@
  */
 package com.medic.entities;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  *
  * @author 1482910
@@ -18,8 +21,9 @@ public class Medecin {
     private String coordonnees;
     private String nomClinique;
     private String motDePasse;
+    List<Patient> listePatients;
 
-    public Medecin(int numeroProfessionel, String nom, String prenom, String specialite, float facturation, String coordonnees, String nomClinique, String motDePasse) {
+    public Medecin(int numeroProfessionel, String nom, String prenom, String specialite, float facturation, String coordonnees, String nomClinique, String motDePasse,List<Patient> listePatients) {
         this.numeroProfessionel = numeroProfessionel;
         this.nom = nom;
         this.prenom = prenom;
@@ -28,13 +32,14 @@ public class Medecin {
         this.coordonnees = coordonnees;
         this.nomClinique = nomClinique;
         this.motDePasse = motDePasse;
-    }
-
-    public int getNumeroProfessionel() {
-        return numeroProfessionel;
+        this.listePatients = listePatients;
     }
 
     public Medecin() {
+        listePatients = new ArrayList<Patient>();
+    }
+    public int getNumeroProfessionel() {
+        return numeroProfessionel;
     }
 
     public void setNumeroProfessionel(int numeroProfessionel) {

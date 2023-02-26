@@ -10,6 +10,7 @@ package com.medic.dao.clinique;
 
 import com.medic.dao.clinique.CliniqueDao;
 import com.medic.entities.Clinique;
+import com.medic.entities.Medecin;
 import com.medic.singleton.ConnexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author dahamada
+ * @author 1482910
  */
 public class CliniqueImpDao implements CliniqueDao {
 
@@ -154,6 +155,21 @@ public class CliniqueImpDao implements CliniqueDao {
 
     @Override
     public Clinique findByService(String service) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<String> findAllServicesClinique() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Medecin> findAllMedecinsClinique() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Medecin> findAllPatientsClinique() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -5,11 +5,12 @@
 package com.medic.dao.clinique;
 
 import com.medic.entities.Clinique;
+import com.medic.entities.Medecin;
 import java.util.List;
 
 /**
  *
- * @author hundl
+ * @author 1482910
  */
 public interface CliniqueDao {
     List<Clinique> findAll();
@@ -17,4 +18,7 @@ public interface CliniqueDao {
     Clinique findByName(String nom);
     Clinique findByCoordonnes(String coordonnees);
     Clinique findByService(String service);
+    List<String> findAllServicesClinique();
+    List<Medecin> findAllMedecinsClinique();
+    List<Medecin> findAllPatientsClinique();
 }

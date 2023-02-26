@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author hundl
+ * @author 1482910
  */
 public interface MedecinDao {
     List<Medecin> findAll();
