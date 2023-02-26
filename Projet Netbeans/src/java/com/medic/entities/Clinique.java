@@ -20,13 +20,32 @@ public class Clinique {
     List<Medecin> medecinDansClinique;
     List<Patient> patientDeClinique;
 
-    public Clinique(String nom, String coordonnées, List<String> servicesOfferts,List<Medecin> medecinDansClinique,         List<Patient> patientDeClinique) {
+    public Clinique(int id, String nom, String coordonnées, List<String> servicesOfferts, List<Medecin> medecinDansClinique, List<Patient> patientDeClinique) {
+        this.id = id;
         this.nom = nom;
         this.coordonnées = coordonnées;
         this.servicesOfferts = servicesOfferts;
         this.medecinDansClinique = medecinDansClinique;
         this.patientDeClinique = patientDeClinique;
     }
+
+    public List<Medecin> getMedecinDansClinique() {
+        return medecinDansClinique;
+    }
+
+    public void setMedecinDansClinique(List<Medecin> medecinDansClinique) {
+        this.medecinDansClinique = medecinDansClinique;
+    }
+
+    public List<Patient> getPatientDeClinique() {
+        return patientDeClinique;
+    }
+
+    public void setPatientDeClinique(List<Patient> patientDeClinique) {
+        this.patientDeClinique = patientDeClinique;
+    }
+
+    
 
     public Clinique() {
         servicesOfferts = new ArrayList<String>();
@@ -82,6 +101,8 @@ public class Clinique {
 
     @Override
     public String toString() {
-        return "Clinique{" + "id=" + id + ", nom=" + nom + ", coordonn\u00e9es=" + coordonnées + ", servicesOfferts=" + servicesOfferts + '}';
+        return "Clinique{" + "id=" + id + ", nom=" + nom + ", coordonn\u00e9es=" + coordonnées + ", servicesOfferts=" + servicesOfferts + ", medecinDansClinique=" + medecinDansClinique + ", patientDeClinique=" + patientDeClinique + '}';
     }
+
+   
 }

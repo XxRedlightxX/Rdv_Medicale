@@ -18,22 +18,30 @@ public class Medecin {
     private String prenom;
     private String specialite;
     private float facturation;
-    private String coordonnees;
-    private String nomClinique;
     private String motDePasse;
     List<Patient> listePatients;
 
-    public Medecin(int numeroProfessionel, String nom, String prenom, String specialite, float facturation, String coordonnees, String nomClinique, String motDePasse,List<Patient> listePatients) {
+    public Medecin(int numeroProfessionel, String nom, String prenom, String specialite, float facturation, String motDePasse, List<Patient> listePatients) {
         this.numeroProfessionel = numeroProfessionel;
         this.nom = nom;
         this.prenom = prenom;
         this.specialite = specialite;
         this.facturation = facturation;
-        this.coordonnees = coordonnees;
-        this.nomClinique = nomClinique;
         this.motDePasse = motDePasse;
         this.listePatients = listePatients;
     }
+
+
+
+    public List<Patient> getListePatients() {
+        return listePatients;
+    }
+
+    public void setListePatients(List<Patient> listePatients) {
+        this.listePatients = listePatients;
+    }
+
+    
 
     public Medecin() {
         listePatients = new ArrayList<Patient>();
@@ -78,22 +86,6 @@ public class Medecin {
         this.facturation = facturation;
     }
 
-    public String getCoordonnees() {
-        return coordonnees;
-    }
-
-    public void setCoordonnees(String coordonnees) {
-        this.coordonnees = coordonnees;
-    }
-
-    public String getNomClinique() {
-        return nomClinique;
-    }
-
-    public void setNomClinique(String nomClinique) {
-        this.nomClinique = nomClinique;
-    }
-
     public String getMotDePasse() {
         return motDePasse;
     }
@@ -104,6 +96,10 @@ public class Medecin {
 
     @Override
     public String toString() {
-        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", coordonnees=" + coordonnees + ", nomClinique=" + nomClinique + ", motDePasse=" + motDePasse + '}';
+        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", motDePasse=" + motDePasse + ", listePatients=" + listePatients + '}';
     }
+
+
+
+  
 }
