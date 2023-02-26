@@ -5,6 +5,7 @@
 package com.medic.dao.clinique;
 
 import com.medic.entities.Clinique;
+import com.medic.entities.Medecin;
 import java.util.List;
 
 /**
@@ -20,5 +21,4 @@ public interface CliniqueDao {
     List<String> findAllServicesClinique();
     List<Medecin> findAllMedecinsClinique();
     List<Medecin> findAllPatientsClinique();
-    
 }

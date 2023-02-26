@@ -73,7 +73,7 @@ public class Clinique {
     }
 
     public void supprimerService(String unService) {
-        for (int i = 0; i<this.servicesOfferts.length();i++) {
+        for (int i = 0; i<this.servicesOfferts.size();i++) {
             if(this.servicesOfferts.get(i).equals(unService)){
                 this.servicesOfferts.remove(i);
             }
