@@ -27,8 +27,12 @@ public class TestDeBase {
         //testfindById();
         //testfindByName();
         //testfindByCoordonnees();
+        //-------------------------------
         //testFindAll();
-        testCreate();
+        //testCreate();
+        //testFindById();
+       //testFindByName();
+       testUpdate();
 
     }
 
@@ -71,7 +75,7 @@ public class TestDeBase {
     }
     
     
-    
+    //Medecin--------------------------------------------------------------------------
     public static void testFindAll() {
         System.out.println("findAll");
         MedecinImpDao instance = new MedecinImpDao();
@@ -114,5 +118,79 @@ public class TestDeBase {
             System.out.println("insertion echec ");
         }
     }
+    
+    public static void testFindById() {
+        System.out.println("findById");
+        int id = 0;
+        MedecinImpDao instance = new MedecinImpDao();
+        System.out.println("Entrez l'id du medecin : ");
+        Scanner lectureClavier = new Scanner(System.in);
+        id = lectureClavier.nextInt();
+        Medecin result = instance.findById(id);
+        System.out.println(result.toString());
+
+    }
+    
+    
+    public static void testFindByName() {
+        System.out.println("findByName");
+        String nom = "";
+        MedecinImpDao instance = new MedecinImpDao();
+        System.out.println("Entrez le nom de l'utilisateur : ");
+        Scanner lectureClavier = new Scanner(System.in);
+        nom = lectureClavier.next();
+        Medecin result = instance.findByName(nom);
+        System.out.println(result.toString());
+
+    }
+    
+    public static void testUpdate() {
+        System.out.println("update");
+        Medecin medecin = null;
+        MedecinImpDao instance = new MedecinImpDao();
+        Scanner lectureClavier = new Scanner(System.in);
+        System.out.println("Entrez l'ide du medecin à mettre à jour : ");
+        int id = lectureClavier.nextInt();
+        medecin = instance.findById(id);
+        
+        System.out.println("Change ID  : ");
+        int idmedecin = lectureClavier.nextInt();
+        medecin.setNumeroProfessionel(idmedecin);
+        
+        System.out.println("Entrez le nom : ");
+        String nom = lectureClavier.next();
+        medecin.setNom(nom);
+        
+        System.out.println("Entrez le prenom : ");
+        String prenom = lectureClavier.next();
+        medecin.setPrenom(prenom);
+        
+        System.out.println("Entrez la specialite de l'utilisateur :");
+        String specialite = lectureClavier.next();
+        medecin.setSpecialite(specialite);
+        
+        System.out.println("Entrez sa facture  :");
+        float facture = lectureClavier.nextFloat();
+        medecin.setFacturation(facture);
+
+        System.out.println("Entrez son mot de passe :");
+        String password = lectureClavier.next();
+        medecin.setMotDePasse(password);
+        
+        // utilisateur = new Utilisateur(email, active, nom, prenom, password, photo);
+        boolean result = instance.update(medecin);
+        if (result) {
+            System.out.println("L'utilisateur est mis à jour ");
+        } else {
+            System.out.println("Echec de mis à jour ");
+        }
+
+    }
+    
+    
+    
+    
+    
+    
     
 }

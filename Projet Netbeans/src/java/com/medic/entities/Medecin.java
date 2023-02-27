@@ -31,7 +31,7 @@ public class Medecin {
         this.listePatients = listePatients;
     }
     
-    public Medecin( String nom, String prenom, String specialite, float facturation, String password) {
+    public Medecin( String nom, String prenom, String specialite, float facturation, String motDePasse) {
         
         this.nom = nom;
         this.prenom = prenom;

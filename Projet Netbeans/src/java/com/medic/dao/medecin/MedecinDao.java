@@ -21,4 +21,5 @@ public interface MedecinDao {
     Medecin findByCoordonnees(String coordonnees);
     Medecin findByClinique(String clinique);
     boolean create(Medecin medecin);
+    boolean update(Medecin medecin);
 }
