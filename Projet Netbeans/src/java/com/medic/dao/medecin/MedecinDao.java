@@ -19,5 +19,6 @@ public interface MedecinDao {
     Medecin findBySpecialite(String specialite);
     Medecin findByPrix(float prix);
     Medecin findByCoordonnees(String coordonnees);
-    Medecin findByClinique(String clinique);  
+    Medecin findByClinique(String clinique);
+    boolean create(Medecin medecin);
 }

@@ -1,10 +1,14 @@
 
 import com.medic.dao.clinique.CliniqueImpDao;
+import com.medic.dao.medecin.MedecinImpDao;
 import com.medic.entities.Clinique;
+import com.medic.entities.Medecin;
+import com.medic.entities.Patient;
 import com.medic.singleton.ConnexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -22,7 +26,9 @@ public class TestDeBase {
 
         //testfindById();
         //testfindByName();
-        testfindByCoordonnees();
+        //testfindByCoordonnees();
+        //testFindAll();
+        testCreate();
 
     }
 
@@ -63,4 +69,50 @@ public class TestDeBase {
         System.out.println(result.toString());
 
     }
+    
+    
+    
+    public static void testFindAll() {
+        System.out.println("findAll");
+        MedecinImpDao instance = new MedecinImpDao();
+        // List<Utilisateur> expResult = null;
+        List<Medecin> result = instance.findAll();
+        // assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //System.out.println(result.get(0).toString());
+        for (Medecin medecin : result) {
+            System.out.println(medecin.toString());
+        }
+    
+    }
+    
+    
+    public static void testCreate() {
+        System.out.println("create");
+        Medecin medecin = null;
+        MedecinImpDao instance = new MedecinImpDao();
+        Scanner lectureClavier = new Scanner(System.in);
+        System.out.println("Entrez nom medecin ");
+        String nom = lectureClavier.next();
+        System.out.println("Entrez le prenom du medecin");
+        String prenom= lectureClavier.next();
+        
+
+        System.out.println("Entrez la specialite : ");
+        String specialite = lectureClavier.next();
+        System.out.println("Entrez la facturation : ");
+        float facturation = lectureClavier.nextFloat();
+        System.out.println("Entrez le mot de passe :");
+        String password = lectureClavier.next();
+        
+        medecin = new Medecin(  nom,  prenom,  specialite, facturation,password);
+     
+        boolean result = instance.create(medecin);
+        if (result) {
+            System.out.println("insertion reussite");
+        } else {
+            System.out.println("insertion echec ");
+        }
+    }
+    
 }
