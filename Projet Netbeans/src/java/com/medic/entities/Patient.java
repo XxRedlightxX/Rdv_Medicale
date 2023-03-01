@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author 1482910
  */
 public class Patient {
-    private String id;
+    private int id;
     private String nom;
     private String prenom;
     private String numeroAssuranceMaladie;
@@ -22,7 +22,7 @@ public class Patient {
     private String sexe;
     private String motDePasse;
 
-    public Patient(String id, String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse) {
+    public Patient(int id, String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -38,11 +38,11 @@ public class Patient {
     public Patient() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
