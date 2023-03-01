@@ -30,7 +30,10 @@ public class MedecinImpDao implements MedecinDao {
      private static final String SQL_INSERT_MEDECIN = "insert into medecin(nom,prenom,specialite,facturation,password) value(?,?,?,?,?)";
     private static final String SQL_SELECT_BY_ID_MEDECIN = "select * from medecin where idmedecin =?";
     private static final String SQL_SELECT_MEDECIN_PAR_NOM = "select * from medecin where nom = ?";
-     private static final String SQL_UPDATE_MEDECIN = "update medecin set idmedecin =?, nom =?,prenom = ?, specialite =?, facturation=?, password=? where idmedecin= ?";
+     private static final String SQL_UPDATE_MEDECIN = "update medecin set nom =?,prenom = ?, specialite =?, facturation=?, password=? where idmedecin= ?";
+      private static final String SQL_DELETE_MEDECIN_PAR_ID = "delete from medecin where idmedecin = ?";
+      private static final String SQL_DESACTIVER_CONTRAINTS = " ALTER TABLE medecin DROP CONSTRAINT fk_patients_medecin ";
+   
     
     @Override //Bug avec Le champ mot de passe ne s'insère dans la BD
     public List<Medecin> findAll() {
@@ -206,12 +209,13 @@ public class MedecinImpDao implements MedecinDao {
         try {
 
             ps = ConnexionBD.getConnection().prepareStatement(SQL_UPDATE_MEDECIN);
-            ps.setInt(1, medecin.getNumeroProfessionel());
-            ps.setString(2, medecin.getNom());
-            ps.setString(3, medecin.getPrenom());
-            ps.setString(4, medecin.getSpecialite());
-            ps.setFloat(5, medecin.getFacturation());
-            ps.setString(6, medecin.getMotDePasse());
+           
+            ps.setString(1, medecin.getNom());
+            ps.setString(2, medecin.getPrenom());
+            ps.setString(3, medecin.getSpecialite());
+            ps.setFloat(4, medecin.getFacturation());
+            ps.setString(5, medecin.getMotDePasse());
+            ps.setInt(6, medecin.getNumeroProfessionel());
 
             nbLigne = ps.executeUpdate();
 
@@ -221,6 +225,32 @@ public class MedecinImpDao implements MedecinDao {
         }
 
 //		System.out.println("nb ligne " + nbLigne);
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        boolean retour = false;
+        int nbLigne = 0;
+        PreparedStatement ps1;
+        PreparedStatement ps;
+        try {
+            // Désactiver les contraintes de clé étrangère
+            ps1 = ConnexionBD.getConnection().prepareStatement(SQL_DESACTIVER_CONTRAINTS);
+            ps1.executeUpdate();
+            ps = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_MEDECIN_PAR_ID);
+            ps.setInt(1, id);
+
+            nbLigne = ps.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         if (nbLigne > 0) {
             retour = true;
         }

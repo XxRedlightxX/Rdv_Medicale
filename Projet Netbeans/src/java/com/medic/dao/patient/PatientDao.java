@@ -16,11 +16,14 @@ import java.util.List;
  */
 public interface PatientDao {
     List<Patient> findAll();
-    Patient findById(int id);
+    Patient findByIdPatient(int id);
     Patient findByName(String nom);
     Patient findByFirstName(String prenom);
     Patient findByAssuranceMaladie(String assuranceMaladie);
     Patient findBynumeroSequentiel(String numeroSequentiel);
     Patient findBydateNaissance(String dateNaissance);
     Patient findBySexe(String sexe);
+    boolean create(Patient patient);
+    boolean update(Patient patient);
+    boolean delete(int id);
 }

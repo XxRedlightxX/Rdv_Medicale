@@ -22,4 +22,5 @@ public interface MedecinDao {
     Medecin findByClinique(String clinique);
     boolean create(Medecin medecin);
     boolean update(Medecin medecin);
+    boolean delete(int id);
 }
