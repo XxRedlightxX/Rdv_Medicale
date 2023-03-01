@@ -30,6 +30,16 @@ public class Medecin {
         this.motDePasse = motDePasse;
         this.listePatients = listePatients;
     }
+    
+    public Medecin( String nom, String prenom, String specialite, float facturation, String motDePasse) {
+        
+        this.nom = nom;
+        this.prenom = prenom;
+        this.specialite = specialite;
+        this.facturation = facturation;
+        this.motDePasse = motDePasse;
+        
+    }
 
 
 
