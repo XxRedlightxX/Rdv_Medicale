@@ -2,6 +2,7 @@
 import com.medic.dao.clinique.CliniqueImpDao;
 import com.medic.dao.medecin.MedecinImpDao;
 import com.medic.dao.patient.PatientImpDao;
+import com.medic.dao.services.ServicesImpDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
@@ -34,12 +35,13 @@ public class TestDeBase {
         //testCreate();
         //testFindById();
        //testFindByName();
-       testUpdate();
+       //testUpdate();
        //testDelete();
        //-----------------------
        //testFindAllPatient();
        //testfindByIdPatient();
        //testCreatePatient();
+       testFindAllServices();
        
 
     }
@@ -276,7 +278,7 @@ public class TestDeBase {
 
 
 
-    //-----------------------------------------------------------------------------------------------------
+    //Patient-----------------------------------------------------------------------------------------------------
      public static void testFindAllPatient() {
         System.out.println("findAll");
         PatientImpDao instance = new PatientImpDao();
@@ -345,6 +347,129 @@ public class TestDeBase {
         
         
     }
+       //Services--------------------------------------------------------------------------
+    public static void testFindAllServices() {
+        System.out.println("findAllServices");
+        ServicesImpDao instance = new ServicesImpDao();
+        // List<Utilisateur> expResult = null;
+        List<Services> result = instance.findAll();
+        // assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //System.out.println(result.get(0).toString());
+        for (Services unService : result) {
+            System.out.println(unService.toString());
+        }
+    
+    }
+    
+    
+    public static void testCreateServices() {
+        System.out.println("createService");
+        Services service = null;
+        ServicesImpDao instance = new ServicesImpDao();
+        Scanner lectureClavier = new Scanner(System.in);
+        System.out.println("Entrez nom service ");
+        String nom = lectureClavier.next();
+        System.out.println("Entrez la description du service");
+        String description= lectureClavier.next();
+        System.out.println("Entrez le ID du service");
+        String id= lectureClavier.next();
+        int test;
+        test = Integer.parseInt(id);
+        
+        service = new Services(test,nom,description);
+     
+        boolean result = instance.ajouterService(service);
+        if (result) {
+            System.out.println("insertion reussite");
+        } else {
+            System.out.println("insertion echec ");
+        }
+    }
+    
+    public static void testFindByIdServices() {
+        System.out.println("findByIdService");
+        int id = 0;
+        ServicesImpDao instance = new ServicesImpDao();
+        System.out.println("Entrez l'id du service : ");
+        Scanner lectureClavier = new Scanner(System.in);
+        id = lectureClavier.nextInt();
+        Services result = instance.findById(id);
+        System.out.println(result.toString());
+
+    }
+    
+    
+    public static void testFindByNameServices() {
+        System.out.println("findByNameServices");
+        String nom = "";
+        ServicesImpDao instance = new ServicesImpDao();
+        System.out.println("Entrez le nom de l'utilisateur : ");
+        Scanner lectureClavier = new Scanner(System.in);
+        nom = lectureClavier.next();
+        Services result = instance.findByName(nom);
+        System.out.println(result.toString());
+
+    }
+    
+    public static void testFindByDescriptionServices() {
+        System.out.println("findByDescriptionServices");
+        String description = "";
+        ServicesImpDao instance = new ServicesImpDao();
+        System.out.println("Entrez la description du service : ");
+        Scanner lectureClavier = new Scanner(System.in);
+        description = lectureClavier.next();
+        Services result = instance.findByDescription(description);
+        System.out.println(result.toString());
+
+    }
+    
+    public static void testUpdateServices() {
+        System.out.println("update");
+        Services service = null;
+        ServicesImpDao instance = new ServicesImpDao();
+        Scanner lectureClavier = new Scanner(System.in);
+        System.out.println("Entrez l'ide du service à mettre à jour : ");
+        int id = lectureClavier.nextInt();
+        service = instance.findById(id);
+        
+//        System.out.println("Change ID  : ");
+//        int idmedecin = lectureClavier.nextInt();
+//        medecin.setNumeroProfessionel(idmedecin);
+        
+        System.out.println("Entrez le nom : ");
+        String nom = lectureClavier.next();
+        service.setNom(nom);
+        
+        System.out.println("Entrez la description : ");
+        String description = lectureClavier.next();
+        service.setDescription(description);
+        
+     
+        
+        //medecin = new Medecin(nom, prenom, specialite, facture, password );
+        boolean result = instance.update(service);
+        if (result) {
+            System.out.println("L'utilisateur est mis à jour ");
+        } else {
+            System.out.println("Echec de mis à jour ");
+        }
+    }    
+    
+    public static void testDeleteServices() {
+            System.out.println("deleteServices");
+            int id = 0;
+            ServicesImpDao instance = new ServicesImpDao();
+           System.out.println("Entrez l'id du service : ");
+          Scanner lectureClavier = new Scanner(System.in);
+           id = lectureClavier.nextInt();
+           boolean result = instance.delete(id);
+           if (result) {
+               System.out.println("le service dont l'id est " + id + " est supprimé de la base des données");
+           } else {
+              System.out.println("le service dont l'id est " + id + " n'existe de la base des données");
+           }
+       }
       
       
      

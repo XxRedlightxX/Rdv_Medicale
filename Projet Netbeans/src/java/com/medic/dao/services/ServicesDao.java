@@ -4,6 +4,7 @@
  */
 package com.medic.dao.services;
 
+import com.medic.entities.Medecin;
 import com.medic.entities.Services;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface ServicesDao {
     Services findById(int id);
     Services findByName(String nom);
     Services findByDescription(String description); 
-    Services ajouterService(Services service);
-    Services supprimerService(Services service);
-    Services modifierService(Services service);
+    boolean ajouterService(Services service);
+    boolean update(Services service);
+    boolean delete(int id);
 }

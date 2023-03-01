@@ -61,7 +61,7 @@ public class MedecinImpDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 listeMedecin.add(medecin);
-            };
+            }
         } catch (SQLException ex) {
             Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -135,7 +135,7 @@ public class MedecinImpDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                
-            };
+            }
         } catch (SQLException ex) {
             Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
         }
