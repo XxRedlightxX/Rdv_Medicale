@@ -9,11 +9,11 @@ package com.medic.entities;
  * @author hundl
  */
 public class Services {
-    private String id;
+    private int id;
     private String nom;
     private String description;
 
-    public Services(String id, String nom, String description) {
+    public Services(int id, String nom, String description) {
         this.id = id;
         this.nom = nom;
         this.description = description;
@@ -22,11 +22,11 @@ public class Services {
     public Services() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

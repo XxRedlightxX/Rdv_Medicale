@@ -5,6 +5,7 @@ import com.medic.dao.patient.PatientImpDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
+import com.medic.entities.Services;
 import com.medic.singleton.ConnexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +44,17 @@ public class TestDeBase {
 
     }
 
-    public static void testfindById() {
+     //Clinique--------------------------------------------------------------------------
+    public static void cliniqueTestAll() {
+        System.out.println("findAllClinique");
+        CliniqueImpDao instance = new CliniqueImpDao();
+        List<Clinique> result = instance.findAll();
+        for (Clinique uneClinique : result) {
+            System.out.println(uneClinique);
+        }
+
+    }
+    public static void cliniqueTestfindById() {
         System.out.println("findById");
         Scanner lectureClavier = new Scanner(System.in);
         String id = "";
@@ -57,7 +68,7 @@ public class TestDeBase {
 
     }
 
-    public static void testfindByName() {
+    public static void cliniqueTestfindByName() {
         System.out.println("findByName");
         Scanner lectureClavier = new Scanner(System.in);
         String nom = "";
@@ -69,8 +80,8 @@ public class TestDeBase {
 
     }
     
-    public static void testfindByCoordonnees() {
-        System.out.println("findByName");
+    public static void cliniqueTestfindByCoordonnees() {
+        System.out.println("findByCoordonnees");
         Scanner lectureClavier = new Scanner(System.in);
         String coordonnees = "";
         CliniqueImpDao instance = new CliniqueImpDao();
@@ -80,6 +91,61 @@ public class TestDeBase {
         System.out.println(result.toString());
 
     }
+    
+    public static void cliniqueTestfindByService() {
+        List<Clinique> result;
+        System.out.println("findByCoordonnees");
+        Scanner lectureClavier = new Scanner(System.in);
+        String coordonnees = "";
+        CliniqueImpDao instance = new CliniqueImpDao();
+        System.out.println("Entrez le service voulu : ");
+        coordonnees = lectureClavier.nextLine();
+        result = instance.findByService(coordonnees);
+        for (Clinique uneClinique : result) {
+            System.out.println(uneClinique);
+        }
+
+    }
+    public static void cliniqueTestfindAllService() {
+        List<Services> result;
+        System.out.println("findByCoordonnees");
+        Scanner lectureClavier = new Scanner(System.in);
+        String coordonnees = "";
+        CliniqueImpDao instance = new CliniqueImpDao();
+        System.out.println("Entrez la clinique dont vous voulez connaitre les services : ");
+        coordonnees = lectureClavier.nextLine();
+        result = instance.findAllServicesClinique(coordonnees);
+        for (Services unService : result) {
+            System.out.println(unService);
+        }
+    }
+    public static void cliniqueTestfindAllMedecins() {
+        List<Medecin> result;
+        System.out.println("findAllMedecins");
+        Scanner lectureClavier = new Scanner(System.in);
+        String nom = "";
+        CliniqueImpDao instance = new CliniqueImpDao();
+        System.out.println("Entrez la clinique dont vous voulez connaitre les medecins : ");
+        nom = lectureClavier.nextLine();
+        result = instance.findAllMedecinsClinique(nom);
+        for (Medecin unMedecin : result) {
+            System.out.println(unMedecin);
+        }
+    }
+    public static void cliniqueTestfindAllPatients() {
+        List<Patient> result;
+        System.out.println("findAllPatients");
+        Scanner lectureClavier = new Scanner(System.in);
+        String nom = "";
+        CliniqueImpDao instance = new CliniqueImpDao();
+        System.out.println("Entrez la clinique dont vous voulez connaitre les patients : ");
+        nom = lectureClavier.nextLine();
+        result = instance.findAllPatientsClinique(nom);
+        for (Patient unPatient : result) {
+            System.out.println(unPatient);
+        }
+    }
+
     
     
     //Medecin--------------------------------------------------------------------------
