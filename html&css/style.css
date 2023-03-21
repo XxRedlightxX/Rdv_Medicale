@@ -4,7 +4,7 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-   height: 150px;
+   height: 100px;
 }
 
 
@@ -25,7 +25,6 @@
 #body{  background-color: #3375bc;
     padding: 10px;
     text-align: center;
-    font-size: 2px;
     font-weight: bold;
    height: 150px;
   
@@ -66,7 +65,7 @@
 
 #ls{ 
     background-color:#baabab;
-   font-size: 15px;
+   font-size: 14px;
    font-weight: bold;
  display: flex;
  justify-content: space-around;
@@ -74,7 +73,7 @@
 
 .container { 
 display: flex;
-justify-content: space-between;  
+justify-content: space-evenly;  
 } 
 
 h2{
@@ -167,7 +166,7 @@ body.background-image{
 }
 
 #menu{ 
-    margin-top: 4%; 
+    margin-top: 1%; 
  }
 
  #logo{ 
