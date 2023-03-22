@@ -11,22 +11,7 @@
 
 </head>
 
-<header id="header">
-
-  <div id="logo">
-<img src="imageWeb2/logo.png" width="60px" , height="50px">
-
-  </div>
-
-  <div class="container" id="menu">
-	<a href="xyz.html">Accueil</a>
-    <a href="xyz.html">Inscription/Connexion</a>
-	
-
-
-  </div>
-
-</header>
+<jsp:include page="EnTete.jsp"/>
 
 
 <body id="body" class="background-image">

@@ -11,19 +11,8 @@
 
 </head>
 
-<header id="header">
-
-  
-  <div>
-<div>  <img src="imageWeb2/logo.png" height="80" width=90 title="logo">
-   </div>
-   <h1>Clinique Lasanté</h1><br>
-    <div class="container">
-      <h3><a href="xyz" class="servicesClinique">Prendre rendez-vous</a> </h3>
-      <h3><a href="xyz" class="servicesClinique">Nos médecins:</a></h3>
-    </div>
-  </div>
-</header><br><br><br><br>
+<jsp:include page="EnTete.jsp"/>
+<br><br><br><br>
 
 <body id="body">
 

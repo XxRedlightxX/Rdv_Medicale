@@ -11,15 +11,7 @@
 
 </head>
 
-<header id="header">
-
-
-    <div id="logo">
-        <img src="imageWeb2/logo.png" width="60px" , height="50px">
-        
-          </div>
-
-</header> <br><br>
+<jsp:include page="EnTete.jsp"/> <br><br>
 
 <body id="body">
 

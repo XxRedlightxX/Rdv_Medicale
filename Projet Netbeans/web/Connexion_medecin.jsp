@@ -10,20 +10,7 @@
   <link rel="stylesheet" href="style.css">
 
 </head>
-<header id="header">
-  
-  <div id="logo">
-    <img src="imageWeb2/logo.png" width="60px" , height="50px">
-    
-      </div>
-<div class="container" id="menu">
-    <a href="xyz.html">Retour a l'accueil</a>
-	<a href="xyz.html">Portail Patients</a>
-    <a style="color:black">Portail Medecins</a>
-
-  </div>
-
-</header>
+<jsp:include page="EnTete.jsp"/>
 
 <div id=ls>
   <h1 id="etatPatient">Connexion Medecin</h1>

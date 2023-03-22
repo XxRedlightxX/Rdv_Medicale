@@ -11,15 +11,7 @@
 
 </head>
 
-<header id="header">
-
-     <div id="logo">
-          <img src="imageWeb2/logo.png" width="60px" , height="50px">
-          
-            </div>
-     <h1>BONJOUR ADMIN</h1>
-
-</header>
+<jsp:include page="EnTete.jsp"/>
 
 <body id="body">
 
