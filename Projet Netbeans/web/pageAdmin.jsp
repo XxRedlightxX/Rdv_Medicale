@@ -48,6 +48,6 @@
  
 
 </body>
-
+<jsp:include page="pied.jsp"/>
  
 </html>

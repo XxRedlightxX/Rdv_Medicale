@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -21,6 +23,9 @@
 
 <body id="body">
 </br></br>
+<c:if test = "${not empty requestScope.invalide}">
+    <center><b><font color=red>${requestScope.invalide}</font><b></center>
+</c:if>
 <div id="formuInscr" style="display:none">
 <form class="login" action="">
 
@@ -62,8 +67,8 @@
     </form>
 </div>
 <div id="formuLog">
-<form class="login" action="">
-
+<form class="login" action="connexionController">
+      <input type="hidden" name="typeCompte" value="patient">
       <label for="username">Nom d'utilisateur: </label>
       <input type="text" name="username" id="username"><br> <br>
       
@@ -95,8 +100,6 @@ if (choix == "inscription"){
   }
 }
 </script>
-<footer id="footer">
-
-</footer>
+<jsp:include page="pied.jsp"/>
 
 </html>

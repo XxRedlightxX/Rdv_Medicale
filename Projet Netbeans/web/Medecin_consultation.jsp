@@ -77,11 +77,6 @@
 
 </body>
 
-<footer>
-    <div id=partageDoc>
-        <button>Partager un document avec un client</button>
-
-    </div>
-</footer>
+<jsp:include page="pied.jsp"/>
 
 </html>

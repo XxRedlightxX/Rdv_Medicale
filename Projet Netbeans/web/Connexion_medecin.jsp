@@ -53,7 +53,7 @@
 </div>
 <div id="formuLog">
 <form class="login" action="">
-
+      <input type="hidden" name="typeCompte" value="medecin">
       <label for="username">Nom d'utilisateur: </label>
       <input type="text" name="username" id="username"><br> <br>
       
@@ -85,8 +85,6 @@ if (choix == "inscription"){
   }
 }
 </script>
-<footer id="footer">
-
-</footer>
+<jsp:include page="pied.jsp"/>
 
 </html>

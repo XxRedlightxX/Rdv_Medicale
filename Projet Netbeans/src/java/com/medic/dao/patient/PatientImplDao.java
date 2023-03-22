@@ -31,13 +31,14 @@ import java.util.logging.Logger;
  *
  * @author 1482910
  */
-public class PatientImpDao implements PatientDao {
+public class PatientImplDao implements PatientDao {
 
     private static final String SQL_SELECT_PATIENT = "select * from patients";
     private static final String SQL_SELECT_BY_ID_PATIENT = "select * from patients where idpatient =?";
     private static final String SQL_INSERT_PATIENT = "insert into patients(idpatient, nom, prenom, assurance, numSeq_assurance, naissance, sexe, password) value(?,?,?,?,?,?,?,?)";
     private static final String SQL_UPDATE_PATIENT = "update patients set nom =?,prenom = ?, assurance =?, numSeq_assurance=?, naissance=?, naissance=?,sexe=?,pasword=? where idmedecin= ?";
-
+    private static final String SQL_CONNEXION_PATIENT_NUMERO_PASSWORD = "SELECT * from patients where assurance = ? and password = ?";
+    
     @Override
     public List<Patient> findAll() {
         List<Patient> listePatient = null;
@@ -68,7 +69,7 @@ public class PatientImpDao implements PatientDao {
                 listePatient.add(patient);
             };
         } catch (SQLException ex) {
-            Logger.getLogger(PatientImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PatientImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
@@ -172,7 +173,7 @@ public class PatientImpDao implements PatientDao {
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
-            Logger.getLogger(PatientImpDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PatientImplDao.class.getName()).log(Level.SEVERE, null, e);
         }
 
 //		System.out.println("nb ligne " + nbLigne);
@@ -223,6 +224,44 @@ public class PatientImpDao implements PatientDao {
     @Override
     public boolean update(Patient patient) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Patient existByNumeroMotPasse(String numero, String motPasse) {
+        Patient patient = null;
+        try {
+
+            //Initialise la requête préparée basée sur la connexion
+            // la requête SQL passé en argument pour construire l'objet preparedStatement
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_CONNEXION_PATIENT_NUMERO_PASSWORD);
+            // on initialise la propriété email du bean avec sa premiere valeur
+            ps.setString(1, numero);
+            ps.setString(2, motPasse);
+            //On execute la requête et on récupère les résultats dans la requête 
+            // dans ResultSet
+            ResultSet result = ps.executeQuery();
+
+            //// la méthode next() pour se déplacer sur l'enregistrement suivant
+            //on parcours ligne par ligne les résultas retournés
+            while (result.next()) {
+                patient = new Patient();
+
+                patient.setId(result.getInt("idpatient"));
+                patient.setNom(result.getString("nom"));
+                patient.setPrenom(result.getString("prenom"));
+                patient.setNumeroAssuranceMaladie(result.getString("assurance"));
+                patient.setNumeroSequentiel(result.getInt("numSeq_assurance"));
+                patient.setDateNaissance(result.getString("naissance"));
+                patient.setSexe(result.getString("sexe"));
+                patient.setMotDePasse(result.getString("password"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PatientImplDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Fermeture de toutes les ressources ouvertes
+        ConnexionBD.closeConnection();
+        return patient;
     }
 
  

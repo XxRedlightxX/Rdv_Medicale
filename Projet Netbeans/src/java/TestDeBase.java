@@ -1,7 +1,7 @@
 
 import com.medic.dao.clinique.CliniqueImpDao;
 import com.medic.dao.medecin.MedecinImpDao;
-import com.medic.dao.patient.PatientImpDao;
+import com.medic.dao.patient.PatientImplDao;
 import com.medic.dao.services.ServicesImpDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
@@ -281,7 +281,7 @@ public class TestDeBase {
     //Patient-----------------------------------------------------------------------------------------------------
      public static void testFindAllPatient() {
         System.out.println("findAll");
-        PatientImpDao instance = new PatientImpDao();
+        PatientImplDao instance = new PatientImplDao();
         // List<Utilisateur> expResult = null;
         List<Patient> result = instance.findAll();
         // assertEquals(expResult, result);
@@ -297,7 +297,7 @@ public class TestDeBase {
         System.out.println("findById");
         Scanner lectureClavier = new Scanner(System.in);
         String id = "";
-        PatientImpDao instance = new PatientImpDao();
+        PatientImplDao instance = new PatientImplDao();
         System.out.println("Entrez le Id de la clinique : ");
         id = lectureClavier.next();
         int test;
@@ -310,7 +310,7 @@ public class TestDeBase {
       public static void testCreatePatient() {
         System.out.println("create");
         Patient patient = null;
-        PatientImpDao instance = new PatientImpDao();
+        PatientImplDao instance = new PatientImplDao();
         Scanner lectureClavier = new Scanner(System.in);
         
         System.out.println("Entrez le ID : ");

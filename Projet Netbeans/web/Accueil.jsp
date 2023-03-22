@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -12,23 +14,15 @@
 </head>
 
 <jsp:include page="EnTete.jsp"/>
-
-
 <body id="body" class="background-image">
-
-
+<c:if test = "${not empty requestScope.deconnexion}">
+<div id=ls>
+  <h1 id="etatPatient">${requestScope.deconnexion}</h1>
+</div>
+</c:if>
 
 
 
 </body>
-
-<footer id="footer">
-  <div class="container">
-    <h3> <a href="xyz">Deconnexion</a></h3>
-    <h3><a href="xyz">Chat 24/24</a></h3>
-    <h3><a href="xyz">Langue Fr/En</a></h3>
-
-  </div>
-</footer>
-
+<jsp:include page="pied.jsp"/>
 </html>

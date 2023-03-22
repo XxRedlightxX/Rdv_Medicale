@@ -7,9 +7,25 @@
         <servlet-name>TestController</servlet-name>
         <servlet-class>com.medic.controller.TestController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConnexionController</servlet-name>
+        <servlet-class>com.medic.controller.ConnexionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeconnexionController</servlet-name>
+        <servlet-class>com.medic.controller.DeconnexionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/testController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConnexionController</servlet-name>
+        <url-pattern>/connexionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeconnexionController</servlet-name>
+        <url-pattern>/deconnexionController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -41,10 +41,6 @@
 
 
 </body>
-
-<footer>
-
-
-</footer>
+<jsp:include page="pied.jsp"/>
 
 </html>

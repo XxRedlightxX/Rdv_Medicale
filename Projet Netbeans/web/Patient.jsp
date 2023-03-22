@@ -80,11 +80,6 @@
 
 </body>
 
-<footer id="footer">
-    <div class="container">
-        <h3> <a href="xyz">Deconnexion</a></h3>
-        <h3><a href="xyz">Contacter</a></h3>
-    </div>
-</footer>
+<jsp:include page="pied.jsp"/>
 
 </html>

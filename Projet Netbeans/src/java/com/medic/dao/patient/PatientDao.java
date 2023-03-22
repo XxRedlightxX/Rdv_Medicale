@@ -23,6 +23,7 @@ public interface PatientDao {
     Patient findBynumeroSequentiel(String numeroSequentiel);
     Patient findBydateNaissance(String dateNaissance);
     Patient findBySexe(String sexe);
+    Patient existByNumeroMotPasse(String numero,String motPasse);
     boolean create(Patient patient);
     boolean update(Patient patient);
     boolean delete(int id);
