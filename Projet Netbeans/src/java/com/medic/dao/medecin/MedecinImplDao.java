@@ -29,7 +29,7 @@ public class MedecinImplDao implements MedecinDao {
     private static final String SQL_SELECT_BY_ID_MEDECIN = "select * from medecin where idmedecin =?";
     private static final String SQL_SELECT_MEDECIN_PAR_NOM = "select * from medecin where nom = ?";
     private static final String SQL_SELECT_MEDECIN_PAR_PRENOM = "select * from medecin where prenom = ?";
-    private static final String SQL_UPDATE_MEDECIN = "update medecin set nom =?,prenom = ?, specialite =?, facturation=?, password=?,coordonnees_medecin=?,clinique_idclinique=? where idmedecin= ?";
+    private static final String SQL_UPDATE_MEDECIN = "update medecin set nom =?,prenom = ?, specialite =?, facturation=?, password=?,coordonnees_medecin=?,clinique_idclinique=?,idmedecin=? where idmedecin= ?";
     private static final String SQL_DELETE_MEDECIN_PAR_ID = "delete from medecin where idmedecin = ?";
     private static final String SQL_CONNEXION_MEDECIN_NUMERO_PASSWORD = "SELECT * from medecin where idmedecin = ? and password =?";
     private static final String SQL_SELECT_BY_SPECIALITE = "SELECT * from medecin where specialite = ?";
@@ -56,7 +56,7 @@ public class MedecinImplDao implements MedecinDao {
             while (result.next()) {
                 Medecin medecin = new Medecin();
 
-                //medecin.setNumeroProfessionel(result.getInt("idmedecin"));
+                medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
                 medecin.setSpecialite(result.getString("specialite"));
@@ -110,8 +110,8 @@ public class MedecinImplDao implements MedecinDao {
     }
 
     @Override
-    public Medecin findByName(String nom) {
-        Medecin medecin = null;
+    public List<Medecin> findByName(String nom) {
+        List<Medecin> listeMedecin = null;
         try {
 
             //Initialise la requête préparée basée sur la connexion
@@ -125,8 +125,9 @@ public class MedecinImplDao implements MedecinDao {
 
             //// la méthode next() pour se déplacer sur l'enregistrement suivant
             //on parcours ligne par ligne les résultas retournés
+            listeMedecin = new ArrayList<>();
             while (result.next()) {
-                medecin = new Medecin();
+                Medecin medecin = new Medecin();
                 medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
@@ -134,6 +135,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                listeMedecin.add(medecin);
 
             }
         } catch (SQLException ex) {
@@ -141,12 +143,12 @@ public class MedecinImplDao implements MedecinDao {
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
-        return medecin;
+        return listeMedecin;
     }
 
     @Override
-    public Medecin findByFirstName(String prenom) {
-        Medecin medecin = null;
+    public List<Medecin> findByFirstName(String prenom) {
+        List<Medecin> listeMedecin = null;
         try {
 
             //Initialise la requête préparée basée sur la connexion
@@ -160,8 +162,9 @@ public class MedecinImplDao implements MedecinDao {
 
             //// la méthode next() pour se déplacer sur l'enregistrement suivant
             //on parcours ligne par ligne les résultas retournés
+            listeMedecin = new ArrayList<>();
             while (result.next()) {
-                medecin = new Medecin();
+                Medecin medecin = new Medecin();
                 medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
@@ -169,6 +172,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                listeMedecin.add(medecin);
 
             }
         } catch (SQLException ex) {
@@ -176,7 +180,7 @@ public class MedecinImplDao implements MedecinDao {
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
-        return medecin;
+        return listeMedecin;
     }
 
     @Override
@@ -197,7 +201,7 @@ public class MedecinImplDao implements MedecinDao {
             while (result.next()) {
                 Medecin medecin = new Medecin();
 
-                //medecin.setNumeroProfessionel(result.getInt("idmedecin"));
+                medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
                 medecin.setSpecialite(result.getString("specialite"));
@@ -233,7 +237,7 @@ public class MedecinImplDao implements MedecinDao {
             while (result.next()) {
                 Medecin medecin = new Medecin();
 
-                //medecin.setNumeroProfessionel(result.getInt("idmedecin"));
+                medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
                 medecin.setSpecialite(result.getString("specialite"));
@@ -252,8 +256,8 @@ public class MedecinImplDao implements MedecinDao {
     }
 
     @Override
-    public Medecin findByCoordonnees(String coordonnees) {
-        Medecin medecin = null;
+    public List<Medecin> findByCoordonnees(String coordonnees) {
+        List<Medecin> listeMedecin = null;
         try {
 
             //Initialise la requête préparée basée sur la connexion
@@ -267,8 +271,9 @@ public class MedecinImplDao implements MedecinDao {
 
             //// la méthode next() pour se déplacer sur l'enregistrement suivant
             //on parcours ligne par ligne les résultas retournés
+            listeMedecin = new ArrayList<>();
             while (result.next()) {
-                medecin = new Medecin();
+                Medecin medecin = new Medecin();
                 medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
@@ -276,6 +281,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                listeMedecin.add(medecin);
 
             }
         } catch (SQLException ex) {
@@ -283,7 +289,7 @@ public class MedecinImplDao implements MedecinDao {
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
-        return medecin;
+        return listeMedecin;
     }
 
     @Override
@@ -304,7 +310,7 @@ public class MedecinImplDao implements MedecinDao {
             while (result.next()) {
                 Medecin medecin = new Medecin();
 
-                //medecin.setNumeroProfessionel(result.getInt("idmedecin"));
+                medecin.setNumeroProfessionel(result.getInt("idmedecin"));
                 medecin.setNom(result.getString("nom"));
                 medecin.setPrenom(result.getString("prenom"));
                 medecin.setSpecialite(result.getString("specialite"));
@@ -394,6 +400,7 @@ public class MedecinImplDao implements MedecinDao {
             ps.setString(6, medecin.getCoordonnees());            
             ps.setInt(7,idClinique);
             ps.setInt(8, medecin.getNumeroProfessionel());
+            ps.setInt(9, medecin.getNumeroProfessionel());
 
             nbLigne = ps.executeUpdate();
 

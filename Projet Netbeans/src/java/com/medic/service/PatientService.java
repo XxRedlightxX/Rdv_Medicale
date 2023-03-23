@@ -28,34 +28,29 @@ public class PatientService {
         return unPatient;
     }
     
-    public Patient chercherPatientParNom(String nom){
-        unPatient = dao.findByName(nom);
-        return unPatient;
+    public List<Patient> chercherPatientParNom(String nom){
+        listePatients = dao.findByName(nom);
+        return listePatients;
     }
     
-    public Patient chercherPatientParPrenom(String prenom){
-        unPatient = dao.findByFirstName(prenom);
-        return unPatient;
+    public List<Patient> chercherPatientParPrenom(String prenom){
+        listePatients = dao.findByFirstName(prenom);
+        return listePatients;
     }
     
     public Patient chercherParAssuranceMaladie(String numeroAssurance){
         unPatient = dao.findByAssuranceMaladie(numeroAssurance);
         return unPatient;
     }
-    
-    public Patient chercherParNumeroSequentiel(String numeroSequentiel){
-        unPatient = dao.findBynumeroSequentiel(numeroSequentiel);
-        return unPatient;
+        
+    public List<Patient> chercherParDateNaissance(String dateNaissance){
+        listePatients = dao.findBydateNaissance(dateNaissance);
+        return listePatients;
     }
     
-    public Patient chercherParDateNaissance(String dateNaissance){
-        unPatient = dao.findBydateNaissance(dateNaissance);
-        return unPatient;
-    }
-    
-    public Patient chercherParSexe(String sexe){
-        unPatient = dao.findBySexe(sexe);
-        return unPatient;
+    public List<Patient> chercherParSexe(String sexe){
+        listePatients = dao.findBySexe(sexe);
+        return listePatients;
     }
     
     public Patient verifierExistencePatient(String numeroAssurance,String motPasse){
@@ -63,17 +58,19 @@ public class PatientService {
         return unPatient;
     }
     
-    public boolean ajouterPatient(Patient unPatient){
-        retour = dao.create(unPatient);
+    public boolean ajouterPatient(Patient unPatient,int idMedecin){
+        retour = dao.create(unPatient,idMedecin);
         return retour;
     }
     
-    public boolean modifierPatient(Patient unPatient){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean modifierPatient(Patient unPatient,int idMedecin){
+        retour = dao.update(unPatient, idMedecin);
+        return retour;
     }
     
-    public boolean supprimerPatient(Patient unPatient){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean supprimerPatient(int idPatient){
+        retour = dao.delete(idPatient);
+        return retour;
     }
     
 }

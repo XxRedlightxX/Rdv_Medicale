@@ -17,14 +17,13 @@ import java.util.List;
 public interface PatientDao {
     List<Patient> findAll();
     Patient findByIdPatient(int id);
-    Patient findByName(String nom);
-    Patient findByFirstName(String prenom);
+    List<Patient> findByName(String nom);
+    List<Patient> findByFirstName(String prenom);
     Patient findByAssuranceMaladie(String assuranceMaladie);
-    Patient findBynumeroSequentiel(String numeroSequentiel);
-    Patient findBydateNaissance(String dateNaissance);
-    Patient findBySexe(String sexe);
+    List<Patient> findBydateNaissance(String dateNaissance);
+    List<Patient> findBySexe(String sexe);
     Patient existByNumeroMotPasse(String numero,String motPasse);
-    boolean create(Patient patient);
-    boolean update(Patient patient);
+    boolean create(Patient patient,int idMedecin);
+    boolean update(Patient patient,int idMedecin);
     boolean delete(int id);
 }

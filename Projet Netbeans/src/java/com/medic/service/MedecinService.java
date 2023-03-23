@@ -29,14 +29,14 @@ public class MedecinService {
         return unMedecin;
     }
     
-    public Medecin chercherMedecinParNom(String nom){
-        unMedecin = dao.findByName(nom);
-        return unMedecin;
+    public List<Medecin> chercherMedecinParNom(String nom){
+        listeMedecin = dao.findByName(nom);
+        return listeMedecin;
     }
     
-    public Medecin chercherMedecinParPrenom(String prenom){
-        unMedecin = dao.findByFirstName(prenom);
-        return unMedecin;
+    public List<Medecin> chercherMedecinParPrenom(String prenom){
+        listeMedecin = dao.findByFirstName(prenom);
+        return listeMedecin;
     }
     
     public List<Medecin> chercherParSpecialite(String specialite){
@@ -49,9 +49,9 @@ public class MedecinService {
         return listeMedecin;
     }
     
-    public Medecin chercherParCoordonnees(String coordonnee){
-        unMedecin = dao.findByCoordonnees(coordonnee);
-        return unMedecin;
+    public List<Medecin> chercherParCoordonnees(String coordonnee){
+        listeMedecin = dao.findByCoordonnees(coordonnee);
+        return listeMedecin;
     }
     
     public List<Medecin> chercherParClinique(int idClinique){
