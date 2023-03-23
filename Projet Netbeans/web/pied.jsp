@@ -20,7 +20,7 @@
         <footer id="footer">
             <div class="container">
                 <c:if test = "${not empty sessionScope.typeCompte}">
-                <h3> <a href="xyz">Déconnexion</a></h3>
+                <h3> <a href="deconnexionController">Déconnexion</a></h3>
                 </c:if>
                 <h3><a href="xyz">Chat 24/24</a></h3>
                 <h3><a href="xyz">Langue Fr/En</a></h3>

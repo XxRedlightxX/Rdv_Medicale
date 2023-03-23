@@ -51,6 +51,7 @@
                     <a href="Accueil.jsp">Accueil</a>
                     <a href="Connexion_patient.jsp">Portail Patients</a>
                     <a href="Connexion_medecin.jsp">Portail Medecins</a>
+                    <a href="Connexion_admin.jsp">Portail Administrateurs</a>
                 </div>     
             </c:if>
 

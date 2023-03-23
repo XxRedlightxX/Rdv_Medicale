@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.medic.dao.services;
+package com.medic.dao.servicesClinique;
 
-import com.medic.dao.medecin.MedecinImpDao;
+import com.medic.dao.medecin.MedecinImplDao;
 import com.medic.entities.Medecin;
 import com.medic.entities.Services;
 import com.medic.singleton.ConnexionBD;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author hundl
  */
-public class ServicesImpDao implements ServicesDao {
+public class ServicesCliniqueImplDao {
     private static final String SQL_SELECT_SERVICES= "select * from services";
     private static final String SQL_SELECT_BY_ID_SERVICES = "select * from services where idservice =?";
     private static final String SQL_SELECT_BY_NOM_SERVICES = "select * from services where nom =?";
@@ -29,7 +29,6 @@ public class ServicesImpDao implements ServicesDao {
     private static final String SQL_UPDATE_SERVICE = "update service nom = ?, description =? where idservice= ?";   
     //private static final String SQL_DESACTIVER_CONTRAINTS = " ALTER TABLE services DROP CONSTRAINT fk_patients_medecin ";
     private static final String SQL_DELETE_SERVICES_PAR_ID = "delete from services where idservice = ?";
-    @Override
     public List<Services> findAll() {
         List<Services> listeServices = null;
         try {
@@ -54,14 +53,13 @@ public class ServicesImpDao implements ServicesDao {
                 listeServices.add(services);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
         return listeServices;
     }
 
-    @Override
     public Services findById(int id) {
         Services service = null;
         try {
@@ -85,12 +83,11 @@ public class ServicesImpDao implements ServicesDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return service;
     }
 
-    @Override
     public Services findByName(String nom) {
         Services service = null;
         try {
@@ -114,14 +111,13 @@ public class ServicesImpDao implements ServicesDao {
                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
         return service;
     }
 
-    @Override
     public Services findByDescription(String description) {
         Services service = null;
         try {
@@ -145,14 +141,13 @@ public class ServicesImpDao implements ServicesDao {
                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
         return service;
     }
 
-    @Override
     public boolean ajouterService(Services service) {
         boolean retour = false;
         int nbLigne = 0;
@@ -169,7 +164,7 @@ public class ServicesImpDao implements ServicesDao {
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, e);
         }
 
 //		System.out.println("nb ligne " + nbLigne);
@@ -180,7 +175,6 @@ public class ServicesImpDao implements ServicesDao {
         return retour;
     }
 
-    @Override
     public boolean update(Services service) {
         boolean retour = false;
         int nbLigne = 0;
@@ -199,7 +193,7 @@ public class ServicesImpDao implements ServicesDao {
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, e);
         }
 
 //		System.out.println("nb ligne " + nbLigne);
@@ -210,7 +204,6 @@ public class ServicesImpDao implements ServicesDao {
         return retour;
     }
 
-        @Override
     public boolean delete(int id) {
         boolean retour = false;
         int nbLigne = 0;

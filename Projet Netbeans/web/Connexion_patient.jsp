@@ -18,14 +18,16 @@
   <h1 id="etatPatient">Connexion patient</h1>
 
 </div> <br>
-<a style="color:black" onclick="myFunction('connection')" >Connexion</a>&nbsp;&nbsp;&nbsp;
-<a onclick="myFunction('inscription')" alt="Passe">Inscription</a>
+<a style="color:black" onclick="myFunction('connection')" id="btnConnexion">Connexion</a>&nbsp;&nbsp;&nbsp;
+<a onclick="myFunction('inscription')" alt="Passe" id="btnInscription" style="text-decoration:underline;cursor:pointer;">Inscription</a>
 
 <body id="body">
 </br></br>
+
 <c:if test = "${not empty requestScope.invalide}">
-    <center><b><font color=red>${requestScope.invalide}</font><b></center>
+    <center><b><font color=red>${requestScope.invalide}</font><b></center>               
 </c:if>
+            
 <div id="formuInscr" style="display:none">
 <form class="login" action="">
 
@@ -38,7 +40,7 @@
       <label for="assuranceMaladie">Numero d'assurance maladie : </label>
       <input type="text" name="assuranceMaladie" id="assuranceMaladie"><br> <br>
       
-      <label for="numeroSeq">Numero squentiel : </label>
+      <label for="numeroSeq">Numero sequentiel : </label>
       <input type="text" name="numeroSeq" id="numeroSeq"><br> <br>
       
       <label for="dateNaissance">Date de naissance : </label>
@@ -69,7 +71,7 @@
 <div id="formuLog">
 <form class="login" action="connexionController">
       <input type="hidden" name="typeCompte" value="patient">
-      <label for="username">Nom d'utilisateur: </label>
+      <label for="username">Numero d'assurance maladie: </label>
       <input type="text" name="username" id="username"><br> <br>
       
       <label for="password">Mot de passe:</label>
@@ -87,16 +89,35 @@
 
 
 function myFunction(choix) {
-if (choix == "connection"){
+if (choix === "connection"){
   document.getElementById("formuInscr").style.display = "none";
   document.getElementById("formuLog").style.display = "block";
   document.getElementById("etatPatient").innerHTML = "Connexion patient";
   
+  document.getElementById("btnConnexion").style.color = "black";
+  document.getElementById("btnInscription").style.color = "white";
+  
+  document.getElementById("btnInscription").style.textDecoration="underline";
+  document.getElementById("btnConnexion").style.textDecoration="none";
+  
+  document.getElementById("btnInscription").style.cursor="pointer";
+  document.getElementById("btnConnexion").style.cursor="default";
+  
+  
   }
-if (choix == "inscription"){
+if (choix === "inscription"){
   document.getElementById("formuLog").style.display = "none";
   document.getElementById("formuInscr").style.display = "block";
   document.getElementById("etatPatient").innerHTML = "Inscription d'un patient";
+  
+  document.getElementById("btnInscription").style.color = "black";
+  document.getElementById("btnConnexion").style.color = "white";
+  
+  document.getElementById("btnConnexion").style.textDecoration="underline";
+  document.getElementById("btnInscription").style.textDecoration="none";
+  
+  document.getElementById("btnConnexion").style.cursor="pointer";
+  document.getElementById("btnInscription").style.cursor="default";
   }
 }
 </script>

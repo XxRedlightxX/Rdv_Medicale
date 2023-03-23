@@ -1,8 +1,8 @@
 
-import com.medic.dao.clinique.CliniqueImpDao;
-import com.medic.dao.medecin.MedecinImpDao;
+import com.medic.dao.clinique.CliniqueImplDao;
+import com.medic.dao.medecin.MedecinImplDao;
 import com.medic.dao.patient.PatientImplDao;
-import com.medic.dao.services.ServicesImpDao;
+import com.medic.dao.servicesClinique.ServicesCliniqueImplDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
@@ -27,6 +27,9 @@ public class TestDeBase {
 
     public static void main(String[] args) throws SQLException {
 
+        
+        testCreate();
+        testUpdate();
         //testfindById();
         //testfindByName();
         //testfindByCoordonnees();
@@ -41,7 +44,7 @@ public class TestDeBase {
        //testFindAllPatient();
        //testfindByIdPatient();
        //testCreatePatient();
-       testFindAllServices();
+       //testFindAllServices();
        
 
     }
@@ -49,7 +52,7 @@ public class TestDeBase {
      //Clinique--------------------------------------------------------------------------
     public static void cliniqueTestAll() {
         System.out.println("findAllClinique");
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         List<Clinique> result = instance.findAll();
         for (Clinique uneClinique : result) {
             System.out.println(uneClinique);
@@ -60,7 +63,7 @@ public class TestDeBase {
         System.out.println("findById");
         Scanner lectureClavier = new Scanner(System.in);
         String id = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez le Id de la clinique : ");
         id = lectureClavier.next();
         int test;
@@ -74,7 +77,7 @@ public class TestDeBase {
         System.out.println("findByName");
         Scanner lectureClavier = new Scanner(System.in);
         String nom = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez le nom de la clinique : ");
         nom = lectureClavier.nextLine();
         Clinique result = instance.findByName(nom);
@@ -86,7 +89,7 @@ public class TestDeBase {
         System.out.println("findByCoordonnees");
         Scanner lectureClavier = new Scanner(System.in);
         String coordonnees = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez les coordonnees de la clinique : ");
         coordonnees = lectureClavier.nextLine();
         Clinique result = instance.findByCoordonnes(coordonnees);
@@ -99,7 +102,7 @@ public class TestDeBase {
         System.out.println("findByCoordonnees");
         Scanner lectureClavier = new Scanner(System.in);
         String coordonnees = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez le service voulu : ");
         coordonnees = lectureClavier.nextLine();
         result = instance.findByService(coordonnees);
@@ -113,7 +116,7 @@ public class TestDeBase {
         System.out.println("findByCoordonnees");
         Scanner lectureClavier = new Scanner(System.in);
         String coordonnees = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez la clinique dont vous voulez connaitre les services : ");
         coordonnees = lectureClavier.nextLine();
         result = instance.findAllServicesClinique(coordonnees);
@@ -126,7 +129,7 @@ public class TestDeBase {
         System.out.println("findAllMedecins");
         Scanner lectureClavier = new Scanner(System.in);
         String nom = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez la clinique dont vous voulez connaitre les medecins : ");
         nom = lectureClavier.nextLine();
         result = instance.findAllMedecinsClinique(nom);
@@ -139,7 +142,7 @@ public class TestDeBase {
         System.out.println("findAllPatients");
         Scanner lectureClavier = new Scanner(System.in);
         String nom = "";
-        CliniqueImpDao instance = new CliniqueImpDao();
+        CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez la clinique dont vous voulez connaitre les patients : ");
         nom = lectureClavier.nextLine();
         result = instance.findAllPatientsClinique(nom);
@@ -153,7 +156,7 @@ public class TestDeBase {
     //Medecin--------------------------------------------------------------------------
     public static void testFindAll() {
         System.out.println("findAll");
-        MedecinImpDao instance = new MedecinImpDao();
+        MedecinImplDao instance = new MedecinImplDao();
         // List<Utilisateur> expResult = null;
         List<Medecin> result = instance.findAll();
         // assertEquals(expResult, result);
@@ -169,8 +172,10 @@ public class TestDeBase {
     public static void testCreate() {
         System.out.println("create");
         Medecin medecin = null;
-        MedecinImpDao instance = new MedecinImpDao();
+        MedecinImplDao instance = new MedecinImplDao();
         Scanner lectureClavier = new Scanner(System.in);
+        System.out.println("Entrez idmedecin ");
+        int idmed = lectureClavier.nextInt();
         System.out.println("Entrez nom medecin ");
         String nom = lectureClavier.next();
         System.out.println("Entrez le prenom du medecin");
@@ -183,10 +188,23 @@ public class TestDeBase {
         float facturation = lectureClavier.nextFloat();
         System.out.println("Entrez le mot de passe :");
         String password = lectureClavier.next();
+        System.out.println("Entrez le numero clinique :");
+        int no = lectureClavier.nextInt();
         
-        medecin = new Medecin(  nom,  prenom,  specialite, facturation,password);
+        System.out.println("Entrez coordonnees :");
+        String coord = lectureClavier.next();
+        
+        medecin = new Medecin();
+        medecin.setNom(nom);
+        medecin.setNumeroProfessionel(idmed);
+        medecin.setPrenom(prenom);
+        medecin.setSpecialite(specialite);
+        medecin.setFacturation(facturation);
+        medecin.setMotDePasse(password);
+        medecin.setCoordonnees(coord);
+        
      
-        boolean result = instance.create(medecin);
+        boolean result = instance.create(medecin,no);
         if (result) {
             System.out.println("insertion reussite");
         } else {
@@ -197,11 +215,11 @@ public class TestDeBase {
     public static void testFindById() {
         System.out.println("findById");
         int id = 0;
-        MedecinImpDao instance = new MedecinImpDao();
+        MedecinImplDao instance = new MedecinImplDao();
         System.out.println("Entrez l'id du medecin : ");
         Scanner lectureClavier = new Scanner(System.in);
         id = lectureClavier.nextInt();
-        Medecin result = instance.findById(id);
+        Medecin result = instance.findByIdMedecin(id);
         System.out.println(result.toString());
 
     }
@@ -210,7 +228,7 @@ public class TestDeBase {
     public static void testFindByName() {
         System.out.println("findByName");
         String nom = "";
-        MedecinImpDao instance = new MedecinImpDao();
+        MedecinImplDao instance = new MedecinImplDao();
         System.out.println("Entrez le nom de l'utilisateur : ");
         Scanner lectureClavier = new Scanner(System.in);
         nom = lectureClavier.next();
@@ -222,11 +240,13 @@ public class TestDeBase {
     public static void testUpdate() {
         System.out.println("update");
         Medecin medecin = null;
-        MedecinImpDao instance = new MedecinImpDao();
+        
+        MedecinImplDao instance = new MedecinImplDao();
         Scanner lectureClavier = new Scanner(System.in);
         System.out.println("Entrez l'ide du medecin à mettre à jour : ");
-        int id = lectureClavier.nextInt();
-        medecin = instance.findById(id);
+        int idc = lectureClavier.nextInt();
+        medecin = instance.findByIdMedecin(idc);
+        
         
 //        System.out.println("Change ID  : ");
 //        int idmedecin = lectureClavier.nextInt();
@@ -252,8 +272,15 @@ public class TestDeBase {
         String password = lectureClavier.next();
         medecin.setMotDePasse(password);
         
+        System.out.println("Entrez coordonnees :");
+        String coord = lectureClavier.next();
+        medecin.setCoordonnees(coord);
+        
+        System.out.println("Entrez l'ide de la nouvelle clinique : ");
+        int idcl = lectureClavier.nextInt();
+        
         //medecin = new Medecin(nom, prenom, specialite, facture, password );
-        boolean result = instance.update(medecin);
+        boolean result = instance.update(medecin,idcl);
         if (result) {
             System.out.println("L'utilisateur est mis à jour ");
         } else {
@@ -264,7 +291,7 @@ public class TestDeBase {
     public static void testDelete() {
             System.out.println("delete");
             int id = 0;
-            MedecinImpDao instance = new MedecinImpDao();
+            MedecinImplDao instance = new MedecinImplDao();
            System.out.println("Entrez l'ide l'utilisateur : ");
           Scanner lectureClavier = new Scanner(System.in);
            id = lectureClavier.nextInt();
@@ -350,7 +377,7 @@ public class TestDeBase {
        //Services--------------------------------------------------------------------------
     public static void testFindAllServices() {
         System.out.println("findAllServices");
-        ServicesImpDao instance = new ServicesImpDao();
+        ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         // List<Utilisateur> expResult = null;
         List<Services> result = instance.findAll();
         // assertEquals(expResult, result);
@@ -366,7 +393,7 @@ public class TestDeBase {
     public static void testCreateServices() {
         System.out.println("createService");
         Services service = null;
-        ServicesImpDao instance = new ServicesImpDao();
+        ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         Scanner lectureClavier = new Scanner(System.in);
         System.out.println("Entrez nom service ");
         String nom = lectureClavier.next();
@@ -390,7 +417,7 @@ public class TestDeBase {
     public static void testFindByIdServices() {
         System.out.println("findByIdService");
         int id = 0;
-        ServicesImpDao instance = new ServicesImpDao();
+        ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         System.out.println("Entrez l'id du service : ");
         Scanner lectureClavier = new Scanner(System.in);
         id = lectureClavier.nextInt();
@@ -403,7 +430,7 @@ public class TestDeBase {
     public static void testFindByNameServices() {
         System.out.println("findByNameServices");
         String nom = "";
-        ServicesImpDao instance = new ServicesImpDao();
+        ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         System.out.println("Entrez le nom de l'utilisateur : ");
         Scanner lectureClavier = new Scanner(System.in);
         nom = lectureClavier.next();
@@ -415,7 +442,7 @@ public class TestDeBase {
     public static void testFindByDescriptionServices() {
         System.out.println("findByDescriptionServices");
         String description = "";
-        ServicesImpDao instance = new ServicesImpDao();
+        ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         System.out.println("Entrez la description du service : ");
         Scanner lectureClavier = new Scanner(System.in);
         description = lectureClavier.next();
@@ -427,7 +454,7 @@ public class TestDeBase {
     public static void testUpdateServices() {
         System.out.println("update");
         Services service = null;
-        ServicesImpDao instance = new ServicesImpDao();
+        ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         Scanner lectureClavier = new Scanner(System.in);
         System.out.println("Entrez l'ide du service à mettre à jour : ");
         int id = lectureClavier.nextInt();
@@ -459,7 +486,7 @@ public class TestDeBase {
     public static void testDeleteServices() {
             System.out.println("deleteServices");
             int id = 0;
-            ServicesImpDao instance = new ServicesImpDao();
+            ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
            System.out.println("Entrez l'id du service : ");
           Scanner lectureClavier = new Scanner(System.in);
            id = lectureClavier.nextInt();

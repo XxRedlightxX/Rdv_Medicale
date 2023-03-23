@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  *
  * @author 1482910
  */
-public class CliniqueImpDao implements CliniqueDao {
+public class CliniqueImplDao implements CliniqueDao {
 
     private static final String SQL_SELECT_CLINIQUES = "select * from clinique";
     private static final String SQL_SELECT_BY_ID = "select * from clinique where idclinique =?";
@@ -62,7 +62,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listeClinique;
     }
@@ -92,7 +92,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return clinique;
@@ -123,7 +123,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return clinique;
@@ -153,7 +153,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return clinique;
@@ -183,7 +183,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listeClinique;
     }
@@ -212,7 +212,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listeServices;
     }
@@ -245,7 +245,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listeMedecins;
     }
@@ -278,7 +278,7 @@ public class CliniqueImpDao implements CliniqueDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(CliniqueImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listePatients;
     }

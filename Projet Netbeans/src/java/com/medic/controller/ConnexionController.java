@@ -24,7 +24,6 @@ public class ConnexionController extends HttpServlet {
     Patient patient = null;
     String typeCompte = null;
     PatientService service = new PatientService();
-    Boolean connexion = false;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,17 +32,18 @@ public class ConnexionController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String sauvegarde = request.getParameter("sauvegarde");
+        boolean connexion = false;
 
         typeCompte = request.getParameter("typeCompte");
         if (typeCompte.contains("patient")) {
             patient = service.verifierExistencePatient(username, password);
-            
+
             if (patient != null) {
                 connexion = true;
                 HttpSession session = request.getSession(true);
                 session.setAttribute("nom", patient.getNom());
                 session.setAttribute("prenom", patient.getPrenom());
-                session.setAttribute("typeCompte",typeCompte);
+                session.setAttribute("typeCompte", typeCompte);
 
                 if (sauvegarde != null) {
                     if (sauvegarde.equals("yes")) {
@@ -58,16 +58,18 @@ public class ConnexionController extends HttpServlet {
                 }
                 request.getRequestDispatcher("Patient.jsp").forward(request, response);
             }
-            
+
             if (!connexion) {
-         ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");
-            
-                request.setAttribute("invalide", "Le username ou mot de passe est invalide");
-            
-            
-            request.getRequestDispatcher("Connexion_patient.jsp").include(request, response);
-           
-        }
+                ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");
+                
+                if (!username.trim().equals("")) {
+                    request.setAttribute("invalide", "Le username ou mot de passe est invalide");
+                }
+
+                request.getRequestDispatcher("Connexion_patient.jsp").include(request, response);
+                
+
+            }
         }
 
     }

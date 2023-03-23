@@ -12,7 +12,7 @@ package com.medic.dao.patient;
 
 
 
-import com.medic.dao.medecin.MedecinImpDao;
+import com.medic.dao.medecin.MedecinImplDao;
 import com.medic.dao.patient.PatientDao;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
@@ -114,7 +114,7 @@ public class PatientImplDao implements PatientDao {
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {
-            Logger.getLogger(MedecinImpDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return patient;

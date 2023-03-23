@@ -13,35 +13,28 @@ import java.util.ArrayList;
  * @author 1482910
  */
 public class Medecin {
+
     private int numeroProfessionel;
     private String nom;
     private String prenom;
     private String specialite;
     private float facturation;
     private String motDePasse;
+    private String coordonnees;
+
     List<Patient> listePatients;
 
-    public Medecin(int numeroProfessionel, String nom, String prenom, String specialite, float facturation, String motDePasse, List<Patient> listePatients) {
-        this.numeroProfessionel = numeroProfessionel;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.specialite = specialite;
-        this.facturation = facturation;
-        this.motDePasse = motDePasse;
-        this.listePatients = listePatients;
-    }
-    
-    public Medecin( String nom, String prenom, String specialite, float facturation, String motDePasse) {
-        
-        this.nom = nom;
-        this.prenom = prenom;
-        this.specialite = specialite;
-        this.facturation = facturation;
-        this.motDePasse = motDePasse;
-        
+    public Medecin() {
+        listePatients = new ArrayList<Patient>();
     }
 
+    public String getCoordonnees() {
+        return coordonnees;
+    }
 
+    public void setCoordonnees(String coordonnees) {
+        this.coordonnees = coordonnees;
+    }
 
     public List<Patient> getListePatients() {
         return listePatients;
@@ -53,9 +46,6 @@ public class Medecin {
 
     
 
-    public Medecin() {
-        listePatients = new ArrayList<Patient>();
-    }
     public int getNumeroProfessionel() {
         return numeroProfessionel;
     }
@@ -106,10 +96,7 @@ public class Medecin {
 
     @Override
     public String toString() {
-        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", motDePasse=" + motDePasse + ", listePatients=" + listePatients + '}';
+        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", motDePasse=" + motDePasse + ", coordonnees=" + coordonnees + ", listePatients=" + listePatients + '}';
     }
 
-
-
-  
 }

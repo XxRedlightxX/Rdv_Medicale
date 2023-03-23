@@ -13,14 +13,15 @@ import java.util.List;
  */
 public interface MedecinDao {
     List<Medecin> findAll();
-    Medecin findById(int id);
+    Medecin findByIdMedecin(int id);
     Medecin findByName(String nom);
     Medecin findByFirstName(String prenom);
-    Medecin findBySpecialite(String specialite);
-    Medecin findByPrix(float prix);
+    List<Medecin> findBySpecialite(String specialite);
+    List<Medecin> findByPrix(float prix);
     Medecin findByCoordonnees(String coordonnees);
-    Medecin findByClinique(String clinique);
-    boolean create(Medecin medecin);
-    boolean update(Medecin medecin);
+    List<Medecin> findByClinique(int idClinique);
+    Medecin existByNumeroMotPasse(String numero,String motPasse);
+    boolean create(Medecin medecin,int idClinique);
+    boolean update(Medecin medecin,int idClinique);
     boolean delete(int id);
 }
