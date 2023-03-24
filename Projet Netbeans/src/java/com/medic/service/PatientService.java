@@ -63,8 +63,8 @@ public class PatientService {
         return retour;
     }
     
-    public boolean modifierPatient(Patient unPatient,int idMedecin){
-        retour = dao.update(unPatient, idMedecin);
+    public boolean modifierPatient(Patient unPatient,int idMedecin,int idFindPatient){
+        retour = dao.update(unPatient, idMedecin,idFindPatient);
         return retour;
     }
     

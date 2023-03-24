@@ -8,18 +8,18 @@ package com.medic.entities;
  *
  * @author hundl
  */
-public class Services {
+public class ServicesClinique {
     private int id;
     private String nom;
     private String description;
 
-    public Services(int id, String nom, String description) {
+    public ServicesClinique(int id, String nom, String description) {
         this.id = id;
         this.nom = nom;
         this.description = description;
     }
 
-    public Services() {
+    public ServicesClinique() {
     }
 
     public int getId() {

@@ -69,8 +69,8 @@ public class MedecinService {
         return retour;
     }
     
-    public boolean modifierMedecin(Medecin medecin,int idClinique){
-        retour = dao.update(medecin,idClinique);
+    public boolean modifierMedecin(Medecin medecin,int idClinique,int idFindClinique){
+        retour = dao.update(medecin,idClinique,idFindClinique);
         return retour;
     }
     

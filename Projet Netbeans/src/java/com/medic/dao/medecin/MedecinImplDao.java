@@ -383,7 +383,7 @@ public class MedecinImplDao implements MedecinDao {
     }
 
     @Override
-    public boolean update(Medecin medecin,int idClinique) {
+    public boolean update(Medecin medecin,int idClinique,int idFindMedecin) {
         boolean retour = false;
         int nbLigne = 0;
         PreparedStatement ps;
@@ -400,7 +400,7 @@ public class MedecinImplDao implements MedecinDao {
             ps.setString(6, medecin.getCoordonnees());            
             ps.setInt(7,idClinique);
             ps.setInt(8, medecin.getNumeroProfessionel());
-            ps.setInt(9, medecin.getNumeroProfessionel());
+            ps.setInt(9, idFindMedecin);
 
             nbLigne = ps.executeUpdate();
 

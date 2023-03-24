@@ -12,7 +12,7 @@ import com.medic.dao.clinique.CliniqueDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
-import com.medic.entities.Services;
+import com.medic.entities.ServicesClinique;
 import com.medic.singleton.ConnexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +37,9 @@ public class CliniqueImplDao implements CliniqueDao {
     private static final String SQL_SELECT_ALLSERVICES = "select s.idservice,s.nom,s.description from services as s join clinique_has_services as cs on s.idservice = cs.services_idservice join clinique as c on c.idclinique = cs.clinique_idclinique where c.nom = ?;";
     private static final String SQL_SELECT_ALLMEDECINS = "select m.idmedecin,m.nom,m.prenom,m.specialite,m.facturation,m.password from medecin as m join clinique as c on m.clinique_idclinique = c.idclinique where c.nom= ?;";
     private static final String SQL_SELECT_ALLPATIENTS = "select p.idpatient,p.nom,p.prenom,p.assurance,p.numSeq_assurance,p.naissance,p.sexe,p.password from patients as p join medecin as m on p.medecin_idmedecin = m.idmedecin join clinique as c on c.idclinique = m.clinique_idclinique where c.nom = ?;";
+    private static final String SQL_INSERT_CLINIQUE = "insert into clinique(idclinique,nom,coordonnees) value(?,?,?)";
+    private static final String SQL_UPDATE_CLINIQUE = "update clinique set idclinique =?,nom=?, coordonnees=? where idclinique= ?";
+    private static final String SQL_DELETE_CLINIQUE = "delete from clinique where idmedecin = ?";
 
             
     @Override
@@ -55,7 +58,7 @@ public class CliniqueImplDao implements CliniqueDao {
                 Clinique clinique = new Clinique();
                 clinique.setId(result.getInt("idclinique"));
                 clinique.setNom(result.getString("nom"));
-                clinique.setCoordonnées(result.getString("coordonnees"));
+                clinique.setCoordonnees(result.getString("coordonnees"));
 
                 listeClinique.add(clinique);
             }
@@ -86,7 +89,7 @@ public class CliniqueImplDao implements CliniqueDao {
                 clinique = new Clinique();
                 clinique.setId(result.getInt("idclinique"));
                 clinique.setNom(result.getString("nom"));
-                clinique.setCoordonnées(result.getString("coordonnees"));
+                clinique.setCoordonnees(result.getString("coordonnees"));
 
             }
             ConnexionBD.closeConnection();
@@ -117,7 +120,7 @@ public class CliniqueImplDao implements CliniqueDao {
                 clinique = new Clinique();
                 clinique.setId(result.getInt("idclinique"));
                 clinique.setNom(result.getString("nom"));
-                clinique.setCoordonnées(result.getString("coordonnees"));
+                clinique.setCoordonnees(result.getString("coordonnees"));
 
             }
             ConnexionBD.closeConnection();
@@ -130,8 +133,8 @@ public class CliniqueImplDao implements CliniqueDao {
     }
 
     @Override
-    public Clinique findByCoordonnes(String coordonnees) {
-        Clinique clinique = null;
+    public List<Clinique> findByCoordonnes(String coordonnees) {
+        List<Clinique> listeClinique = null;
         try {
 
             // Initilise la requete préparé de la basé sur la connexion
@@ -141,13 +144,14 @@ public class CliniqueImplDao implements CliniqueDao {
             ps.setString(1, coordonnees);
             // on execute la requete  et on recupere les resultats dans la requete
             ResultSet result = ps.executeQuery();
-
+            listeClinique = new ArrayList<>();
             //initilisation de la listeUtilisateur
             while (result.next()) {
-                clinique = new Clinique();
+                Clinique clinique = new Clinique();
                 clinique.setId(result.getInt("idclinique"));
                 clinique.setNom(result.getString("nom"));
-                clinique.setCoordonnées(result.getString("coordonnees"));
+                clinique.setCoordonnees(result.getString("coordonnees"));
+                listeClinique.add(clinique);
 
             }
             ConnexionBD.closeConnection();
@@ -156,7 +160,7 @@ public class CliniqueImplDao implements CliniqueDao {
             Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return clinique;
+        return listeClinique;
     }
 
     @Override
@@ -176,7 +180,7 @@ public class CliniqueImplDao implements CliniqueDao {
                 Clinique clinique = new Clinique();
                 clinique.setId(result.getInt("idclinique"));
                 clinique.setNom(result.getString("nom"));
-                clinique.setCoordonnées(result.getString("coordonnees"));
+                clinique.setCoordonnees(result.getString("coordonnees"));
 
                 listeClinique.add(clinique);
             }
@@ -189,8 +193,8 @@ public class CliniqueImplDao implements CliniqueDao {
     }
 
     @Override
-    public List<Services> findAllServicesClinique(String nom) {
-        List<Services> listeServices = null;
+    public List<ServicesClinique> findAllServicesClinique(String nom) {
+        List<ServicesClinique> listeServices = null;
         try {
             // Initilise la requete préparé de la basé sur la connexion
             // la requete SQL passé en argument pour construire l'objet PreparedStatement
@@ -202,7 +206,7 @@ public class CliniqueImplDao implements CliniqueDao {
             //initilisation de la listeUtilisateur
             listeServices = new ArrayList();
             while (result.next()) {
-                Services services = new Services();
+                ServicesClinique services = new ServicesClinique();
                 services.setId(result.getInt("idservice"));
                 services.setNom(result.getString("nom"));
                 services.setDescription(result.getString("description"));
@@ -282,6 +286,105 @@ public class CliniqueImplDao implements CliniqueDao {
         }
         return listePatients;
     }
+
+    @Override
+    public boolean create(Clinique clinique) {
+        boolean retour = false;
+        int nbLigne = 0;
+        Connection conn = null;
+
+        try {
+            // obtenir la connexion à la bd
+            conn = ConnexionBD.getConnection();
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_INSERT_CLINIQUE);
+            conn.setAutoCommit(false);
+            ps.setInt(1, clinique.getId());
+            ps.setString(2, clinique.getNom());
+            ps.setString(3, clinique.getCoordonnees());
+      
+            
+            nbLigne = ps.executeUpdate();
+
+            // enregistre les changements en base de données
+            conn.commit();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            // Si une erreur se produit, annuler les changements en effectuant un rollback
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    conn.setAutoCommit(true); // réactive l'auto-commit
+                    conn.close();
+
+                } catch (SQLException ex) {
+                    // Traiter l'exception ici
+                    System.out.println("Erreur dans la transaction ");
+                }
+            }
+
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+//		System.out.println("nb ligne " + nbLigne);
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+
+    @Override
+    public boolean update(Clinique clinique,int idFindClinique) {
+        boolean retour = false;
+        int nbLigne = 0;
+        PreparedStatement ps;
+
+        try {
+
+            ps = ConnexionBD.getConnection().prepareStatement(SQL_UPDATE_CLINIQUE);
+
+            ps.setInt(1, clinique.getId());
+            ps.setString(2, clinique.getNom());
+            ps.setString(3, clinique.getCoordonnees());
+            ps.setInt(4, idFindClinique);
+
+            nbLigne = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+//		System.out.println("nb ligne " + nbLigne);
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        boolean retour = false;
+        int nbLigne = 0;
+        PreparedStatement ps;
+        try {
+            // Désactiver les contraintes de clé étrangère
+            ps = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_CLINIQUE);
+            ps.setInt(1, id);
+
+            nbLigne = ps.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+    
 
 
 

@@ -15,15 +15,15 @@ import java.util.ArrayList;
 public class Clinique {
     private int id;
     private String nom;
-    private String coordonnées;
+    private String coordonnees;
     List<String> servicesOfferts;
     List<Medecin> medecinDansClinique;
     List<Patient> patientDeClinique;
 
-    public Clinique(int id, String nom, String coordonnées, List<String> servicesOfferts, List<Medecin> medecinDansClinique, List<Patient> patientDeClinique) {
+    public Clinique(int id, String nom, String coordonnees, List<String> servicesOfferts, List<Medecin> medecinDansClinique, List<Patient> patientDeClinique) {
         this.id = id;
         this.nom = nom;
-        this.coordonnées = coordonnées;
+        this.coordonnees = coordonnees;
         this.servicesOfferts = servicesOfferts;
         this.medecinDansClinique = medecinDansClinique;
         this.patientDeClinique = patientDeClinique;
@@ -71,12 +71,12 @@ public class Clinique {
         this.nom = nom;
     }
 
-    public String getCoordonnées() {
-        return coordonnées;
+    public String getCoordonnees() {
+        return coordonnees;
     }
 
-    public void setCoordonnées(String coordonnées) {
-        this.coordonnées = coordonnées;
+    public void setCoordonnees(String coordonnees) {
+        this.coordonnees = coordonnees;
     }
 
     public List<String> getServicesOfferts() {
@@ -101,7 +101,7 @@ public class Clinique {
 
     @Override
     public String toString() {
-        return "Clinique{" + "id=" + id + ", nom=" + nom + ", coordonn\u00e9es=" + coordonnées + ", servicesOfferts=" + servicesOfferts + ", medecinDansClinique=" + medecinDansClinique + ", patientDeClinique=" + patientDeClinique + '}';
+        return "Clinique{" + "id=" + id + ", nom=" + nom + ", coordonnees=" + coordonnees + ", servicesOfferts=" + servicesOfferts + ", medecinDansClinique=" + medecinDansClinique + ", patientDeClinique=" + patientDeClinique + '}';
     }
 
    

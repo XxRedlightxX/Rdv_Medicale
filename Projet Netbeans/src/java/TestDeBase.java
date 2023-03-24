@@ -6,7 +6,7 @@ import com.medic.dao.servicesClinique.ServicesCliniqueImplDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
-import com.medic.entities.Services;
+import com.medic.entities.ServicesClinique;
 import com.medic.singleton.ConnexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,10 +26,12 @@ import java.util.Scanner;
 public class TestDeBase {
 
     public static void main(String[] args) throws SQLException {
-
-        
-        testCreate();
-        testUpdate();
+        //cliniqueTestfindAllService();
+        //testUpdateServices();
+        //testCreateServices();
+        testDeleteServices();
+        //testCreate();
+        //testUpdate();
         //testfindById();
         //testfindByName();
         //testfindByCoordonnees();
@@ -92,7 +94,7 @@ public class TestDeBase {
         CliniqueImplDao instance = new CliniqueImplDao();
         System.out.println("Entrez les coordonnees de la clinique : ");
         coordonnees = lectureClavier.nextLine();
-        Clinique result = instance.findByCoordonnes(coordonnees);
+        List<Clinique> result = instance.findByCoordonnes(coordonnees);
         System.out.println(result.toString());
 
     }
@@ -112,7 +114,7 @@ public class TestDeBase {
 
     }
     public static void cliniqueTestfindAllService() {
-        List<Services> result;
+        List<ServicesClinique> result;
         System.out.println("findByCoordonnees");
         Scanner lectureClavier = new Scanner(System.in);
         String coordonnees = "";
@@ -120,7 +122,7 @@ public class TestDeBase {
         System.out.println("Entrez la clinique dont vous voulez connaitre les services : ");
         coordonnees = lectureClavier.nextLine();
         result = instance.findAllServicesClinique(coordonnees);
-        for (Services unService : result) {
+        for (ServicesClinique unService : result) {
             System.out.println(unService);
         }
     }
@@ -232,7 +234,7 @@ public class TestDeBase {
         System.out.println("Entrez le nom de l'utilisateur : ");
         Scanner lectureClavier = new Scanner(System.in);
         nom = lectureClavier.next();
-        Medecin result = instance.findByName(nom);
+        List<Medecin> result = instance.findByName(nom);
         System.out.println(result.toString());
 
     }
@@ -280,7 +282,7 @@ public class TestDeBase {
         int idcl = lectureClavier.nextInt();
         
         //medecin = new Medecin(nom, prenom, specialite, facture, password );
-        boolean result = instance.update(medecin,idcl);
+        boolean result = instance.update(medecin,idcl,10);
         if (result) {
             System.out.println("L'utilisateur est mis à jour ");
         } else {
@@ -344,9 +346,11 @@ public class TestDeBase {
         int ID = lectureClavier.nextInt();
         System.out.println("Entrez le nom du patient : ");
         String nom = lectureClavier.next();
-        System.out.println("Esdfsdntrez le prenom du medecin");
+        System.out.println("Esdfsdntrez le prenom du patient");
         String prenom= lectureClavier.next();
         
+        System.out.println("Entrez le id de son medecin");
+        int idmed = lectureClavier.nextInt();
 
         System.out.println("Entrez l'assurance du patient  : ");
         String assurance = lectureClavier.next();
@@ -365,7 +369,7 @@ public class TestDeBase {
         
         patient = new Patient(ID,nom,prenom,assurance,NumeroSeq,naissance,sexe,password);
      
-        boolean result = instance.create(patient);
+        boolean result = instance.create(patient, idmed);
         if (result) {
             System.out.println("insertion reussite");
         } else {
@@ -379,11 +383,11 @@ public class TestDeBase {
         System.out.println("findAllServices");
         ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         // List<Utilisateur> expResult = null;
-        List<Services> result = instance.findAll();
+        List<ServicesClinique> result = instance.findAll();
         // assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //System.out.println(result.get(0).toString());
-        for (Services unService : result) {
+        for (ServicesClinique unService : result) {
             System.out.println(unService.toString());
         }
     
@@ -392,7 +396,7 @@ public class TestDeBase {
     
     public static void testCreateServices() {
         System.out.println("createService");
-        Services service = null;
+        ServicesClinique service = null;
         ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         Scanner lectureClavier = new Scanner(System.in);
         System.out.println("Entrez nom service ");
@@ -404,7 +408,7 @@ public class TestDeBase {
         int test;
         test = Integer.parseInt(id);
         
-        service = new Services(test,nom,description);
+        service = new ServicesClinique(test,nom,description);
      
         boolean result = instance.ajouterService(service);
         if (result) {
@@ -421,7 +425,7 @@ public class TestDeBase {
         System.out.println("Entrez l'id du service : ");
         Scanner lectureClavier = new Scanner(System.in);
         id = lectureClavier.nextInt();
-        Services result = instance.findById(id);
+        ServicesClinique result = instance.findById(id);
         System.out.println(result.toString());
 
     }
@@ -434,7 +438,7 @@ public class TestDeBase {
         System.out.println("Entrez le nom de l'utilisateur : ");
         Scanner lectureClavier = new Scanner(System.in);
         nom = lectureClavier.next();
-        Services result = instance.findByName(nom);
+        ServicesClinique result = instance.findByName(nom);
         System.out.println(result.toString());
 
     }
@@ -446,19 +450,19 @@ public class TestDeBase {
         System.out.println("Entrez la description du service : ");
         Scanner lectureClavier = new Scanner(System.in);
         description = lectureClavier.next();
-        Services result = instance.findByDescription(description);
+        ServicesClinique result = instance.findByDescription(description);
         System.out.println(result.toString());
 
     }
     
     public static void testUpdateServices() {
         System.out.println("update");
-        Services service = null;
+        ServicesClinique service = null;
         ServicesCliniqueImplDao instance = new ServicesCliniqueImplDao();
         Scanner lectureClavier = new Scanner(System.in);
         System.out.println("Entrez l'ide du service à mettre à jour : ");
         int id = lectureClavier.nextInt();
-        service = instance.findById(id);
+        service = new ServicesClinique();
         
 //        System.out.println("Change ID  : ");
 //        int idmedecin = lectureClavier.nextInt();
@@ -472,10 +476,12 @@ public class TestDeBase {
         String description = lectureClavier.next();
         service.setDescription(description);
         
-     
+        System.out.println("Entrez le id du service a changer : ");
+        int ids = lectureClavier.nextInt();
+        service.setId(ids);
         
         //medecin = new Medecin(nom, prenom, specialite, facture, password );
-        boolean result = instance.update(service);
+        boolean result = instance.update(service,id);
         if (result) {
             System.out.println("L'utilisateur est mis à jour ");
         } else {

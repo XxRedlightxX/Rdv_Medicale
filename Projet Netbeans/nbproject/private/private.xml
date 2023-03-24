@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/com/medic/dao/patient/PatientImplDao.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20application%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/patient/PatientDao.java</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20application%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/service/MedecinService.java</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20application%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/medecin/MedecinImplDao.java</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20application%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/service/PatientService.java</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20application%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/medecin/MedecinDao.java</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20application%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/patient/PatientImplDao.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

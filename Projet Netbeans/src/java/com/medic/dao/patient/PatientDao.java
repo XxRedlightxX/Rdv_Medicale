@@ -24,6 +24,6 @@ public interface PatientDao {
     List<Patient> findBySexe(String sexe);
     Patient existByNumeroMotPasse(String numero,String motPasse);
     boolean create(Patient patient,int idMedecin);
-    boolean update(Patient patient,int idMedecin);
+    boolean update(Patient patient,int idMedecin,int idFindPatient);
     boolean delete(int id);
 }

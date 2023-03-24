@@ -384,7 +384,7 @@ public class PatientImplDao implements PatientDao {
     }
 
     @Override
-    public boolean update(Patient patient, int idMedecin) {
+    public boolean update(Patient patient, int idMedecin,int idFindPatient) {
         boolean retour = false;
         int nbLigne = 0;
         PreparedStatement ps;
@@ -402,7 +402,7 @@ public class PatientImplDao implements PatientDao {
             ps.setString(7, patient.getSexe());        
             ps.setString(8, patient.getMotDePasse());     
             ps.setInt(9,idMedecin);
-            ps.setInt(10, patient.getId());
+            ps.setInt(10,idFindPatient);
 
             nbLigne = ps.executeUpdate();
 

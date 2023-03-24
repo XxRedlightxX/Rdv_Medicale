@@ -6,8 +6,9 @@ package com.medic.dao.servicesClinique;
 
 import com.medic.dao.medecin.MedecinImplDao;
 import com.medic.entities.Medecin;
-import com.medic.entities.Services;
+import com.medic.entities.ServicesClinique;
 import com.medic.singleton.ConnexionBD;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,17 +21,18 @@ import java.util.logging.Logger;
  *
  * @author hundl
  */
-public class ServicesCliniqueImplDao {
+public class ServicesCliniqueImplDao implements ServicesCliniqueDao {
     private static final String SQL_SELECT_SERVICES= "select * from services";
     private static final String SQL_SELECT_BY_ID_SERVICES = "select * from services where idservice =?";
     private static final String SQL_SELECT_BY_NOM_SERVICES = "select * from services where nom =?";
     private static final String SQL_SELECT_BY_NOM_DESCRIPTION = "select * from services where description =?";
-    private static final String SQL_INSERT_SERVICE = "insert into service(idservice,nom,description) value(?,?,?)";
-    private static final String SQL_UPDATE_SERVICE = "update service nom = ?, description =? where idservice= ?";   
-    //private static final String SQL_DESACTIVER_CONTRAINTS = " ALTER TABLE services DROP CONSTRAINT fk_patients_medecin ";
+    private static final String SQL_INSERT_SERVICE = "insert into services(idservice,nom,description) value(?,?,?)";
+    private static final String SQL_UPDATE_SERVICE = "update services set idservice=?, nom = ?, description =? where idservice= ?";   
     private static final String SQL_DELETE_SERVICES_PAR_ID = "delete from services where idservice = ?";
-    public List<Services> findAll() {
-        List<Services> listeServices = null;
+    
+    @Override
+    public List<ServicesClinique> findAll() {
+        List<ServicesClinique> listeServices = null;
         try {
 
             //Initialise la requête préparée basée sur la connexion
@@ -45,7 +47,7 @@ public class ServicesCliniqueImplDao {
             //// la méthode next() pour se déplacer sur l'enregistrement suivant
             //on parcours ligne par ligne les résultas retournés
             while (result.next()) {
-                Services services = new Services();
+                ServicesClinique services = new ServicesClinique();
                 services.setId(result.getInt("idservice"));
                 services.setNom(result.getString("nom"));
                 services.setDescription(result.getString("description"));
@@ -60,8 +62,9 @@ public class ServicesCliniqueImplDao {
         return listeServices;
     }
 
-    public Services findById(int id) {
-        Services service = null;
+    @Override
+    public ServicesClinique findById(int id) {
+        ServicesClinique service = null;
         try {
 
             // Initilise la requete préparé de la basé sur la connexion
@@ -75,7 +78,7 @@ public class ServicesCliniqueImplDao {
 
             //initilisation de la listeUtilisateur
             while (result.next()) {
-                service = new Services();
+                service = new ServicesClinique();
                 service.setId(result.getInt("idservice"));
                 service.setNom(result.getString("nom"));
                 service.setDescription(result.getString("description"));              
@@ -88,8 +91,9 @@ public class ServicesCliniqueImplDao {
         return service;
     }
 
-    public Services findByName(String nom) {
-        Services service = null;
+    @Override
+    public ServicesClinique findByName(String nom) {
+        ServicesClinique service = null;
         try {
 
             //Initialise la requête préparée basée sur la connexion
@@ -104,7 +108,7 @@ public class ServicesCliniqueImplDao {
             //// la méthode next() pour se déplacer sur l'enregistrement suivant
             //on parcours ligne par ligne les résultas retournés
             while (result.next()) {
-                service = new Services();
+                service = new ServicesClinique();
                 service.setId(result.getInt("idservice"));
                 service.setNom(result.getString("nom"));
                 service.setDescription(result.getString("description")); 
@@ -118,8 +122,9 @@ public class ServicesCliniqueImplDao {
         return service;
     }
 
-    public Services findByDescription(String description) {
-        Services service = null;
+    @Override
+    public ServicesClinique findByDescription(String description) {
+        ServicesClinique service = null;
         try {
 
             //Initialise la requête préparée basée sur la connexion
@@ -134,7 +139,7 @@ public class ServicesCliniqueImplDao {
             //// la méthode next() pour se déplacer sur l'enregistrement suivant
             //on parcours ligne par ligne les résultas retournés
             while (result.next()) {
-                service = new Services();
+                service = new ServicesClinique();
                 service.setId(result.getInt("idservice"));
                 service.setNom(result.getString("nom"));
                 service.setDescription(result.getString("description")); 
@@ -148,15 +153,18 @@ public class ServicesCliniqueImplDao {
         return service;
     }
 
-    public boolean ajouterService(Services service) {
+    @Override
+    public boolean ajouterService(ServicesClinique service) {
         boolean retour = false;
         int nbLigne = 0;
-        PreparedStatement ps;
+        Connection conn = null;
 
         try {
-            ps = ConnexionBD.getConnection().prepareStatement(SQL_INSERT_SERVICE);
+            conn = ConnexionBD.getConnection();
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_INSERT_SERVICE);
             //   Insérer les données dans la table parente, utilisateurs
             //ps.setInt(1, medecin.getNumeroProfessionel());
+            conn.setAutoCommit(false);
             ps.setInt(1, service.getId());
             ps.setString(2, service.getNom());
             ps.setString(3, service.getDescription());
@@ -164,10 +172,21 @@ public class ServicesCliniqueImplDao {
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
-            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, e);
-        }
+            // Si une erreur se produit, annuler les changements en effectuant un rollback
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    conn.setAutoCommit(true); // réactive l'auto-commit
+                    conn.close();
 
-//		System.out.println("nb ligne " + nbLigne);
+                } catch (SQLException ex) {
+                    // Traiter l'exception ici
+                    System.out.println("Erreur dans la transaction ");
+                }
+            }
+
+            Logger.getLogger(ServicesCliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
         if (nbLigne > 0) {
             retour = true;
         }
@@ -175,7 +194,8 @@ public class ServicesCliniqueImplDao {
         return retour;
     }
 
-    public boolean update(Services service) {
+    @Override
+    public boolean update(ServicesClinique service,int idFindServiceClinique) {
         boolean retour = false;
         int nbLigne = 0;
         PreparedStatement ps;
@@ -184,9 +204,10 @@ public class ServicesCliniqueImplDao {
 
             ps = ConnexionBD.getConnection().prepareStatement(SQL_UPDATE_SERVICE);
            
-            ps.setString(1, service.getNom());
-            ps.setString(2, service.getDescription());
-            ps.setInt(3, service.getId());
+            ps.setInt(1, service.getId());
+            ps.setString(2, service.getNom());
+            ps.setString(3, service.getDescription());
+            ps.setInt(4, idFindServiceClinique);
 
 
             nbLigne = ps.executeUpdate();
@@ -204,10 +225,10 @@ public class ServicesCliniqueImplDao {
         return retour;
     }
 
+    @Override
     public boolean delete(int id) {
         boolean retour = false;
         int nbLigne = 0;
-        PreparedStatement ps1;
         PreparedStatement ps;
         try {
             // Désactiver les contraintes de clé étrangère
@@ -219,7 +240,7 @@ public class ServicesCliniqueImplDao {
             nbLigne = ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            Logger.getLogger(ServicesCliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
         }
 
         if (nbLigne > 0) {
