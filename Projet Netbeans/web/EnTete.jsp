@@ -22,27 +22,25 @@
                 <c:choose>
                     <c:when test = "${sessionScope.typeCompte == 'patient'}">
                         <div class="container" id="menu">
-                            <!-- probablement affiche les informations d'un cours dedans -->
-                            <a href="Patient.jsp">Accueil Patient</a>  
-                            <a href="xyz.jsp">Voir mes informations</a>
-                            <a href="xyz.jsp">Prendre un rendez-vous</a>
-                            <a href="xyz.jsp">Annuler/Modifier un rendez-vous</a>
-                            <a href="xyz.jsp">Contacter un médecin</a>
+                            <a href="Accueil.jsp">Accueil</a>
+                            <a href="Connexion_patient.jsp">Voir mes informations</a>
+                            <a href="Connexion_patient.jsp">Prendre un rendez-vous</a>
+                            <a href="Connexion_medecin.jsp">Annuler/Modifier un rendez-vous</a>
+                            <a href="Connexion_medecin.jsp">Contacter un médecin</a>
                         </div>     
                     </c:when>
 
                     <c:when test = "${sessionScope.typeCompte == 'medecin'}">
                         <div class="container" id="menu">
-                            <a href="Medecin.jsp">Accueil Médecin</a>
-                            <a href="xyz.jsp">Autres pages A faire au besoin</a>
+                            <a href="Accueil.jsp">Accueil</a>
+                            <a href="Connexion_patient.jsp">A faire</a>
                         </div>     
                     </c:when>
 
                     <c:when test = "${sessionScope.typeCompte == 'admin'}">
                         <div class="container" id="menu">
-                            <a href="Connexion_patient.jsp">Gestion des Patients</a>
-                            <a href="Connexion_patient.jsp">Gestion des Médecins</a>
-                            <a href="Connexion_patient.jsp">Gestion des Clinique</a>
+                            <a href="Accueil.jsp">Accueil</a>
+                            <a href="Connexion_patient.jsp">A faire</a>
                         </div>     
                     </c:when>
 

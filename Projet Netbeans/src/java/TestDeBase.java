@@ -27,10 +27,9 @@ public class TestDeBase {
 
     public static void main(String[] args) throws SQLException {
         //cliniqueTestfindAllService();
-        findmaxidpatient();
         //testUpdateServices();
         //testCreateServices();
-        //testDeleteServices();
+        testDeleteServices();
         //testCreate();
         //testUpdate();
         //testfindById();
@@ -76,12 +75,6 @@ public class TestDeBase {
 
     }
 
-    public static void findmaxidpatient() {
-        System.out.println("findMaxIdPatient");
-        PatientImplDao instance = new PatientImplDao();
-        System.out.println(instance.findMaxIdPatient());
-
-    }
     public static void cliniqueTestfindByName() {
         System.out.println("findByName");
         Scanner lectureClavier = new Scanner(System.in);

@@ -36,8 +36,6 @@ public class PatientImplDao implements PatientDao {
     private static final String SQL_SELECT_BY_NAISSANCE = "SELECT * FROM patients where naissance = ?";
     private static final String SQL_SELECT_BY_SEXE = "SELECT * FROM patients where sexe = ?";
     private static final String SQL_DELETE_PATIENT_PAR_ID = "delete from patients where idpatient = ?";
-    private static final String SQL_SELECT_MAX_ID_PATIENT = "SELECT max(idpatient) FROM patients";
-    
 
     @Override
     public List<Patient> findAll() {
@@ -457,32 +455,6 @@ public class PatientImplDao implements PatientDao {
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
         return patient;
-    }
-
-    @Override
-    public int findMaxIdPatient() {
-        Integer idMaximal = null;
-        try {
-
-            // Initilise la requete préparé de la basé sur la connexion
-            // la requete SQL passé en argument pour construire l'objet PreparedStatement
-            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_SELECT_MAX_ID_PATIENT);
-            // on initialise la propriete nom du l'ulisateur avec sa premiere valeur
-
-            // on execute la requete  et on recupere les resultats dans la requete
-            ResultSet result = ps.executeQuery();
-            while (result.next()) {
-                idMaximal = result.getInt("max(idpatient)");
-            }
-            
-            System.out.println(idMaximal);
-            ConnexionBD.closeConnection();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return idMaximal;
     }
 
 }
