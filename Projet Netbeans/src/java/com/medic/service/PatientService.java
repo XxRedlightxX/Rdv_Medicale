@@ -73,4 +73,9 @@ public class PatientService {
         return retour;
     }
     
+    public int trouverLeIdMaxPatient(){
+     int maxId = dao.findMaxIdPatient();
+     return maxId;
+    }
+    
 }
