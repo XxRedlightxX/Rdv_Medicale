@@ -135,5 +135,5 @@
                     }
                 </script>
                 <jsp:include page="pied.jsp"/>
-                <script src="javaScript/formValidation.js"></script>
+                <script src="javaScript/formValidation.js"></script> 
                 </html>

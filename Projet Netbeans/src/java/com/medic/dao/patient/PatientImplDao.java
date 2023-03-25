@@ -88,7 +88,7 @@ public class PatientImplDao implements PatientDao {
 
             // on execute la requete  et on recupere les resultats dans la requete
             ResultSet result = ps.executeQuery();
-
+            System.out.println(ps);
             //initilisation de la listeUtilisateur
             while (result.next()) {
                 patient = new Patient();

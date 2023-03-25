@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -27,6 +29,11 @@
     </head>
 
     <jsp:include page="EnTete.jsp"/>
+    <c:if test = "${not empty requestScope.message}">
+<div id=ls>
+  <h1 id="etatPatient">${requestScope.message}</h1>
+</div>
+</c:if>
 
     <body id="body">
 
@@ -45,7 +52,7 @@
                             <tr>
                                 <th>Prenom:</th>
                                 <td>Bob</td>
-                                <th>Numéro séquentiel:</th>
+                                <th>NumÃ©ro sÃ©quentiel:</th>
                                 <td>03</td>
                             </tr>
                             <tr>
@@ -55,16 +62,18 @@
                                 <td>M</td>
                             </tr>
                             <tr>
-                                <th>Nom du médecin de famille:</th>
+                                <th>Nom du mÃ©decin de famille:</th>
                                 <td>Bob Tremblay</td>
                             </tr>
                         </table></td>
-                    <td><form action="modificationController">
+                    <td><form action="administrateurController" method="post">
+                            <input type="hidden" name="gestionAction" value="modifier">
                             <input type="hidden" name="idPatient" value="10">
                             <input type="submit" value="Modifier">
                         </form> </td>
                 <tr>
-                    <td><form action="suppressionController">
+                    <td><form action="administrateurController" method="post">
+                            <input type="hidden" name="gestionAction" value="supprimer">
                             <input type="hidden" name="idPatient" value="10">
                             <input type="submit" value="Supprimer">
                         </form> </td></td>
@@ -76,9 +85,11 @@
         </div>
 
         <div></br>
-            <button> 
-                Ajouter un Patient
-            </button>
+                <form action="administrateurController" method="post">
+                    <input type="hidden" name="gestionAction" value="ajouter">
+                    <input type="hidden" name="idPatient" value="10">
+                    <input type="submit" value="Ajouter un Patient">
+                </form>
         </div>
     </body>
     <jsp:include page="pied.jsp"/>

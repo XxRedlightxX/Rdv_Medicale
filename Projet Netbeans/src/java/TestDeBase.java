@@ -7,6 +7,7 @@ import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
 import com.medic.entities.ServicesClinique;
+import com.medic.service.PatientService;
 import com.medic.singleton.ConnexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +27,13 @@ import java.util.Scanner;
 public class TestDeBase {
 
     public static void main(String[] args) throws SQLException {
+        Patient patient = null;
+    PatientService patientService = new PatientService();
+        int idpatient = Integer.parseInt("222");
+        patient = patientService.chercherPatientParId(idpatient);
+        System.out.println(patient);
         //cliniqueTestfindAllService();
-        findmaxidpatient();
+        //findmaxidpatient();
         //testUpdateServices();
         //testCreateServices();
         //testDeleteServices();
