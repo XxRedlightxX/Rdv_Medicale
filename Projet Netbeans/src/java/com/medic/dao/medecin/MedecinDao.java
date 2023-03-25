@@ -24,4 +24,5 @@ public interface MedecinDao {
     boolean create(Medecin medecin,int idClinique);
     boolean update(Medecin medecin,int idClinique,int idFindMedecin);
     boolean delete(int id);
+    int findMaxIdMedecin();
 }

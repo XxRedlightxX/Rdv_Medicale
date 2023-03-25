@@ -10,30 +10,9 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
+<jsp:include page="EnTete.jsp"/>
 
-<header id="header">
 
-
-    <div id="logo">
-        <img src="imageWeb2/logo.png" width="60px" , height="50px">
-        
-          </div>
-
-    <div class="container" id="menuService">
-        <a href="xyz.html">Prendre un rendez-vous</a>
-
-        <div id="barCh">
-            <form action="/search">
-                <input type="text" placeholder="Barre de recherche">
-                <button type="submit">Recherche</button>
-            </form>
-        </div>
-
-        <a href="xyz.html">Consulter ses rendez-vous</a>
-        <a href="xyz.html">Annuler ou modifier un rendez-vous</a>
-    </div>
-
-</header>
 
 
 <body id="body">

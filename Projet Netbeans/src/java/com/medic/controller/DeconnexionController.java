@@ -26,12 +26,24 @@ public class DeconnexionController extends HttpServlet {
         if (session != null) {
             String nom = (String) session.getAttribute("nom");
             String prenom = (String) session.getAttribute("prenom");
+            String typeCompte = (String) session.getAttribute("typeCompte");
             session.invalidate();
 
             if (nom != null) {
 
                 //  out.println("<center><b><font color=red>" + "Fin de session de " + nom + "</font><b></center>");
-                nom = "Deconnexion réussie pour "+prenom+" "+nom;
+                switch (typeCompte) {
+                    case "medecin":
+                        nom = "Deconnexion réussie pour Dr."+prenom+" "+nom;
+                        break;
+                    case "admin":
+                        nom = "Deconnexion réussie pour l'administrateur "+nom;
+                        break;
+                    default:
+                        nom = "Deconnexion réussie pour le patient "+prenom+" "+nom;
+                        break;
+                }
+                
             }
 
             request.setAttribute("deconnexion", nom);

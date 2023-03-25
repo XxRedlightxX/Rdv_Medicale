@@ -78,5 +78,9 @@ public class MedecinService {
         retour = dao.delete(idMedecin);
         return retour;
     }
+    public int trouverLeIdMaxMedecin(){
+     int maxId = dao.findMaxIdMedecin();
+     return maxId;
+    }
     
 }
