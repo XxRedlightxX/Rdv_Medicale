@@ -36,6 +36,7 @@ public class MedecinImplDao implements MedecinDao {
     private static final String SQL_SELECT_BY_PRIX = "SELECT * from medecin where facturation = ?";
     private static final String SQL_SELECT_BY_COORDONNEES = "SELECT * from medecin where coordonnees_medecin = ?";
     private static final String SQL_SELECT_BY_CLINIQUE = "SELECT * from medecin where clinique_idclinique = ?";
+    private static final String SQL_SELECT_MAX_ID_MEDECIN = "SELECT max(idmedecin) FROM medecin";
 
     @Override //Bug avec Le champ mot de passe ne s'insère dans la BD
     public List<Medecin> findAll() {
@@ -327,7 +328,6 @@ public class MedecinImplDao implements MedecinDao {
 
         return listeMedecin;
     }
-    
 
     @Override
     public boolean create(Medecin medecin, int idClinique) {
@@ -350,9 +350,9 @@ public class MedecinImplDao implements MedecinDao {
             ps.setString(4, medecin.getSpecialite());
             ps.setFloat(5, medecin.getFacturation());
             ps.setString(6, medecin.getMotDePasse());
-            ps.setString(7,medecin.getCoordonnees());
-            ps.setInt(8, clinique.getId()); 
-            
+            ps.setString(7, medecin.getCoordonnees());
+            ps.setInt(8, clinique.getId());
+
             nbLigne = ps.executeUpdate();
 
             // enregistre les changements en base de données
@@ -383,7 +383,7 @@ public class MedecinImplDao implements MedecinDao {
     }
 
     @Override
-    public boolean update(Medecin medecin,int idClinique,int idFindMedecin) {
+    public boolean update(Medecin medecin, int idClinique, int idFindMedecin) {
         boolean retour = false;
         int nbLigne = 0;
         PreparedStatement ps;
@@ -397,8 +397,8 @@ public class MedecinImplDao implements MedecinDao {
             ps.setString(3, medecin.getSpecialite());
             ps.setFloat(4, medecin.getFacturation());
             ps.setString(5, medecin.getMotDePasse());
-            ps.setString(6, medecin.getCoordonnees());            
-            ps.setInt(7,idClinique);
+            ps.setString(6, medecin.getCoordonnees());
+            ps.setInt(7, idClinique);
             ps.setInt(8, medecin.getNumeroProfessionel());
             ps.setInt(9, idFindMedecin);
 
@@ -473,6 +473,31 @@ public class MedecinImplDao implements MedecinDao {
         //Fermeture de toutes les ressources ouvertes
         ConnexionBD.closeConnection();
         return medecin;
+    }
+
+    @Override
+    public int findMaxIdMedecin() {
+        Integer idMaximal = null;
+        try {
+
+            // Initilise la requete préparé de la basé sur la connexion
+            // la requete SQL passé en argument pour construire l'objet PreparedStatement
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_SELECT_MAX_ID_MEDECIN);
+            // on initialise la propriete nom du l'ulisateur avec sa premiere valeur
+
+            // on execute la requete  et on recupere les resultats dans la requete
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                idMaximal = result.getInt("max(idmedecin)");
+            }
+            
+            ConnexionBD.closeConnection();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return idMaximal;
     }
 
 }

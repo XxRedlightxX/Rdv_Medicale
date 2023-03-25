@@ -27,8 +27,8 @@
 </c:if>
 
 <div id="formuLog">
-<form class="login" action="connexionController">
-      <input type="hidden" name="typeCompte" value="patient">
+<form class="login" action="connexionController" method="post">
+      <input type="hidden" name="typeCompte" value="admin" >
       <label for="username">Nom d'utilisateur: </label>
       <input type="text" name="username" id="username"><br> <br>
       
