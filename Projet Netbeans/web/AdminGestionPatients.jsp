@@ -61,10 +61,11 @@
                         <label for="gender_female" id="labelgenderF"> 
                             <input type="radio" id="gender_female" value="Femme" name="sexe">Female</label><br> <br>
 
-
+                        
                         <label for="password">Mot de passe:</label>
                         <input type="password" name="password" id="password"> <br><br>
 
+                        //id medecin de famille
 
                         <input type="submit"  class="btn btn-primary btn-lg" 
                                value="Ajouter le patient"  id="submits"  />
@@ -80,25 +81,26 @@
                 </div> <br>
 
             <body id="body">
+                <c:if test = "${not empty requestScope.unPatient}">  
                 </br></br>
                 <div id="formuInscr">
                     <form style="display:inline;" id="signupForm" class="login" action="administrateurController" method="post">
-                        <input type="hidden" name="modifierPatient" value="9001">
+                        <input type="hidden" name="modifierPatient" value="${unPatient.id}">
 
                         <label for="nom">Nom : </label>
-                        <input type="text" name="nom" id="nom" value="Bob"><br> <br>
+                        <input type="text" name="nom" id="nom" value="${unPatient.nom}"><br> <br>
 
                         <label for="prenom">Prenom : </label>
-                        <input type="text" name="prenom" id="prenom" value="Bertrand"><br> <br>
+                        <input type="text" name="prenom" id="prenom" value="${unPatient.prenom}"><br> <br>
 
                         <label for="assuranceMaladie">Numero d'assurance maladie : </label>
-                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" value="JOSH1234"><br> <br>
+                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" value="${unPatient.numeroAssuranceMaladie}"><br> <br>
 
                         <label for="numeroSeq">Numero sequentiel : </label>
-                        <input type="text" name="numeroSeq" id="numeroSeq" value="01"><br> <br>
+                        <input type="text" name="numeroSeq" id="numeroSeq" value="${unPatient.numeroSequentiel}"><br> <br>
 
                         <label for="dateNaissance">Date de naissance : </label>
-                        <input type="date" name="dateNaissance" id="dateNaissance" value="1999-01-02"><br> <br>
+                        <input type="date" name="dateNaissance" id="dateNaissance" value="${unPatient.dateNaissance}"><br> <br>
 
                         <label for="sexe"> Sexe : </label> 
 
@@ -109,10 +111,10 @@
 
 
                         <label for="password">Mot de passe:</label>
-                        <input type="password" name="password" id="password" value="dsad"> <br><br>
+                        <input type="text" name="password" id="password" value="${unPatient.password}"> <br><br>
 
                         <label for="passwordConfirm">Confirmation du mot de passe:</label>
-                        <input type="password" name="passwordConfirm" id="passwordConfirm" value="dsad"> <br><br><br><br><br>
+                        <input type="text" name="passwordConfirm" id="passwordConfirm" value="${unPatient.password}"> <br><br><br><br><br>
 
 
                         <input type="submit"  class="btn btn-primary btn-lg" 
@@ -121,7 +123,8 @@
                     <form style="display:inline;" action="pageAdminPatients.jsp" method="post">
                         <input style="width:100px;" type="submit" value="Annuler">
                     </form>
-                </div>     
+                </div>   
+                </c:if>  
             </c:when>
 
             <c:when test = "${requestScope.typeAction == 'supprimer'}">
@@ -146,6 +149,7 @@
                 </div> <br>
 
             <body id="body">
+                <c:if test = "${not empty requestScope.unPatient}">
                 </br></br>
                 <div>   
                     <H1 style="margin-right: 50%">Patient: </H1>
@@ -154,27 +158,27 @@
                             <td rowspan="2"><img src="imageWeb2/patient_vide.png" alt="Trulli" width="125" height="125"></td>
                             <td rowspan="2"><table>
                                     <tr>
-                                        <th>Nom:</th>
-                                        <td>Bertrand</td>
-                                        <th>Numero d'assurance maladie:</th>
-                                        <td>JOSH2131</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Prenom:</th>
-                                        <td>Bob</td>
-                                        <th>Numéro séquentiel:</th>
-                                        <td>03</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Date de naissance:</br></th>
-                                        <td>2001-04-14</td>
-                                        <th>Sexe:</th>
-                                        <td>M</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Nom du médecin de famille:</th>
-                                        <td>Bob Tremblay</td>
-                                    </tr>
+                                <th>Nom:</th>
+                                <td>${unPatient.nom}</td>
+                                <th>Numero d'assurance maladie:</th>
+                                <td>${unPatient.numeroAssuranceMaladie}</td>
+                            </tr>
+                            <tr>
+                                <th>Prenom:</th>
+                                <td>${unPatient.prenom}</td>
+                                <th>Numéro séquentiel:</th>
+                                <td>${unPatient.numeroSequentiel}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de naissance:</br></th>
+                                <td>${unPatient.dateNaissance}</td>
+                                <th>Sexe:</th>
+                                <td>${unPatient.sexe}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom du médecin de famille:</th>
+                                <td>${unPatient.idMedecinFamille}</td>
+                            </tr>
                                 </table></td>
 
                     </table>
@@ -182,14 +186,14 @@
                     <h2 style="text-align:center"> Voulez vous vraiment supprimer ce patient ?</h2></br>
                 </div>   
                 <form style="display:inline;" action="administrateurController" method="post">    
-                    <input type="hidden" name="supprimerPatient" value="222">
+                    <input type="hidden" name="supprimerPatient" value="${unPatient.id}">
                     <input style="width:100px;" type="submit" value="Supprimer">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <form style="display:inline;" action="pageAdminPatients.jsp" method="post">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form> 
-
+            </c:if>  
             </c:when>
         </c:choose>
 

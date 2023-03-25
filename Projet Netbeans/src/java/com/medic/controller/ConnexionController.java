@@ -7,9 +7,11 @@ package com.medic.controller;
 import com.medic.entities.Administrateur;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
+import com.medic.entities.Clinique;
 import com.medic.service.AdministrateurService;
 import com.medic.service.MedecinService;
 import com.medic.service.PatientService;
+import com.medic.service.CliniqueService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,6 +36,9 @@ public class ConnexionController extends HttpServlet {
     
     Administrateur admin = null;
     AdministrateurService adminService = new AdministrateurService();
+
+    Clinique clinique = null;
+    CliniqueService cliniqueService = new CliniqueService();
     
     
 
@@ -129,6 +134,11 @@ public class ConnexionController extends HttpServlet {
                             response.addCookie(passwordCookie);
                         }
                     }
+
+                    session.setAttribute("listePatients",patientService.afficherLesPatients());
+                    session.setAttribute("listeMedecins",medecinService.afficherLesMedecin());
+                    session.setAttribute("listeCliniques",cliniqueService.afficherLesCliniques());
+
                     request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
                 }   if (!connexion) {
                     ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");

@@ -77,6 +77,9 @@ public class AdministrateurController extends HttpServlet {
             
             String message = "Le patient " + unNom + " " + unPrenom + " à été supprimé";
             request.setAttribute("message", message);
+
+            session.setAttribute("listePatients",patientService.afficherLesPatients());
+
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
 
         } else if (ajouterPatient != null) {
@@ -89,10 +92,14 @@ public class AdministrateurController extends HttpServlet {
             patient.setDateNaissance(request.getParameter("dateNaissance"));
             patient.setSexe(request.getParameter("sexe"));
             patient.setMotDePasse(request.getParameter("password"));
+            patient.setIdMedecinFamille(Integer.parseInt(request.getParameter("idMedecinFamille")));
             String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été ajouté";
             //drop down pour trouver son medecin de famille -----------------------------------------------------------------
-            patientService.ajouterPatient(patient, 100);
+            patientService.ajouterPatient(patient, patient.getIdMedecinFamille());
             request.setAttribute("message", message);
+
+            session.setAttribute("listePatients",patientService.afficherLesPatients());
+
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
             
         } else if (modifierPatient!=null){
@@ -105,11 +112,15 @@ public class AdministrateurController extends HttpServlet {
             patient.setDateNaissance(request.getParameter("dateNaissance"));
             patient.setSexe(request.getParameter("sexe"));
             patient.setMotDePasse(request.getParameter("password"));
+            patient.setIdMedecinFamille(Integer.parseInt(request.getParameter("idMedecinFamille")));
             
             String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été modifié";
             //drop down pour trouver son medecin de famille -----------------------------------------------------------------
             patientService.modifierPatient(patient, 200, Integer.parseInt(request.getParameter("modifierPatient")));
             request.setAttribute("message", message);
+
+            session.setAttribute("listePatients",patientService.afficherLesPatients());
+
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
         }
     }
