@@ -21,6 +21,7 @@ public class Medecin {
     private float facturation;
     private String motDePasse;
     private String coordonnees;
+    private int idCliniqueEmploi;
 
     List<Patient> listePatients;
 
@@ -92,6 +93,14 @@ public class Medecin {
 
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
+    }
+
+    public int getIdCliniqueEmploi() {
+        return getIdCliniqueEmploi;
+    }
+
+    public void setIdCliniqueEmploi(String idCliniqueEmploi) {
+        this.idCliniqueEmploi = idCliniqueEmploi;
     }
 
     @Override

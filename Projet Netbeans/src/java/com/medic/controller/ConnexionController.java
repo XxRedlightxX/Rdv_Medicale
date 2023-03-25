@@ -72,6 +72,7 @@ public class ConnexionController extends HttpServlet {
                             response.addCookie(passwordCookie);
                         }
                     }
+                    
                     request.getRequestDispatcher("Patient.jsp").forward(request, response);
                 }   if (!connexion) {
                     ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");

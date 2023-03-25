@@ -64,6 +64,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
             }
         } catch (SQLException ex) {
@@ -98,6 +99,8 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
+                
 
             }
             ConnexionBD.closeConnection();
@@ -136,6 +139,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
 
             }
@@ -173,6 +177,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
 
             }
@@ -209,6 +214,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
             }
             ConnexionBD.closeConnection();
@@ -245,6 +251,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
             }
             ConnexionBD.closeConnection();
@@ -282,6 +289,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
 
             }
@@ -318,6 +326,7 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
                 medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
                 listeMedecin.add(medecin);
             }
             ConnexionBD.closeConnection();
@@ -465,6 +474,8 @@ public class MedecinImplDao implements MedecinDao {
                 medecin.setSpecialite(result.getString("specialite"));
                 medecin.setFacturation(result.getFloat("facturation"));
                 medecin.setMotDePasse(result.getString("password"));
+                medecin.setCoordonnees(result.getString("coordonnees_medecin"));
+                medecin.setIdCliniqueEmploi(result.getString("clinique_idclinique"));
 
             }
         } catch (SQLException ex) {
