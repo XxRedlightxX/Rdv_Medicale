@@ -96,10 +96,10 @@ public class Medecin {
     }
 
     public int getIdCliniqueEmploi() {
-        return getIdCliniqueEmploi;
+        return idCliniqueEmploi;
     }
 
-    public void setIdCliniqueEmploi(String idCliniqueEmploi) {
+    public void setIdCliniqueEmploi(int idCliniqueEmploi) {
         this.idCliniqueEmploi = idCliniqueEmploi;
     }
 

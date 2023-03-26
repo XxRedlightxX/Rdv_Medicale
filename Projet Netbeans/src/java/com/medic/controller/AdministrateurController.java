@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,9 +32,11 @@ public class AdministrateurController extends HttpServlet {
 
     Administrateur admin = null;
     AdministrateurService adminService = new AdministrateurService();
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         String gestionAction = request.getParameter("gestionAction");
         String idPatient = request.getParameter("idPatient");
@@ -116,7 +119,7 @@ public class AdministrateurController extends HttpServlet {
             
             String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été modifié";
             //drop down pour trouver son medecin de famille -----------------------------------------------------------------
-            patientService.modifierPatient(patient, 200, Integer.parseInt(request.getParameter("modifierPatient")));
+            patientService.modifierPatient(patient, Integer.parseInt(request.getParameter("idMedecinFamille")), Integer.parseInt(request.getParameter("modifierPatient")));
             request.setAttribute("message", message);
 
             session.setAttribute("listePatients",patientService.afficherLesPatients());

@@ -41,8 +41,8 @@
         <div>   
             <H1 style="margin-right: 50%">Patients: </H1>
             <c:choose>
-<c:when test= "${not empty sessionScope.listePatients"}">
-    <c:forEach var="unPatient" items="${requestScope.listePatients}" >
+<c:when test= "${not empty sessionScope.listePatients}">
+    <c:forEach var="unPatient" items="${sessionScope.listePatients}" >
             <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                 <tr>
                     <td rowspan="2"><img src="imageWeb2/patient_vide.png" alt="Trulli" width="125" height="125"></td>
@@ -104,6 +104,7 @@
                 </form>
         </div>
     </body>
+
     <jsp:include page="pied.jsp"/>
 
 </html>

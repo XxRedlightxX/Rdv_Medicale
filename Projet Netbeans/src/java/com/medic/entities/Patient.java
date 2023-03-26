@@ -94,11 +94,11 @@ public class Patient {
         this.motDePasse = motDePasse;
     }   
 
-    public String getIdMedecinFamille() {
+    public int getIdMedecinFamille() {
         return idMedecinFamille;
     }
 
-    public void setIdMedecinFamille(String idMedecinFamille) {
+    public void setIdMedecinFamille(int idMedecinFamille) {
         this.idMedecinFamille = idMedecinFamille;
     }
 
