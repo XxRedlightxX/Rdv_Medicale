@@ -21,18 +21,7 @@ public class Patient {
     private String dateNaissance;
     private String sexe;
     private String motDePasse;
-
-    public Patient(int id, String nom, String prenom, String numeroAssuranceMaladie, int numeroSequentiel, String dateNaissance, String sexe, String motDePasse) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.numeroAssuranceMaladie = numeroAssuranceMaladie;
-        this.numeroSequentiel = numeroSequentiel;
-        this.dateNaissance = dateNaissance;
-        this.sexe = sexe;
-        this.motDePasse = motDePasse;
-    }
-    
+    private int idMedecinFamille;
     
 
 
@@ -104,6 +93,14 @@ public class Patient {
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
     }   
+
+    public int getIdMedecinFamille() {
+        return idMedecinFamille;
+    }
+
+    public void setIdMedecinFamille(int idMedecinFamille) {
+        this.idMedecinFamille = idMedecinFamille;
+    }
 
     @Override
     public String toString() {

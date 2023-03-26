@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,9 +32,11 @@ public class AdministrateurController extends HttpServlet {
 
     Administrateur admin = null;
     AdministrateurService adminService = new AdministrateurService();
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         String gestionAction = request.getParameter("gestionAction");
         String idPatient = request.getParameter("idPatient");
@@ -77,6 +80,9 @@ public class AdministrateurController extends HttpServlet {
             
             String message = "Le patient " + unNom + " " + unPrenom + " à été supprimé";
             request.setAttribute("message", message);
+
+            session.setAttribute("listePatients",patientService.afficherLesPatients());
+
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
 
         } else if (ajouterPatient != null) {
@@ -89,10 +95,14 @@ public class AdministrateurController extends HttpServlet {
             patient.setDateNaissance(request.getParameter("dateNaissance"));
             patient.setSexe(request.getParameter("sexe"));
             patient.setMotDePasse(request.getParameter("password"));
+            patient.setIdMedecinFamille(Integer.parseInt(request.getParameter("idMedecinFamille")));
             String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été ajouté";
             //drop down pour trouver son medecin de famille -----------------------------------------------------------------
-            patientService.ajouterPatient(patient, 100);
+            patientService.ajouterPatient(patient, patient.getIdMedecinFamille());
             request.setAttribute("message", message);
+
+            session.setAttribute("listePatients",patientService.afficherLesPatients());
+
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
             
         } else if (modifierPatient!=null){
@@ -105,11 +115,15 @@ public class AdministrateurController extends HttpServlet {
             patient.setDateNaissance(request.getParameter("dateNaissance"));
             patient.setSexe(request.getParameter("sexe"));
             patient.setMotDePasse(request.getParameter("password"));
+            patient.setIdMedecinFamille(Integer.parseInt(request.getParameter("idMedecinFamille")));
             
             String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été modifié";
             //drop down pour trouver son medecin de famille -----------------------------------------------------------------
-            patientService.modifierPatient(patient, 200, Integer.parseInt(request.getParameter("modifierPatient")));
+            patientService.modifierPatient(patient, Integer.parseInt(request.getParameter("idMedecinFamille")), Integer.parseInt(request.getParameter("modifierPatient")));
             request.setAttribute("message", message);
+
+            session.setAttribute("listePatients",patientService.afficherLesPatients());
+
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
         }
     }

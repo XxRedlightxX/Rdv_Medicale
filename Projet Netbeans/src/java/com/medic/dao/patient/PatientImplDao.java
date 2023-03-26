@@ -59,12 +59,15 @@ public class PatientImplDao implements PatientDao {
                 Patient patient = new Patient();
 
                 //medecin.setNumeroProfessionel(result.getInt("idmedecin"));
-                patient.setNom(result.getString("idpatient"));
-                patient.setPrenom(result.getString("nom"));
+                patient.setId(result.getInt("idpatient"));
+                patient.setNom(result.getString("nom"));
+                patient.setPrenom(result.getString("prenom"));
                 patient.setNumeroAssuranceMaladie(result.getString("assurance"));
                 patient.setNumeroSequentiel(result.getInt("numSeq_assurance"));
                 patient.setDateNaissance(result.getString("naissance"));
+                patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
                 listePatient.add(patient);
             }
         } catch (SQLException ex) {
@@ -100,8 +103,7 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
-
-                patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
 
             }
             ConnexionBD.closeConnection();
@@ -140,8 +142,8 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
 
-                patient.setMotDePasse(result.getString("password"));
                 listePatient.add(patient);
 
             }
@@ -180,8 +182,7 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
-
-                patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
                 listePatient.add(patient);
 
             }
@@ -219,8 +220,7 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
-
-                patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
 
             }
             ConnexionBD.closeConnection();
@@ -258,8 +258,7 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
-
-                patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
                 listePatient.add(patient);
 
             }
@@ -298,8 +297,7 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
-
-                patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
                 listePatient.add(patient);
 
             }
@@ -449,6 +447,7 @@ public class PatientImplDao implements PatientDao {
                 patient.setDateNaissance(result.getString("naissance"));
                 patient.setSexe(result.getString("sexe"));
                 patient.setMotDePasse(result.getString("password"));
+                patient.setIdMedecinFamille(result.getInt("medecin_idmedecin"));
 
             }
         } catch (SQLException ex) {
