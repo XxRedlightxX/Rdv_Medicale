@@ -67,6 +67,9 @@
                             </tr>
                             <tr>
                                 <th>Nom du médecin de famille:</th>
+                                <jsp:useBean id="test" class="MedecinService"/>
+
+                                ${test.chercherMedecinParId(${unPatient.idMedecinFamille}).getNom()}
                                 <td>${unPatient.idMedecinFamille}</td>
                             </tr>
                         </table></td>
