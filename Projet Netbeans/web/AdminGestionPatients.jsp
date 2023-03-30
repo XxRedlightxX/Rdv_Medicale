@@ -5,11 +5,7 @@
 <%@page import="com.medic.entities.Medecin"%>
 <%@page import="com.medic.entities.Patient"%>
 <%@page import="com.medic.service.MedecinService"%>
-<%
-    Patient patient = (Patient) request.getAttribute("unPatient");
-    MedecinService medecinService = new MedecinService();
-    Medecin unMed = medecinService.chercherMedecinParId(patient.getIdMedecinFamille());
-%>
+
 
 
 <!DOCTYPE html>
@@ -37,6 +33,7 @@
     <jsp:include page="EnTete.jsp" />
 
     <body id="body">
+        <jsp:useBean id="test" class="com.medic.service.MedecinService"/>
         <c:choose>
             <c:when test="${requestScope.typeAction == 'ajouter'}">
                 <div id=ls>
@@ -145,9 +142,15 @@
                                     <td><label for="sexe"> Sexe : </label> </td>
                                     <td>${unPatient.sexe}</td>
                                     <td><label for="gender_male" id="labelgenderM">
-                                            <input type="radio" id="gender_male" value="Homme" name="sexe" checked>Male</label>
+                                            <input type="radio" id="gender_male" value="Homme" name="sexe" 
+                                                   <c:if test="${unPatient.sexe == 'Homme'}"> 
+                                                   checked
+                                                   </c:if>>Male</label>
                                         <label for="gender_female" id="labelgenderF">
-                                            <input type="radio" id="gender_female" value="Femme" name="sexe">Female</label>
+                                            <input type="radio" id="gender_female" value="Femme" name="sexe"
+                                                   <c:if test="${unPatient.sexe == 'Femme'}"> 
+                                                   checked
+                                                   </c:if>>Female</label>
                                     </td>
                                 </tr>
 
@@ -160,10 +163,14 @@
                                 </tr>
                                 <tr>
                                     <td><label for="idMedecinFamille">Médecin de famille :</label></td>
-                                    <td><%=unMed.getPrenom()%> <%=unMed.getNom()%></td>                              
+
+                                    <td>Dr. ${test.chercherMedecinParId(unPatient.idMedecinFamille).prenom} ${test.chercherMedecinParId(unPatient.idMedecinFamille).nom} </td>                              
                                     <td><select id="idMedecinFamille" name="idMedecinFamille">
                                             <c:forEach var="unMedecin" items="${sessionScope.listeMedecins}" >
-                                                <option value="${unMedecin.numeroProfessionel}">${unMedecin.prenom} ${unMedecin.nom}</option>
+                                                <option value="${unMedecin.numeroProfessionel}"
+                                                        <c:if test="${unMedecin.numeroProfessionel == unPatient.idMedecinFamille}"> 
+                                                            selected="selected"
+                                                        </c:if>>Dr. ${unMedecin.prenom} ${unMedecin.nom}</option>
                                             </c:forEach>
                                         </select>
                                     </td>
@@ -245,7 +252,8 @@
                                         </tr>
                                         <tr>
                                             <th>Nom du médecin de famille:</th>
-                                            <td><%=unMed.getPrenom()%> <%=unMed.getNom()%></td>
+
+                                            <td>Dr. ${test.chercherMedecinParId(unPatient.idMedecinFamille).prenom} ${test.chercherMedecinParId(unPatient.idMedecinFamille).nom} </td>
                                         </tr>
                                     </table>
                                 </td>
