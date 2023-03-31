@@ -47,9 +47,10 @@
             </form>
         </div>
         <div>   
-            <H1 style="margin-right: 50%">Patients: </H1>
+            <h1 style="margin-right: 50%">Patients: </h1>
                 <c:choose>
                     <c:when test= "${not empty sessionScope.listePatients}">
+                    <div id="containerListe" style="height:60vh;overflow:auto;">
                         <c:forEach var="unPatient" items="${sessionScope.listePatients}" >
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
@@ -98,6 +99,7 @@
                         </table>
                         </br>
                     </c:forEach>
+                        </div>
                 </c:when>
                 <c:otherwise>
                     </br></br>

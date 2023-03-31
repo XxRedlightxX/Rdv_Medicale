@@ -26,21 +26,20 @@ import javax.servlet.http.HttpSession;
  * @author hundl
  */
 public class ConnexionController extends HttpServlet {
+
     String typeCompte = null;
 
     Patient patient = null;
     PatientService patientService = new PatientService();
-    
+
     Medecin medecin = null;
     MedecinService medecinService = new MedecinService();
-    
+
     Administrateur admin = null;
     AdministrateurService adminService = new AdministrateurService();
 
     Clinique clinique = null;
     CliniqueService cliniqueService = new CliniqueService();
-    
-    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,6 +49,10 @@ public class ConnexionController extends HttpServlet {
         String password = request.getParameter("password");
         String sauvegarde = request.getParameter("sauvegarde");
         boolean connexion = false;
+        request.setAttribute("listePatients", patientService.afficherLesPatients());
+        request.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+        request.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
+        
 
         typeCompte = request.getParameter("typeCompte");
         switch (typeCompte) {
@@ -61,7 +64,7 @@ public class ConnexionController extends HttpServlet {
                     session.setAttribute("nom", patient.getNom());
                     session.setAttribute("prenom", patient.getPrenom());
                     session.setAttribute("typeCompte", typeCompte);
-                    
+
                     if (sauvegarde != null) {
                         if (sauvegarde.equals("yes")) {
                             Cookie monCookie = new Cookie("username", username);
@@ -72,19 +75,20 @@ public class ConnexionController extends HttpServlet {
                             response.addCookie(passwordCookie);
                         }
                     }
-                    
+
                     request.getRequestDispatcher("Patient.jsp").forward(request, response);
-                }   if (!connexion) {
+                }
+                if (!connexion) {
                     ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");
-                    
+
                     if (!username.trim().equals("")) {
                         request.setAttribute("invalide", "Le username ou mot de passe est invalide");
                     }
-                    
+
                     request.getRequestDispatcher("Connexion_patient.jsp").include(request, response);
-                    
-                    
-                }   break;
+
+                }
+                break;
             case "medecin":
                 medecin = medecinService.verifierExistenceMedecin(username, password);
                 if (medecin != null) {
@@ -93,7 +97,7 @@ public class ConnexionController extends HttpServlet {
                     session.setAttribute("nom", medecin.getNom());
                     session.setAttribute("prenom", medecin.getPrenom());
                     session.setAttribute("typeCompte", typeCompte);
-                    
+
                     if (sauvegarde != null) {
                         if (sauvegarde.equals("yes")) {
                             Cookie monCookie = new Cookie("username", username);
@@ -105,17 +109,18 @@ public class ConnexionController extends HttpServlet {
                         }
                     }
                     request.getRequestDispatcher("Medecin.jsp").forward(request, response);
-                }   if (!connexion) {
+                }
+                if (!connexion) {
                     ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");
-                    
+
                     if (!username.trim().equals("")) {
                         request.setAttribute("invalide", "Le username ou mot de passe est invalide");
                     }
-                    
+
                     request.getRequestDispatcher("Connexion_medecin.jsp").include(request, response);
-                    
-                    
-                }   break;
+
+                }
+                break;
             case "admin":
                 admin = adminService.verifierExistenceAdmin(username, password);
                 if (admin != null) {
@@ -124,7 +129,7 @@ public class ConnexionController extends HttpServlet {
                     session.setAttribute("nom", admin.getUsername());
                     session.setAttribute("prenom", "ADMIN");
                     session.setAttribute("typeCompte", typeCompte);
-                    
+
                     if (sauvegarde != null) {
                         if (sauvegarde.equals("yes")) {
                             Cookie monCookie = new Cookie("username", username);
@@ -136,26 +141,26 @@ public class ConnexionController extends HttpServlet {
                         }
                     }
 
-                    session.setAttribute("listePatients",patientService.afficherLesPatients());
-                    session.setAttribute("listeMedecins",medecinService.afficherLesMedecin());
-                    session.setAttribute("listeCliniques",cliniqueService.afficherLesCliniques());
+                    session.setAttribute("listePatients", patientService.afficherLesPatients());
+                    session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+                    session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
 
                     request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
-                }   if (!connexion) {
+                }
+                if (!connexion) {
                     ///   out.println("<center><b><font color=red>" + "L'email ou mot de passe invalide" + "</font><b></center>");
-                    
+
                     if (!username.trim().equals("")) {
                         request.setAttribute("invalide", "Le username ou mot de passe est invalide");
                     }
-                    
+
                     request.getRequestDispatcher("Connexion_admin.jsp").include(request, response);
-                    
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
-        
 
     }
 

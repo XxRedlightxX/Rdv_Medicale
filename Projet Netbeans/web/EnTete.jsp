@@ -51,9 +51,9 @@
             <c:if test = "${empty sessionScope.typeCompte}">    
                 <div class="container" id="menu">
                     <a href="Accueil.jsp">Accueil</a>
-                    <a href="Connexion_patient.jsp">Portail Patients</a>
-                    <a href="Connexion_medecin.jsp">Portail Medecins</a>
-                    <a href="Connexion_admin.jsp">Portail Administrateurs</a>
+                    <a href="connexionController?typeCompte=patient&username= ">Portail Patients</a>
+                    <a href="connexionController?typeCompte=medecin&username= ">Portail Medecins</a>
+                    <a href="connexionController?typeCompte=admin&username= ">Portail Administrateurs</a>
                 </div>     
             </c:if>
 

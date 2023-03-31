@@ -40,7 +40,7 @@
                 </c:if>
 
                 <div id="formuInscr" style="display:none">
-                    <form id="signupForm" class="login" action="inscriptionController" method="post">
+                    <form id="signupForm" class="login" action="inscriptionController" method="get">
                         <input type="hidden" name="typeCompte" value="patient">
 
                         <label for="nom">Nom : </label>
@@ -71,6 +71,14 @@
 
                         <label for="passwordConfirm">Confirmation du mot de passe:</label>
                         <input type="password" name="passwordConfirm" id="passwordConfirm"> <br><br>
+
+                        <label for="password">Médecin de famille:</label>
+                        <select id="idMedecinFamille" name="idMedecinFamille">
+                            <c:forEach var="unMedecin" items="${requestScope.listeMedecins}" >
+                                <option value="${unMedecin.numeroProfessionel}">
+                                    Dr. ${unMedecin.prenom} ${unMedecin.nom}</option>
+                                </c:forEach>
+                        </select> <br><br>
 
 
                         <input type="submit"  class="btn btn-primary btn-lg" 
