@@ -1,6 +1,6 @@
-<%@page import="com.medic.service.MedecinService"%>
+<%@page import="com.medic.service.CliniqueService"%>
+<%@page import="com.medic.entities.Clinique"%>
 <%@page import="com.medic.entities.Medecin"%>
-<%@page import="com.medic.entities.Patient"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
     <jsp:include page="EnTete.jsp"/>
     <c:if test = "${not empty requestScope.message}">
         <div id=ls>
-            <h1 id="etatPatient">${requestScope.message}</h1>
+            <h1 id="etatMedecin">${requestScope.message}</h1>
         </div>
     </c:if>
 
@@ -42,55 +42,55 @@
         <div></br>
             <form action="administrateurController" method="get">
                 <input type="hidden" name="gestionAction" value="ajouter">
-                <input type="hidden" name="idPatient" value="00">
-                <input type="submit" value="Ajouter un Patient">
+                <input type="hidden" name="idMedecin" value="00">
+                <input type="submit" value="Ajouter un Médecin">
             </form>
         </div>
         <div id="containerListe" style="height:60vh;overflow:auto;">   
-            <h1 style="margin-right: 50%">Patients: </h1>
+            <h1 style="margin-right: 50%">Médecins: </h1>
                 <c:choose>
-                    <c:when test= "${not empty sessionScope.listePatients}">
+                    <c:when test= "${not empty sessionScope.listeMedecins}">
                     <div>
-                        <c:forEach var="unPatient" items="${sessionScope.listePatients}" >
+                        <c:forEach var="unMedecin" items="${sessionScope.listeMedecins}" >
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
                                 <td rowspan="2"><img src="imageWeb2/patient_vide.png" alt="Trulli" width="125" height="125"></td>
                                 <td rowspan="2"><table>
                                         <tr>
                                             <th>Nom:</th>
-                                            <td>${unPatient.nom}</td>
-                                            <th>Numero d'assurance maladie:</th>
-                                            <td>${unPatient.numeroAssuranceMaladie}</td>
+                                            <td>${unMedecin.nom}</td>
+                                            <th>Numero de professionel:</th>
+                                            <td>${unMedecin.numeroProfessionel}</td>
                                         </tr>
                                         <tr>
                                             <th>Prenom:</th>
-                                            <td>${unPatient.prenom}</td>
-                                            <th>Numéro séquentiel:</th>
-                                            <td>${unPatient.numeroSequentiel}</td>
+                                            <td>${unMedecin.prenom}</td>
+                                            <th>Spécialitée:</th>
+                                            <td>${unMedecin.specialite}</td>
                                         </tr>
                                         <tr>
-                                            <th>Date de naissance:</br></th>
-                                            <td>${unPatient.dateNaissance}</td>
-                                            <th>Sexe:</th>
-                                            <td>${unPatient.sexe}</td>
+                                            <th>Facturation:</br></th>
+                                            <td>${unMedecin.facturation} $</td>
+                                            <th>Coordonnées:</th>
+                                            <td>${unMedecin.coordonnees}</td>
                                         </tr>
                                         <tr>
-                                            <th>Nom du médecin de famille:</th>
-                                                <jsp:useBean id="test" class="com.medic.service.MedecinService"/>
+                                            <th>Clinique où médecin est employé:</th>
+                                                <jsp:useBean id="test" class="com.medic.service.CliniqueService"/>
 
-                                            <td>Dr. ${test.chercherMedecinParId(unPatient.idMedecinFamille).prenom} ${test.chercherMedecinParId(unPatient.idMedecinFamille).nom} </td>
+                                            <td>${test.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>
 
                                         </tr>
                                     </table></td>
                                 <td><form action="administrateurController" method="post">
                                         <input type="hidden" name="gestionAction" value="modifier">
-                                        <input type="hidden" name="idPatient" value="${unPatient.id}">
+                                        <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
                                         <input type="submit" value="Modifier">
                                     </form> </td>
                             <tr>
                                 <td><form action="administrateurController" method="post">
                                         <input type="hidden" name="gestionAction" value="supprimer">
-                                        <input type="hidden" name="idPatient" value="${unPatient.id}">
+                                        <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
                                         <input type="submit" value="Supprimer">
                                     </form> </td></td>
                             </tr>
@@ -103,7 +103,7 @@
                 </c:when>
                 <c:otherwise>
                     </br></br>
-                    <H1 style="text-align:center;">Il n'y a aucun patient dans la liste </H1>
+                    <H1 style="text-align:center;">Il n'y a aucun médecin dans la liste </H1>
                     </c:otherwise>
                 </c:choose>
         </div>
