@@ -28,21 +28,8 @@ public class TestDeBase {
 
     public static void main(String[] args) throws SQLException {
 
-        PatientService patientService = new PatientService();
-        Patient patient = new Patient();
-        patient.setId(1);
-        patient.setNom("jack");
-        patient.setPrenom("reacher");
-        patient.setNumeroAssuranceMaladie("000dadads");
-        patient.setNumeroSequentiel(01);
-        patient.setDateNaissance("12-12-2012");
-        patient.setSexe("homme");
-        patient.setMotDePasse("password");
-        patient.setIdMedecinFamille(300);
+        testUpdate();
 
-        int idpatient = Integer.parseInt("1");
-        patientService.modifierPatient(patient, 300, idpatient);
-        System.out.println(patient);
         //cliniqueTestfindAllService();
         //findmaxidpatient();
         //testUpdateServices();
@@ -302,7 +289,7 @@ public class TestDeBase {
         int idcl = lectureClavier.nextInt();
 
         //medecin = new Medecin(nom, prenom, specialite, facture, password );
-        boolean result = instance.update(medecin, idcl, 10);
+        boolean result = instance.update(medecin, idcl, idc);
         if (result) {
             System.out.println("L'utilisateur est mis à jour ");
         } else {

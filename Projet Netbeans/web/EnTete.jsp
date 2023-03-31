@@ -41,7 +41,7 @@
                     <c:when test = "${sessionScope.typeCompte == 'admin'}">
                         <div class="container" id="menu">
                             <a href="pageAdminPatients.jsp">Gestion des Patients</a>
-                            <a href="Connexion_patient.jsp">Gestion des Médecins</a>
+                            <a href="pageAdminMedecins.jsp">Gestion des Médecins</a>
                             <a href="Connexion_patient.jsp">Gestion des Clinique</a>
                         </div>     
                     </c:when>

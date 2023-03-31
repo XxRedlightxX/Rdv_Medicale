@@ -61,9 +61,10 @@ public class InscriptionController extends HttpServlet {
             medecin.setFacturation(Float.parseFloat(request.getParameter("facturation")));
             medecin.setCoordonnees(request.getParameter("coordonnees"));
             medecin.setMotDePasse(request.getParameter("password"));
+            medecin.setIdCliniqueEmploi(Integer.parseInt(request.getParameter("idClinique")));
 
             //drop down pour trouver sa clinique -----------------------------------------------------------------
-            medecinService.ajouterMedecin(medecin, 10);
+            medecinService.ajouterMedecin(medecin, medecin.getIdCliniqueEmploi());
         }
             request.getRequestDispatcher("connexionController?typeCompte=" + typeCompte + "&username=" + medecin.getNumeroProfessionel() + "&password=" + medecin.getMotDePasse()).include(request, response);
 

@@ -66,6 +66,14 @@
                         <label for="passwordConfirm">Confirmation du mot de passe:</label>
                         <input type="password" name="passwordConfirm" id="passwordConfirm"> <br><br>
 
+                        <label for="password">Clinique : </label>
+                        <select id="idClinique" name="idClinique">
+                            <c:forEach var="uneClinique" items="${requestScope.listeCliniques}" >
+                                <option value="${uneClinique.id}">
+                                    ${uneClinique.nom}</option>
+                                </c:forEach>
+                        </select> <br><br>
+
 
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">

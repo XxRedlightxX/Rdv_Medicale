@@ -39,10 +39,15 @@ public class AdministrateurController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String gestionAction = request.getParameter("gestionAction");
         String idPatient = request.getParameter("idPatient");
+        String idMedecin = request.getParameter("idMedecin");
 
         String supprimerPatient = request.getParameter("supprimerPatient");
         String ajouterPatient = request.getParameter("ajouterPatient");
         String modifierPatient = request.getParameter("modifierPatient");
+        
+        String supprimerMedecin = request.getParameter("supprimerMedecin");
+        String ajouterMedecin = request.getParameter("ajouterMedecin");
+        String modifierMedecin = request.getParameter("modifierMedecin");
 
         if (idPatient != null) {
             switch (gestionAction) {
@@ -53,16 +58,16 @@ public class AdministrateurController extends HttpServlet {
                 
                 case "modifier": 
                     request.setAttribute("typeAction", gestionAction);
-                    int idpatient = Integer.parseInt(request.getParameter("idPatient"));
-                    patient = patientService.chercherPatientParId(idpatient);
+                    int patientId = Integer.parseInt(request.getParameter("idPatient"));
+                    patient = patientService.chercherPatientParId(patientId);
                     request.setAttribute("unPatient", patient);
                     request.getRequestDispatcher("AdminGestionPatients.jsp").forward(request, response);
                     break;
                 
                 case "supprimer": 
                     request.setAttribute("typeAction", gestionAction);
-                    idpatient = Integer.parseInt(request.getParameter("idPatient"));
-                    patient = patientService.chercherPatientParId(idpatient);
+                    patientId = Integer.parseInt(request.getParameter("idPatient"));
+                    patient = patientService.chercherPatientParId(patientId);
                     request.setAttribute("unPatient", patient);
                     request.getRequestDispatcher("AdminGestionPatients.jsp").forward(request, response);
                     break;
@@ -70,7 +75,34 @@ public class AdministrateurController extends HttpServlet {
                 default:
                     break;
             }
+        } else if (idMedecin != null) {
+            switch (gestionAction) {
+                case "ajouter": 
+                    request.setAttribute("typeAction", gestionAction);
+                    request.getRequestDispatcher("AdminGestionMedecins.jsp").forward(request, response);
+                    break;
+                
+                case "modifier": 
+                    request.setAttribute("typeAction", gestionAction);
+                    int medecinId = Integer.parseInt(request.getParameter("idMedecin"));
+                    medecin = medecinService.chercherMedecinParId(medecinId);
+                    request.setAttribute("unMedecin", medecin);
+                    request.getRequestDispatcher("AdminGestionMedecins.jsp").forward(request, response);
+                    break;
+                
+                case "supprimer": 
+                    request.setAttribute("typeAction", gestionAction);
+                    medecinId = Integer.parseInt(request.getParameter("idMedecin"));
+                    medecin = medecinService.chercherMedecinParId(medecinId);
+                    request.setAttribute("unMedecin", medecin);
+                    request.getRequestDispatcher("AdminGestionMedecins.jsp").forward(request, response);
+                    break;
+  
+                default:
+                    break;
+            }
         }
+                
         if (supprimerPatient != null) {
             int idpatient = Integer.parseInt(request.getParameter("supprimerPatient"));
             patient = patientService.chercherPatientParId(idpatient);
@@ -125,6 +157,63 @@ public class AdministrateurController extends HttpServlet {
             session.setAttribute("listePatients", patientService.afficherLesPatients());
 
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
+        }
+        
+        
+        
+        
+        if (supprimerMedecin != null) {
+            int idmedecin = Integer.parseInt(request.getParameter("supprimerMedecin"));
+            medecin = medecinService.chercherMedecinParId(idmedecin);
+            String unNom = medecin.getNom();
+            String unPrenom = medecin.getPrenom();
+            medecinService.supprimerMedecin(idmedecin);
+
+            String message = "Le Médecin " + unNom + " " + unPrenom + " à été supprimé";
+            request.setAttribute("message", message);
+
+            session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+
+            request.getRequestDispatcher("pageAdminMedecins.jsp").forward(request, response);
+
+        } else if (ajouterMedecin != null) {
+            medecin = new Medecin();
+            medecin.setNumeroProfessionel(Integer.parseInt(request.getParameter("numeroProfessionel")));
+            medecin.setNom(request.getParameter("nom"));
+            medecin.setPrenom(request.getParameter("prenom"));
+            medecin.setSpecialite(request.getParameter("specialite"));
+            medecin.setFacturation(Float.parseFloat(request.getParameter("facturation")));
+            medecin.setCoordonnees(request.getParameter("coordonnees"));
+            medecin.setMotDePasse(request.getParameter("password"));
+            medecin.setIdCliniqueEmploi(Integer.parseInt(request.getParameter("idClinique")));
+            String message = "Le médecin " + medecin.getNom() + " " + medecin.getPrenom() + " à été ajouté";
+            //drop down pour trouver son medecin de famille -----------------------------------------------------------------
+            medecinService.ajouterMedecin(medecin, medecin.getIdCliniqueEmploi());
+            request.setAttribute("message", message);
+
+            session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+
+            request.getRequestDispatcher("pageAdminMedecins.jsp").forward(request, response);
+
+        } else if (modifierMedecin != null) {
+            medecin = new Medecin();
+            medecin.setNumeroProfessionel(Integer.parseInt(request.getParameter("numeroProfessionel2")));
+            medecin.setNom(request.getParameter("nom"));
+            medecin.setPrenom(request.getParameter("prenom"));
+            medecin.setSpecialite(request.getParameter("specialite"));
+            medecin.setFacturation(Float.parseFloat(request.getParameter("facturation")));
+            medecin.setCoordonnees(request.getParameter("coordonnees"));
+            medecin.setMotDePasse(request.getParameter("password"));
+            medecin.setIdCliniqueEmploi(Integer.parseInt(request.getParameter("idClinique")));
+
+            String message = "Le médecin " + medecin.getNom() + " " + medecin.getPrenom() + " à été modifié";
+            //drop down pour trouver son medecin de famille -----------------------------------------------------------------
+            medecinService.modifierMedecin(medecin, Integer.parseInt(request.getParameter("idClinique")), Integer.parseInt(request.getParameter("numeroProfessionel")));
+            request.setAttribute("message", message);
+
+            session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+
+            request.getRequestDispatcher("pageAdminMedecins.jsp").forward(request, response);
         }
     }
 
