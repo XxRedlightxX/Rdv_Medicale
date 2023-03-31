@@ -46,9 +46,9 @@ public class InscriptionController extends HttpServlet {
             patient.setDateNaissance(request.getParameter("dateNaissance"));
             patient.setSexe(request.getParameter("sexe"));
             patient.setMotDePasse(request.getParameter("password"));
-
+            patient.setIdMedecinFamille(Integer.parseInt(request.getParameter("idMedecinFamille")));
             //drop down pour trouver son medecin de famille -----------------------------------------------------------------
-            patientService.ajouterPatient(patient, 100);
+            patientService.ajouterPatient(patient, patient.getIdMedecinFamille());
 
             request.getRequestDispatcher("connexionController?typeCompte=" + typeCompte + "&username=" + patient.getNumeroAssuranceMaladie() + "&password=" + patient.getMotDePasse()).include(request, response);
 

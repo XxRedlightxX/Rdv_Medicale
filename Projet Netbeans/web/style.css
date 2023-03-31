@@ -4,31 +4,29 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-   height: 100px;
+    height: 100px;
 }
-
-
-#footer{ 
+#footer{
     background-color: #358045;
     padding: 10px;
     text-align: center;
     font-size: 2px;
     font-weight: bold;
-   height: 100px;
-   position: fixed;
-   bottom: 0;
-   width: 97%;
-  
+    height: 100px;
+    position: fixed;
+    bottom: 0;
+    width: 97%;
+
 }
 
-
-#body{  background-color: #3375bc;
+#body{
+    background-color: #3375bc;
     padding: 10px;
     text-align: center;
     font-weight: bold;
-   height: 150px; 
+    height: 150px;
 }
-#patient{ 
+#patient{
     padding: 10px;
     text-align: left;
     font-size: 20px;
@@ -37,15 +35,15 @@
 
 }
 
-#medecin{ 
+#medecin{
     padding: 10px;
     text-align: left;
     font-size: 20px;
     font-weight: bold;
     padding-left: 350px;
-    
+
 }
-#clinique{ 
+#clinique{
     padding: 10px;
     text-align: left;
     font-size: 20px;
@@ -53,33 +51,33 @@
     padding-left: 350px;
 }
 
- 
 
-#lsl{ 
-     background-color: #baabab;
+
+#lsl{
+    background-color: #baabab;
     font-size: 15px;
     font-weight: bold;
     text-align: right;
-} 
+}
 
-#ls{ 
+#ls{
     background-color:#baabab;
-   font-size: 14px;
-   font-weight: bold;
- display: flex;
- justify-content: space-around;
-} 
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+}
 
-.container { 
-display: flex;
-justify-content: space-evenly;  
-} 
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}
 
 h2{
-font-size: medium;
-text-align: left;
-font-family: Georgia, 'Times New Roman', Times, serif;
-color: rgb(238, 231, 218);
+    font-size: medium;
+    text-align: left;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(238, 231, 218);
 
 }
 
@@ -88,92 +86,92 @@ h3{
     text-align: left;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: rgb(19, 18, 14);
-    
-    }
+
+}
 
 #infoTitre{
-margin-right: 500px;
+    margin-right: 500px;
 
 }
 #courriel{
     text-align: right;
 }
 #barCherche{
-  margin-right: 70%; 
-} 
+    margin-right: 70%;
+}
 
 
 
 #partageDoc{
-    margin-left: 1000px; 
-    
+    margin-left: 1000px;
+
     margin-top: 16%
-  }
+}
 
- #patientTable {
-border:1px black;
-width: 900px;
-margin-left: 25%;
+#patientTable {
+    border:1px black;
+    width: 900px;
+    margin-left: 25%;
 
- }
- 
- #patientRow 
-{ 
-background-color: white;
-   
- }
- #ip{
-    margin-left: 25%; 
- }
+}
 
- #menuService{
-    margin-top: 8%; 
- }
+#patientRow
+{
+    background-color: white;
 
- #tableService{
-    width: 1000px; 
-    margin-top: 5%; 
- }
- 
- #souF{ 
-    margin-left: 75%; 
- } 
+}
+#ip{
+    margin-left: 25%;
+}
 
- a.services { 
+#menuService{
+    margin-top: 8%;
+}
+
+#tableService{
+    width: 1000px;
+    margin-top: 5%;
+}
+
+#souF{
+    margin-left: 75%;
+}
+
+a.services {
     font-size: medium;
     text-align: left;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    color: rgb(19, 18, 14); 
- } 
+    color: rgb(19, 18, 14);
+}
 
- a.servicesClinique{ 
+a.servicesClinique{
     font-size: medium;
     text-align: left;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    color: rgb(245, 243, 237); 
- }  
+    color: rgb(245, 243, 237);
+}
 
- a{ 
+a{
     font-size: medium;
     text-align: left;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    color: rgb(239, 241, 231); 
- }
+    color: rgb(239, 241, 231);
+}
 body.background-image{
 
     background-image: url(imageWeb2/back.PNG);
 }
 
-#menu{ 
-    margin-top: 1%; 
- }
+#menu{
+    margin-top: 1%;
+}
 
- #logo{ 
-    margin-right: 100%; 
- }
+#logo{
+    margin-right: 100%;
+}
 
- #tab{ 
-    margin-top: 8%; 
- }
+#tab{
+    margin-top: 8%;
+}
 
- 
+
