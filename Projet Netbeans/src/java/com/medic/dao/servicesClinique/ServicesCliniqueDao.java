@@ -19,7 +19,6 @@ public interface ServicesCliniqueDao {
     List<ServicesClinique> findAllSeviceUneClinique();
     ServicesClinique ajouterSeviceUneClinique(ServicesClinique service);
     ServicesClinique supprimerSeviceUneClinique(int id);
-    List<ServicesClinique> findAll();
     boolean ajouterService(ServicesClinique service);
     boolean update(ServicesClinique service,int idFindServiceClinique);
     boolean delete(int id);
