@@ -33,7 +33,7 @@
     <jsp:include page="EnTete.jsp" />
 
     <body id="body">
-        <jsp:useBean id="test" class="com.medic.service.CliniqueService"/>
+        <jsp:useBean id="cliniqueTest" class="com.medic.service.CliniqueService"/>
         <c:choose>
             <c:when test="${requestScope.typeAction == 'ajouter'}">
                 <div id=ls>
@@ -42,7 +42,7 @@
                 </div> 
                 </br>
                 <div id="formuInscr">
-                    <form id="signupForm"  class="login" action="administrateurController" method="post">
+                    <form id="signupForm"  class="login" action="administrateurController" method="get">
                         <input type="hidden" name="ajouterMedecin">
 
                         <label for="nom">Nom : </label>
@@ -68,6 +68,7 @@
 
                         <label for="password">Clinique : </label>
                         <select id="idClinique" name="idClinique">
+                            <option value = "0">Aucun</option>
                             <c:forEach var="uneClinique" items="${sessionScope.listeCliniques}" >
                                 <option value="${uneClinique.id}">
                                     ${uneClinique.nom}</option>
@@ -122,12 +123,18 @@
                                     <td><input type="text" name="prenom" id="prenom" value="${unMedecin.prenom}">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td><label for="specialite">Specialite : </label></td>
+                                    <td>${unMedecin.specialite}</td>
+                                    <td><input type="text" name="specialite" id="specialite" value="${unMedecin.specialite}">
+                                    </td>
+                                </tr>
 
                                 <tr>
                                     <td><label for="numeroProfessionel">Numéro de professionel : </label></td>
                                     <td>${unMedecin.numeroProfessionel}</td>
                                     <td><input type="text" name="numeroProfessionel2" id="numeroProfessionel2" value="${unMedecin.numeroProfessionel}">
-                                     <input type="hidden" name="numeroProfessionel" id="numeroProfessionel" value="${unMedecin.numeroProfessionel}">  
+                                        <input type="hidden" name="numeroProfessionel" id="numeroProfessionel" value="${unMedecin.numeroProfessionel}">  
                                     </td>
                                 </tr>
 
@@ -154,9 +161,19 @@
                                 </tr>
                                 <tr>
                                     <td><label for="idClinique">Clinique où médecin<br> est employé : </label></td>
+                                            <c:if test = "${unMedecin.idCliniqueEmploi != 0}">
+                                        <td>${cliniqueTest.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>
+                                    </c:if>
 
-                                    <td>${test.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>                              
+                                    <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                        <td>Aucun</td>
+                                    </c:if>
+                                                                 
                                     <td><select id="idClinique" name="idClinique">
+                                            <option value = "0"
+                                                    <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                                        selected="selected" 
+                                                    </c:if>>Aucun</option>
                                             <c:forEach var="uneClinique" items="${sessionScope.listeCliniques}" >
                                                 <option value="${uneClinique.id}"
                                                         <c:if test="${uneClinique.id == unMedecin.idCliniqueEmploi}"> 
@@ -213,7 +230,7 @@
                             <H1 style="margin-right: 50%">Médecin: </H1>
                             <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                                 <tr>
-                                    <td rowspan="2"><img src="imageWeb2/patient_vide.png" alt="Trulli" width="125" height="125"></td>
+                                    <td rowspan="2"><img src="imageWeb2/patient_icon.png" alt="Trulli" width="125" height="125"></td>
                                     <td rowspan="2"><table>
                                             <tr>
                                                 <th>Nom:</th>
@@ -235,7 +252,13 @@
                                             </tr>
                                             <tr>
                                                 <th>Clinique où médecin est employé:</th>
-                                                <td>${test.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>
+                                                    <c:if test = "${unMedecin.idCliniqueEmploi != 0}">
+                                                    <td>${cliniqueTest.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>
+                                                </c:if>
+
+                                                <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                                    <td>Aucun</td>
+                                                </c:if> 
 
                                             </tr>
                                         </table>

@@ -74,6 +74,7 @@
 
                         <label for="password">Médecin de famille:</label>
                         <select id="idMedecinFamille" name="idMedecinFamille">
+                            <option value = "0">Aucun</option>
                             <c:forEach var="unMedecin" items="${requestScope.listeMedecins}" >
                                 <option value="${unMedecin.numeroProfessionel}">
                                     Dr. ${unMedecin.prenom} ${unMedecin.nom}</option>

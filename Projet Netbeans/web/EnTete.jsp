@@ -42,7 +42,7 @@
                         <div class="container" id="menu">
                             <a href="pageAdminPatients.jsp">Gestion des Patients</a>
                             <a href="pageAdminMedecins.jsp">Gestion des Médecins</a>
-                            <a href="Connexion_patient.jsp">Gestion des Clinique</a>
+                            <a href="pageAdminCliniques.jsp">Gestion des Cliniques</a>
                         </div>     
                     </c:when>
 

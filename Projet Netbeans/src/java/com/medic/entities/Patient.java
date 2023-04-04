@@ -21,7 +21,7 @@ public class Patient {
     private String dateNaissance;
     private String sexe;
     private String motDePasse;
-    private int idMedecinFamille;
+    private Integer idMedecinFamille;
     
 
 
@@ -104,8 +104,9 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Patient{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroAssuranceMaladie=" + numeroAssuranceMaladie + ", numeroSequentiel=" + numeroSequentiel + ", dateNaissance=" + dateNaissance + ", sexe=" + sexe + ", motDePasse=" + motDePasse + '}';
+        return "Patient{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroAssuranceMaladie=" + numeroAssuranceMaladie + ", numeroSequentiel=" + numeroSequentiel + ", dateNaissance=" + dateNaissance + ", sexe=" + sexe + ", motDePasse=" + motDePasse + ", idMedecinFamille=" + idMedecinFamille + '}';
     }
 
+   
 
 }

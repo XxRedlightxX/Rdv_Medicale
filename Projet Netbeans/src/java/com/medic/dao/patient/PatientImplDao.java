@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -333,7 +334,12 @@ public class PatientImplDao implements PatientDao {
             ps.setString(7, patient.getSexe());
             ps.setString(8, patient.getMotDePasse());
             ps.setString(8, patient.getMotDePasse());
-            ps.setInt(9, medecin.getNumeroProfessionel());
+            if (idMedecin == 0){
+                ps.setNull(9,Types.NULL);
+            } else {
+                ps.setInt(9, medecin.getNumeroProfessionel());
+            }
+            
 
             nbLigne = ps.executeUpdate();
             conn.commit();
@@ -400,8 +406,13 @@ public class PatientImplDao implements PatientDao {
             ps.setInt(5, patient.getNumeroSequentiel());
             ps.setString(6, patient.getDateNaissance());
             ps.setString(7, patient.getSexe());        
-            ps.setString(8, patient.getMotDePasse());     
-            ps.setInt(9,idMedecin);
+            ps.setString(8, patient.getMotDePasse());    
+            if (idMedecin == 0){
+                ps.setNull(9,Types.NULL);
+            } else {
+                ps.setInt(9,idMedecin);
+            }
+            
             ps.setInt(10,idFindPatient);
 
             nbLigne = ps.executeUpdate();
@@ -474,7 +485,6 @@ public class PatientImplDao implements PatientDao {
                 idMaximal = result.getInt("max(idpatient)");
             }
             
-            System.out.println(idMaximal);
             ConnexionBD.closeConnection();
 
         } catch (SQLException ex) {

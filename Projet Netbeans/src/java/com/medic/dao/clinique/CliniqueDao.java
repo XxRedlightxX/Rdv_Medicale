@@ -26,5 +26,6 @@ public interface CliniqueDao {
     boolean create(Clinique clinique);
     boolean update(Clinique clinique,int idFindClinique);
     boolean delete(int id);
+    int findMaxIdClinique();
 }
 

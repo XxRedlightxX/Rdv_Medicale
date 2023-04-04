@@ -68,10 +68,11 @@
 
                         <label for="password">Clinique : </label>
                         <select id="idClinique" name="idClinique">
+                            <option value = "0">Aucun</option>
                             <c:forEach var="uneClinique" items="${requestScope.listeCliniques}" >
                                 <option value="${uneClinique.id}">
                                     ${uneClinique.nom}</option>
-                                </c:forEach>
+                            </c:forEach>
                         </select> <br><br>
 
 

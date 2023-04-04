@@ -39,7 +39,10 @@ public class CliniqueImplDao implements CliniqueDao {
     private static final String SQL_SELECT_ALLPATIENTS = "select p.idpatient,p.nom,p.prenom,p.assurance,p.numSeq_assurance,p.naissance,p.sexe,p.password from patients as p join medecin as m on p.medecin_idmedecin = m.idmedecin join clinique as c on c.idclinique = m.clinique_idclinique where c.nom = ?;";
     private static final String SQL_INSERT_CLINIQUE = "insert into clinique(idclinique,nom,coordonnees) value(?,?,?)";
     private static final String SQL_UPDATE_CLINIQUE = "update clinique set idclinique =?,nom=?, coordonnees=? where idclinique= ?";
-    private static final String SQL_DELETE_CLINIQUE = "delete from clinique where idmedecin = ?";
+    private static final String SQL_DELETE_CLINIQUE = "delete from clinique where idclinique = ?";
+    private static final String SQL_DELETE_ID_CLINIQUE_DES_MEDECINS = "UPDATE medecin SET clinique_idclinique = NULL WHERE (clinique_idclinique = ?)";
+    private static final String SQL_SELECT_MAX_ID_CLINIQUE = "SELECT max(idclinique) FROM clinique";
+
 
             
     @Override
@@ -367,8 +370,12 @@ public class CliniqueImplDao implements CliniqueDao {
         boolean retour = false;
         int nbLigne = 0;
         PreparedStatement ps;
+        PreparedStatement ps1;
         try {
             // Désactiver les contraintes de clé étrangère
+            ps1 = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_ID_CLINIQUE_DES_MEDECINS);
+            ps1.setInt(1, id);
+            ps1.executeUpdate();
             ps = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_CLINIQUE);
             ps.setInt(1, id);
 
@@ -383,6 +390,30 @@ public class CliniqueImplDao implements CliniqueDao {
         }
         ConnexionBD.closeConnection();
         return retour;
+    }
+    @Override
+    public int findMaxIdClinique() {
+        Integer idMaximal = null;
+        try {
+
+            // Initilise la requete préparé de la basé sur la connexion
+            // la requete SQL passé en argument pour construire l'objet PreparedStatement
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_SELECT_MAX_ID_CLINIQUE);
+            // on initialise la propriete nom du l'ulisateur avec sa premiere valeur
+
+            // on execute la requete  et on recupere les resultats dans la requete
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                idMaximal = result.getInt("max(idclinique)");
+            }
+              
+            ConnexionBD.closeConnection();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CliniqueImplDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return idMaximal;
     }
     
 

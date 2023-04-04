@@ -46,6 +46,7 @@
                 <input type="submit" value="Ajouter un Médecin">
             </form>
         </div>
+        <br>
         <div id="containerListe" style="height:60vh;overflow:auto;">   
             <h1 style="margin-right: 50%">Médecins: </h1>
                 <c:choose>
@@ -54,7 +55,7 @@
                         <c:forEach var="unMedecin" items="${sessionScope.listeMedecins}" >
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
-                                <td rowspan="2"><img src="imageWeb2/patient_vide.png" alt="Trulli" width="125" height="125"></td>
+                                <td rowspan="2"><img src="imageWeb2/patient_icon.png" alt="Trulli" width="125" height="125"></td>
                                 <td rowspan="2"><table>
                                         <tr>
                                             <th>Nom:</th>
@@ -78,7 +79,14 @@
                                             <th>Clinique où médecin est employé:</th>
                                                 <jsp:useBean id="test" class="com.medic.service.CliniqueService"/>
 
+                                            
+                                            <c:if test = "${unMedecin.idCliniqueEmploi != 0}">
                                             <td>${test.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>
+                                            </c:if>
+                                            
+                                            <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                            <td>Aucun</td>
+                                            </c:if>
 
                                         </tr>
                                     </table></td>

@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,6 +38,7 @@ public class MedecinImplDao implements MedecinDao {
     private static final String SQL_SELECT_BY_COORDONNEES = "SELECT * from medecin where coordonnees_medecin = ?";
     private static final String SQL_SELECT_BY_CLINIQUE = "SELECT * from medecin where clinique_idclinique = ?";
     private static final String SQL_SELECT_MAX_ID_MEDECIN = "SELECT max(idmedecin) FROM medecin";
+    private static final String SQL_DELETE_ID_MEDECIN_DES_PATIENTS = "UPDATE patients SET medecin_idmedecin = NULL WHERE (medecin_idmedecin = ?)";
 
     @Override //Bug avec Le champ mot de passe ne s'insère dans la BD
     public List<Medecin> findAll() {
@@ -360,7 +362,12 @@ public class MedecinImplDao implements MedecinDao {
             ps.setFloat(5, medecin.getFacturation());
             ps.setString(6, medecin.getMotDePasse());
             ps.setString(7, medecin.getCoordonnees());
-            ps.setInt(8, clinique.getId());
+            if (idClinique == 0){
+                ps.setNull(8,Types.NULL);
+            } else {
+                ps.setInt(8, clinique.getId());
+            }
+            
 
             nbLigne = ps.executeUpdate();
 
@@ -407,7 +414,11 @@ public class MedecinImplDao implements MedecinDao {
             ps.setFloat(4, medecin.getFacturation());
             ps.setString(5, medecin.getMotDePasse());
             ps.setString(6, medecin.getCoordonnees());
-            ps.setInt(7, idClinique);
+            if (idClinique == 0){
+                ps.setNull(7,Types.NULL);
+            } else {
+                ps.setInt(7, idClinique);
+            }
             ps.setInt(8, medecin.getNumeroProfessionel());
             ps.setInt(9, idFindMedecin);
 
@@ -431,8 +442,12 @@ public class MedecinImplDao implements MedecinDao {
         boolean retour = false;
         int nbLigne = 0;
         PreparedStatement ps;
+        PreparedStatement ps1;
         try {
             // Désactiver les contraintes de clé étrangère
+            ps1 = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_ID_MEDECIN_DES_PATIENTS);
+            ps1.setInt(1, id);
+            ps1.executeUpdate();
             ps = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_MEDECIN_PAR_ID);
             ps.setInt(1, id);
 

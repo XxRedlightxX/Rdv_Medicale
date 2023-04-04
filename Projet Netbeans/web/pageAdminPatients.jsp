@@ -46,6 +46,7 @@
                 <input type="submit" value="Ajouter un Patient">
             </form>
         </div>
+        <br>
         <div id="containerListe" style="height:60vh;overflow:auto;">   
             <h1 style="margin-right: 50%">Patients: </h1>
                 <c:choose>
@@ -54,7 +55,7 @@
                         <c:forEach var="unPatient" items="${sessionScope.listePatients}" >
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
-                                <td rowspan="2"><img src="imageWeb2/patient_vide.png" alt="Trulli" width="125" height="125"></td>
+                                <td rowspan="2"><img src="imageWeb2/patient_icon.png" alt="Trulli" width="125" height="125"></td>
                                 <td rowspan="2"><table>
                                         <tr>
                                             <th>Nom:</th>
@@ -76,10 +77,18 @@
                                         </tr>
                                         <tr>
                                             <th>Nom du médecin de famille:</th>
-                                                <jsp:useBean id="test" class="com.medic.service.MedecinService"/>
+                                                <jsp:useBean id="medecinTest" class="com.medic.service.MedecinService"/>
+                                     
+                                            <c:if test = "${unPatient.idMedecinFamille != 0}">
+                                            <td>Dr. ${medecinTest.chercherMedecinParId(unPatient.idMedecinFamille).prenom} ${medecinTest.chercherMedecinParId(unPatient.idMedecinFamille).nom} </td>
+                                            </c:if>
+                                            
+                                            <c:if test = "${unPatient.idMedecinFamille == 0}">
+                                            <td>Aucun</td>
+                                            </c:if>
+                             
 
-                                            <td>Dr. ${test.chercherMedecinParId(unPatient.idMedecinFamille).prenom} ${test.chercherMedecinParId(unPatient.idMedecinFamille).nom} </td>
-
+                                       
                                         </tr>
                                     </table></td>
                                 <td><form action="administrateurController" method="post">
