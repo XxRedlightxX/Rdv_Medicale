@@ -53,5 +53,22 @@ public class ServicesCliniqueService {
         retour = dao.delete(idServicesClinique);
         return retour;
     }
+    
+    public List<ServicesClinique> afficherLesServicesDuneClinique(int idClinique){
+        listeServicesClinique  = dao.findAllSeviceUneClinique(idClinique);
+        return listeServicesClinique;
+    }
+    
+    public boolean ajouterUnServiceAClinique(int idClinique,int idService){
+        retour  = dao.ajouterSeviceUneClinique(idClinique, idService);
+        return retour;
+    }
+    
+    public boolean supprimerUnServiceAClinique(int idClinique,int idService){
+        retour  = dao.supprimerSeviceUneClinique(idClinique, idService);
+        return retour;
+    }
+
+
 
 }

@@ -154,6 +154,8 @@ public class AdministrateurController extends HttpServlet {
             request.setAttribute("message", message);
 
             session.setAttribute("listePatients", patientService.afficherLesPatients());
+            session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+            session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
 
             request.getRequestDispatcher("pageAdminPatients.jsp").forward(request, response);
 
@@ -210,7 +212,9 @@ public class AdministrateurController extends HttpServlet {
             String message = "Le Médecin " + unNom + " " + unPrenom + " à été supprimé";
             request.setAttribute("message", message);
 
+            session.setAttribute("listePatients", patientService.afficherLesPatients());
             session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
+            session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
 
             request.getRequestDispatcher("pageAdminMedecins.jsp").forward(request, response);
 
@@ -263,6 +267,8 @@ public class AdministrateurController extends HttpServlet {
             String message = "La clinique " + unNom + " à été supprimé";
             request.setAttribute("message", message);
 
+            session.setAttribute("listePatients", patientService.afficherLesPatients());
+            session.setAttribute("listeMedecins", medecinService.afficherLesMedecin());
             session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
 
             request.getRequestDispatcher("pageAdminCliniques.jsp").forward(request, response);

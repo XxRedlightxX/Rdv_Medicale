@@ -16,8 +16,11 @@ public interface ServicesCliniqueDao {
     ServicesClinique findById(int id);
     ServicesClinique findByName(String nom);
     ServicesClinique findByDescription(String description);
+    List<ServicesClinique> findAllSeviceUneClinique(int idClinique);
+    boolean ajouterSeviceUneClinique(int idClinique,int idService);
+    boolean supprimerSeviceUneClinique(int idClinique,int idService);
     boolean ajouterService(ServicesClinique service);
     boolean update(ServicesClinique service,int idFindServiceClinique);
-    boolean delete(int id);
+    boolean delete(int idService);
     
 }
