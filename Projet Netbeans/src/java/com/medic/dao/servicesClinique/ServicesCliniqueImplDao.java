@@ -29,7 +29,11 @@ public class ServicesCliniqueImplDao implements ServicesCliniqueDao {
     private static final String SQL_INSERT_SERVICE = "insert into services(idservice,nom,description) value(?,?,?)";
     private static final String SQL_UPDATE_SERVICE = "update services set idservice=?, nom = ?, description =? where idservice= ?";   
     private static final String SQL_DELETE_SERVICES_PAR_ID = "delete from services where idservice = ?";
-    
+    private static final String SQL_FIND_SERVICES_DUNE_CLINIQUE = "SELECT s.idservice, s.nom, s.description FROM services s join clinique_has_services cs on s.idservice = cs.services_idservice join clinique c on cs.clinique_idclinique = c.idclinique where c.idclinique  = ?";
+    private static final String SQL_AJOUTER_SERVICE_A_UNE_CLINIQUE ="INSERT INTO clinique_has_services (`clinique_idclinique`, `services_idservice`) VALUES (?, ?)";
+    private static final String SQL_SUPPRIMER_SERVICE_A_UNE_CLINIQUE ="DELETE FROM clinique_has_services WHERE (clinique_idclinique = ?) and (services_idservice = ?);";
+
+
     @Override
     public List<ServicesClinique> findAll() {
         List<ServicesClinique> listeServices = null;
@@ -236,6 +240,104 @@ public class ServicesCliniqueImplDao implements ServicesCliniqueDao {
             //ps1.executeUpdate();
             ps = ConnexionBD.getConnection().prepareStatement(SQL_DELETE_SERVICES_PAR_ID);
             ps.setInt(1, id);
+
+            nbLigne = ps.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            Logger.getLogger(ServicesCliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+
+    @Override
+    public List<ServicesClinique> findAllSeviceUneClinique(int idClinique) {
+        List<ServicesClinique> listeServices = null;
+        
+        try {
+
+            // Initilise la requete préparé de la basé sur la connexion
+            // la requete SQL passé en argument pour construire l'objet PreparedStatement
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_FIND_SERVICES_DUNE_CLINIQUE);
+            // on initialise la propriete nom du l'ulisateur avec sa premiere valeur
+            ps.setInt(1, idClinique);
+
+            // on execute la requete  et on recupere les resultats dans la requete
+            ResultSet result = ps.executeQuery();
+            listeServices = new ArrayList<>();
+
+            //initilisation de la listeUtilisateur
+            while (result.next()) {
+                ServicesClinique service = new ServicesClinique();
+                service.setId(result.getInt("idservice"));
+                service.setNom(result.getString("nom"));
+                service.setDescription(result.getString("description")); 
+                listeServices.add(service);
+            }
+            ConnexionBD.closeConnection();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listeServices;
+    }
+
+    @Override
+    public boolean ajouterSeviceUneClinique(int idClinique,int idService) {
+        boolean retour = false;
+        int nbLigne = 0;
+        Connection conn = null;
+
+        try {
+            conn = ConnexionBD.getConnection();
+            PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_AJOUTER_SERVICE_A_UNE_CLINIQUE);
+            //   Insérer les données dans la table parente, utilisateurs
+            //ps.setInt(1, medecin.getNumeroProfessionel());
+            conn.setAutoCommit(false);
+            ps.setInt(1,idClinique);
+            ps.setInt(2, idService);
+            nbLigne = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            // Si une erreur se produit, annuler les changements en effectuant un rollback
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    conn.setAutoCommit(true); // réactive l'auto-commit
+                    conn.close();
+
+                } catch (SQLException ex) {
+                    // Traiter l'exception ici
+                    System.out.println("Erreur dans la transaction ");
+                }
+            }
+
+            Logger.getLogger(ServicesCliniqueImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+
+    @Override
+    public boolean supprimerSeviceUneClinique(int idClinique,int idService) {
+        boolean retour = false;
+        int nbLigne = 0;
+        PreparedStatement ps;
+        try {
+            // Désactiver les contraintes de clé étrangère
+            //ps1 = ConnexionBD.getConnection().prepareStatement(SQL_DESACTIVER_CONTRAINTS);
+            //ps1.executeUpdate();
+            ps = ConnexionBD.getConnection().prepareStatement(SQL_SUPPRIMER_SERVICE_A_UNE_CLINIQUE);
+            ps.setInt(1, idClinique);
+            ps.setInt(2, idService);
 
             nbLigne = ps.executeUpdate();
         } catch (SQLException e) {

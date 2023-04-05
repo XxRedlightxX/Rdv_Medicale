@@ -28,9 +28,10 @@ import java.util.Scanner;
 public class TestDeBase {
 
     public static void main(String[] args) throws SQLException {
-        testUpdate();
         //testUpdate();
-
+        //testUpdate();
+        ServicesCliniqueImplDao s = new ServicesCliniqueImplDao();
+        System.out.println(s.supprimerSeviceUneClinique(20, 4));
         //cliniqueTestfindAllService();
         //findmaxidpatient();
         //testUpdateServices();
