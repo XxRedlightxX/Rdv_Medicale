@@ -23,6 +23,10 @@
         <servlet-name>AdministrateurController</servlet-name>
         <servlet-class>com.medic.controller.AdministrateurController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CliniqueController</servlet-name>
+        <servlet-class>com.medic.controller.CliniqueController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/testController</url-pattern>
@@ -42,6 +46,10 @@
     <servlet-mapping>
         <servlet-name>AdministrateurController</servlet-name>
         <url-pattern>/administrateurController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CliniqueController</servlet-name>
+        <url-pattern>/cliniqueController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
