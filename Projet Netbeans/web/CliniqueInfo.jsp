@@ -25,7 +25,7 @@
          <form action="cliniqueController" method="get">
 
                     <select name="nomclinique" id="nomclinique">
-                        <option value="Clinique Rosemon">Clinique Rosemont</option>
+                        <option value="Clinique Rosemont">Clinique Rosemont</option>
                         <option value="Dr Mathieu et associés">Dr Mathieu et Associes</option>
                         <option value="Clinique sante vivre">Clinique Santé et Vivre</option>
                         <option value="Clinique du matin">Clinique du Matin</option>
@@ -50,6 +50,15 @@
                     <input type="radio" name="typeService" value="Expediteur"/> <label>Dépistage d'ITSS</label> <br><!-- comment -->
                     <input type="submit"  value="typeService" />
                 </form>
+                <c:choose>
+          
+            <c:when test= "${not empty requestScope.listeClinique1}">
+                 <h2>${requestScope.listeClinique1}</h2> 
+            </c:when>
+            <c:otherwise>
+                <h2>Liste des utilisateurs</h2>
+            </c:otherwise>
+        </c:choose>
         
         
         
@@ -62,12 +71,44 @@
                 <th> les patients de la clinique en indiquant le médecin et le service</th>
                 
 
-                <th>Status</th>
+                
                 
             </tr>
-            <c:if test="${not empty requestScope.listeClinique}">
+            <c:choose>
+            <c:when test= "${not empty requestScope.clinique}">
                 
             
+                <tr>
+                            
+                            
+                            <td>    ${clinique.nom} </td> 
+                            
+                            <td>${clinique.coordonnees} </td>
+                            
+                            <td> <c:if test = "${unPatient.idMedecinFamille != 0}">
+                                     <c:forEach var="user2" items="${test.chercherParClinique(user.id)}" >
+                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>
+                                            
+                                     </c:forEach>
+                                        </c:if>
+                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
+                                             <c:forEach var="user3" items="${test2.afficherLesServicesDuneClinique(user.id)}" >
+                                        <td>  ${user3.nom} ${user3.description} </td>
+                                            
+                                     </c:forEach>
+                                        </c:if></td>
+                                         
+                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
+                                             <c:forEach var="user4" items="${test.afficherLesMedecin()}" >
+                                        <td>  ${user4.nom}  </td>
+                                            
+                                     </c:forEach>
+                                         </c:if>
+
+                              
+                        </tr>
+                </c:when>
+                <c:otherwise>
             <c:forEach var="user" items="${requestScope.listeClinique}" >
                         <tr>
                             
@@ -99,7 +140,10 @@
                               
                         </tr>
             </c:forEach>
-                        </c:if>
+                        
+                        </c:otherwise>
+                        </c:choose>
+                        
                         
                         </table>
             

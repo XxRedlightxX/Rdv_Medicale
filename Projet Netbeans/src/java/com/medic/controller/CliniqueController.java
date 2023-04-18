@@ -31,26 +31,26 @@ public class CliniqueController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String nomclinique = request.getParameter("nomclinique");
         String nom = request.getParameter("nom");
-        String typeRole = request.getParameter("typeRole");
+        String typeService = request.getParameter("typeService");
         //request.setAttribute("roles", cliniqueService.afficherLesCliniques());
         
         
         
-         /*if ( nom != null && !nom.equals("")) {
+         if ( nom != null && !nom.equals("")) {
 //           if(!nom.equals("")){
 
             clinique = cliniqueService.chercherCliniqueParNom(nom);
-            request.setAttribute("utilisateur", clinique);
+            request.setAttribute("clinique", clinique);
             String listeCliniqu = " Profile de " + nom;
-            request.setAttribute("listeClinique", listeCliniqu);
+            request.setAttribute("listeClinique1", listeCliniqu);
             request.getRequestDispatcher("CliniqueInfo.jsp").forward(request, response);
 //           }else {
 //               System.out.println("Nom vide");
-        }else {*/
+        }else {
             listeClinique = cliniqueService.afficherLesCliniques();
             request.setAttribute("listeClinique", listeClinique);
             request.getRequestDispatcher("CliniqueInfo.jsp").forward(request, response);
-            
+         }  
         
     }
 
