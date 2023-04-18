@@ -21,6 +21,7 @@
     <body>
         <jsp:useBean id="test" class="com.medic.service.MedecinService"/>
         <jsp:useBean id="test2" class="com.medic.service.ServicesCliniqueService"/>
+        <jsp:useBean id="test3" class="com.medic.service.CliniqueService"/>
          <form action="cliniqueController" method="get">
 
                     <select name="nomclinique" id="nomclinique">
@@ -83,10 +84,17 @@
                                         </c:if>
                                         <td><c:if test = "${unPatient.idMedecinFamille != 0}">
                                              <c:forEach var="user3" items="${test2.afficherLesServicesDuneClinique(user.id)}" >
-                                        <td> ${user3.id} ${user3.nom} ${user3.description} </td>
+                                        <td>  ${user3.nom} ${user3.description} </td>
                                             
                                      </c:forEach>
                                         </c:if></td>
+                                         
+                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
+                                             <c:forEach var="user4" items="${test.afficherLesMedecin()}" >
+                                        <td>  ${user4.nom}  </td>
+                                            
+                                     </c:forEach>
+                                         </c:if>
 
                               
                         </tr>
