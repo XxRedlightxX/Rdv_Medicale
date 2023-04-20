@@ -28,16 +28,12 @@
         <servlet-class>com.medic.controller.CliniqueController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PatientControlleur</servlet-name>
-        <servlet-class>com.medic.controller.PatientControlleur</servlet-class>
+        <servlet-name>DispoMedecinController</servlet-name>
+        <servlet-class>com.medic.controller.DispoMedecinController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TestPatiC</servlet-name>
-        <servlet-class>com.medic.controller.TestPatiC</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MedecinControlleur</servlet-name>
-        <servlet-class>com.medic.controller.MedecinControlleur</servlet-class>
+        <servlet-name>RendezVousController</servlet-name>
+        <servlet-class>com.medic.controller.RendezVousController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
@@ -64,16 +60,12 @@
         <url-pattern>/cliniqueController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PatientControlleur</servlet-name>
-        <url-pattern>/patientControlleur</url-pattern>
+        <servlet-name>DispoMedecinController</servlet-name>
+        <url-pattern>/dispoMedecinController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TestPatiC</servlet-name>
-        <url-pattern>/testPatiC</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MedecinControlleur</servlet-name>
-        <url-pattern>/medecinControlleur</url-pattern>
+        <servlet-name>RendezVousController</servlet-name>
+        <url-pattern>/rendezVousController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
