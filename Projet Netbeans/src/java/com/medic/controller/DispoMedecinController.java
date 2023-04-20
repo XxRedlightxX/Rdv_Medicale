@@ -1,14 +1,13 @@
 /*
-* Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-* Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package com.medic.controller;
 
-import com.medic.entities.Patient;
-import com.medic.service.PatientService;
+import com.medic.entities.DispoMedecin;
+import com.medic.service.DispoMedecinService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,29 +15,37 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author amirh
+ * @author hundl
  */
-public class TestController extends HttpServlet {
-
+public class DispoMedecinController extends HttpServlet {
+    DispoMedecinService dispoDao = new DispoMedecinService();
+    DispoMedecin uneDispo = new DispoMedecin();
     
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List<Patient> listePatients;
-    Patient patient = null;
-    PatientService patientService = new PatientService();
-
-        String nom = request.getParameter("nom");
-        if (nom != null && !nom.equals("")) {
-            request.setAttribute("rechercheListePatient", patientService.chercherPatientParNom(nom));
-            request.getRequestDispatcher("Accueil.jsp").forward(request, response);
+        
+        
+        
+        uneDispo.setIdDispoMedecin(dispoDao.trouverLeIdMaxDispoMedecin()+1);
+        uneDispo.setIdMedecinDispo(Integer.parseInt(request.getParameter("idMedecinDispo")));
+        uneDispo.setDateDispo(request.getParameter("date"));
+        uneDispo.setHeureDispoDebut(request.getParameter("heureD"));
+        uneDispo.setHeureDispoFin(request.getParameter("heureF"));
+        DispoMedecin dispoExistante = dispoDao.verifierExistanceDispoMedecin(uneDispo.getIdDispoMedecin(),uneDispo.getDateDispo());
+        if (dispoExistante != null){
+            request.setAttribute("invalide", "Vous avez déja établi des créneaux pour cette période veuillez choisir modifier");
+            request.getRequestDispatcher("Medecin.jsp").include(request, response);
         } else {
-            request.getRequestDispatcher("Accueil.jsp").include(request, response);
+            dispoDao.ajouterDispoMedecin(uneDispo);
         }
 
+        
+        
+        
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
