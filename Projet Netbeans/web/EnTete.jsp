@@ -24,18 +24,17 @@
                         <div class="container" id="menu">
                             <!-- probablement affiche les informations d'un cours dedans -->
                             <a href="Patient.jsp">Accueil Patient</a>  
-                            <a href="AfficherRendezVousPatient.jsp">Consulter mes rendez-vous</a>  
-                            <a href="PriseRendezVous.jsp">Prendre un rendez-vous</a>
+                            <a href="xyz.jsp">Voir mes informations</a>
+                            <a href="xyz.jsp">Prendre un rendez-vous</a>
                             <a href="xyz.jsp">Annuler/Modifier un rendez-vous</a>
                             <a href="xyz.jsp">Contacter un médecin</a>
-                            <a href="CliniqueInfo.jsp">Recherche de cliniques</a>
                         </div>     
                     </c:when>
 
                     <c:when test = "${sessionScope.typeCompte == 'medecin'}">
                         <div class="container" id="menu">
                             <a href="Medecin.jsp">Accueil Médecin</a>
-                            <a href="CliniqueInfo.jsp">Recherche de cliniques</a>
+                            <a href="xyz.jsp">Autres pages A faire au besoin</a>
                         </div>     
                     </c:when>
 
@@ -44,7 +43,6 @@
                             <a href="pageAdminPatients.jsp">Gestion des Patients</a>
                             <a href="pageAdminMedecins.jsp">Gestion des Médecins</a>
                             <a href="pageAdminCliniques.jsp">Gestion des Cliniques</a>
-                            <a href="CliniqueInfo.jsp">Recherche de cliniques</a>
                         </div>     
                     </c:when>
 

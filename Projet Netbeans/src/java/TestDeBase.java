@@ -6,11 +6,9 @@ import com.medic.dao.servicesClinique.ServicesCliniqueImplDao;
 import com.medic.entities.Clinique;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
-import com.medic.entities.RendezVous;
 import com.medic.entities.ServicesClinique;
 import com.medic.service.CliniqueService;
 import com.medic.service.PatientService;
-import com.medic.service.RendezVousService;
 import com.medic.singleton.ConnexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,17 +30,12 @@ public class TestDeBase {
     public static void main(String[] args) throws SQLException {
         //testUpdate();
         //testUpdate();
-        RendezVousService dao = new RendezVousService();
-        RendezVous unRendezVous = new RendezVous();
-            unRendezVous.setIdRendezVous(dao.trouverLeIdMaxRendezVous()+1);
-            unRendezVous.setIdPatientRv(1000);
-            unRendezVous.setIdMedecinRv(100);
-            unRendezVous.setDateRv("2023-04-21");
-            unRendezVous.setHeureRv("12");
-            unRendezVous.setRaisonConsult("ss");
-            unRendezVous.setDescriptionConsult("ssw");
-            dao.ajouterRendezVous(unRendezVous);
-            System.out.println(unRendezVous);
+        ServicesCliniqueImplDao s = new ServicesCliniqueImplDao();
+       // System.out.println(s.supprimerSeviceUneClinique(20, 4));
+        PatientService pas = new PatientService ();
+        pas.chercherPatientParNom("");
+       System.out.println(pas);
+        
         //cliniqueTestfindAllService();
         //findmaxidpatient();
         //testUpdateServices();

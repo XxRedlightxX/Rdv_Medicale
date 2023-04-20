@@ -61,7 +61,6 @@ public class ConnexionController extends HttpServlet {
                 if (patient != null) {
                     connexion = true;
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("username",username);
                     session.setAttribute("nom", patient.getNom());
                     session.setAttribute("prenom", patient.getPrenom());
                     session.setAttribute("typeCompte", typeCompte);
@@ -95,7 +94,6 @@ public class ConnexionController extends HttpServlet {
                 if (medecin != null) {
                     connexion = true;
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("username",username);
                     session.setAttribute("nom", medecin.getNom());
                     session.setAttribute("prenom", medecin.getPrenom());
                     session.setAttribute("typeCompte", typeCompte);
@@ -128,7 +126,6 @@ public class ConnexionController extends HttpServlet {
                 if (admin != null) {
                     connexion = true;
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("username",username);
                     session.setAttribute("nom", admin.getUsername());
                     session.setAttribute("prenom", "ADMIN");
                     session.setAttribute("typeCompte", typeCompte);

@@ -48,6 +48,7 @@ public class PatientImplDao implements PatientDao {
             //Initialise la requête préparée basée sur la connexion
             // la requête SQL passé en argument pour construire l'objet preparedStatement
             PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(SQL_SELECT_PATIENT);
+            System.out.println(" result : " + ps.toString());
             //On execute la requête et on récupère les résultats dans la requête 
             // dans ResultSet
             ResultSet result = ps.executeQuery();

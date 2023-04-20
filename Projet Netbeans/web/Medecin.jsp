@@ -1,6 +1,11 @@
 
 
+<%@page import="com.medic.entities.Medecin"%>
+<%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+
+
+
 <%@page import="java.util.ArrayList"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,7 +23,7 @@
     </head>
 
     <jsp:include page="EnTete.jsp"/>
-    
+
     <body id="body">
         <div id="tab">
 
@@ -32,23 +37,15 @@
                                 <h2>Définir les créneaux de disponibilité:</h2>
                             </td>
                             <td><button onclick="document.getElementById('calForm').style.display = 'block'">Calendrier</button>
-                                
-                                <form id="calForm" style="display: none;" action="dispoMedecinController">
+
+                                <form id="calForm" style="display: none;">
                                     <label for="date">Date:</label>
                                     <input type="date" id="date" name="date"><br><br>
                                     <label for="heureD">Heure debut: </label>
-                                    <select id="heureD" name="heureD" form="calForm">
-                                        <c:forEach var="uneHeureD" begin="6" end="20">
-                                        <option value="${uneHeureD}">${uneHeureD}:00</option>
-                                        </c:forEach>
-                                    </select><br><br>
-                                    <label for="heureF">Heure Fin: </label>
-                                    <select id="heureF" name="heureF" form="calForm">
-                                        <c:forEach var="uneHeureF" begin="6" end="20">
-                                        <option value="${uneHeureF}" <c:if test ="${uneHeureF == 18}">selected="selected"</c:if>>${uneHeureF}:00</option>
-                                        </c:forEach>
-                                    </select><br><br>
-                                    <input type="submit" value="Ajouter créneau">
+                                    <input type="time" id="heurD" name="heureD"><br><br>
+                                    <label for="heureD">Heure Fin: </label>
+                                    <input type="time" id="heurF" name="heureF"><br><br>
+                                    <button type="button" onclick="ajouterCreneau()">Ajouter cr?neau</button>
                                 </form></td>
 
                         </tr>
@@ -89,7 +86,7 @@
                                 <h2> <a href="#" onclick="afficherBlock()">Envoyer une invitation a un patient:</a></h2>
                                 <div id="block" style="display:none;">
                                     <h4>Chercher un patient par nom</h4>
-                                    <form action="testController" method="get"> 
+                                    <form action="patientControlleur" method="get"> 
                                         <input type="search" name="nom">
                                         <input type="submit"  value="nom" />
                                     </form>
@@ -104,8 +101,10 @@
                                 <h2> <a href="#" onclick="afficherMontant()">Tarif de rendez-vous:</a></h2>
                                 <div id="montant" style="display:none;">
                                     <h3>Fixer le tarif</h3>
-                                    <input type="number" id="tarif" name="tarif" min="0" max="9999">
-                                    <button onclick="validerTarif()">Valider</button>
+                                    <form action="medecinControlleur" method="get"> 
+                                    <input type="number" id="tarif" name="tarif" min="0" max="9999" >
+                                     <input type="submit"  value="tarif" /> 
+                                    
                                 </div>
                             </td>
                         </tr>
@@ -138,6 +137,45 @@
             // DIFENIR Tableau pour stocker les cr?neaux de disponibilit?
             var creneaux = [];
 
+            function ajouterCreneau() {
+                // R?cup?rer les valeurs saisies dans le formulaire
+                var date = document.getElementById("date").value;
+                var heurDebut = document.getElementById("heurD").value;
+                var heurFin = document.getElementById("heurF").value;
+
+                // Ajouter le cr?neau au tableau
+                creneaux.push({
+                    date: date,
+                    startTime: heurDebut,
+                    endTime: heurFin
+                });
+
+                // Mettre ? jour le tableau HTML
+                var tbody = document.getElementById("creneaux-table").getElementsByTagName('tbody')[0];
+                var newRow = tbody.insertRow();//ajouter une row vide
+                var dateCell = newRow.insertCell();//inserer celle dans 1er cell
+                dateCell.appendChild(document.createTextNode(date));
+                var startTimeCell = newRow.insertCell();
+                startTimeCell.appendChild(document.createTextNode(heurDebut));
+                var endTimeCell = newRow.insertCell();
+                endTimeCell.appendChild(document.createTextNode(heurFin));
+                var actionsCell = newRow.insertCell();
+                var supprimerButton = document.createElement("button");
+                supprimerButton.appendChild(document.createTextNode("Supprimer"));
+                supprimerButton.onclick = function () {
+                    // Retirer le cr?neau du tableau
+                    //creneaux.splice(creneaux.indexOf(creneau), 1);
+
+                    // Retirer la ligne du tableau HTML
+                    tbody.removeChild(newRow);
+                };
+                actionsCell.appendChild(supprimerButton);
+
+                // R?initialiser le formulaire
+                document.getElementById("date").value = "";
+                document.getElementById("heurD").value = "";
+                document.getElementById("heurF").value = "";
+            }
 
 
 
@@ -160,16 +198,23 @@
             }
 
 
-            function validerTarif() {
-                var tarif = document.getElementById("tarif").value;
-                alert("Le tarif a tarif fix " + tarif + " dollars.");
-                document.getElementById("montant").style.display = "none";
-            }
+             
+        </script> 
 
-        </script>
+        <c:forEach items="${rechercheListePatient}" var="patient">
+            <p>Patient: ${patient.nom}</p>
+            <label>Envoyer lui une invitation: </label>
+            <input id="invitation" name="invitation">
+<%-- Récupérer la liste depuis la session --%>
+<%
+List<Medecin> listeMedecins = (List<Medecin>) session.getAttribute("listeMedecins");
+%>
 
-        <c:forEach items="${requestScope.listePatient}" var="patient">
-            <p>${patient.nom}</p>
+<%-- Afficher la liste en utilisant une boucle forEach --%>
+<ul>
+    <% for (Medecin medecin : listeMedecins) { %>
+        <li>Nom: <%= medecin.getNom() %>, Prénom: <%= medecin.getPrenom() %>, Sp
+
         </c:forEach>
 
     </body>
