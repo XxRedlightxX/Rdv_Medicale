@@ -16,17 +16,28 @@
 
         <link rel="stylesheet" href="style.css">
         <style>
-            th {
-                text-align: left;
-                width: 100px;
-            }
-            td {
-                text-align: left;
-                padding-left:5%;
-                width:40%;
-            }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  background-color: white;
 
-        </style>
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  width: 50%;
+}
+
+
+</style>
 
     </head>
 
@@ -35,13 +46,15 @@
     <jsp:useBean id="patientTest" class="com.medic.service.PatientService"/>
     <jsp:useBean id="rendezVous" class="com.medic.service.RendezVousService"/>
     <jsp:useBean id="cliniqueTest" class="com.medic.service.CliniqueService"/>
+    <h2 style="text-align:center;color: black;">Rendez-vous pour ${patientTest.chercherParAssuranceMaladie(sessionScope.username).prenom} ${patientTest.chercherParAssuranceMaladie(sessionScope.username).nom}</h2>
+    <div style="height:65vh;overflow:auto;">
     <body id="body">
         </br>
         <br>
         <c:forEach var="unRendezVous" items="${rendezVous.chercherToutLesRendezVousIdPatient(patientTest.chercherParAssuranceMaladie(sessionScope.username).id)}" >
-            <table style="background-color: white;margin-left: auto;margin-right: auto;width: 50%">
+            <table>
                 <tr>
-                    <th>Nom Médecin :</th>
+                    <th>Nom du Médecin :</th>
                     <td>Dr. ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).prenom} ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).nom}</td>
                 </tr>
                 <tr>
@@ -72,9 +85,8 @@
             </table>
                 <br><br>
         </c:forEach>
-
-${sessionScope.username}
     </body>
+    <div>
 
     <jsp:include page="pied.jsp"/>
 

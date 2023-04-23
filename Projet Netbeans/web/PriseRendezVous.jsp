@@ -28,22 +28,37 @@
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
                 width: 100%;
+                background-color: white;
             }
 
-            td, th {
+            td {
                 border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-                height: 20px;
+                text-align: center;
+                height: 33px;
             }
 
             th {
-                width:50px;
+                border: 1px solid #dddddd;
+                text-align: center;
+                padding: 8px;
+                height: 20px;
+            }
+            input[type=submit] {
+                background-color: #0E86D4;
+                font-size: 15px;
+                border: none;
+                color: white;
+                padding: 8px;
+                width: 100%;
+                text-decoration: none;
+
+                cursor: pointer;
             }
 
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
+            
         </style>
 
     </head>
@@ -59,11 +74,11 @@
         <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>
         <h2>Prendre un rendez-vous avec son medecin de famille : 
             Dr. ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).prenom}
-        ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).nom}</h2>
+            ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).nom}</h2>
     </div>
     <body id="body">
         <div style="overflow: auto;height:70vh">
-            <table >
+            <table>
                 <tr>
                     <th></th>
                     <th>Dimanche</th>
@@ -90,12 +105,12 @@
                     <% for (int j = 0; j <= 6; j++) {%>
                     <td><%
                         PatientService patientDao = new PatientService();
-                        int idMedecinFamille = patientDao.chercherParAssuranceMaladie((String)session.getAttribute("username")).getIdMedecinFamille();  
-                        
+                        int idMedecinFamille = patientDao.chercherParAssuranceMaladie((String) session.getAttribute("username")).getIdMedecinFamille();
+
                         RendezVousService rendezVousDao = new RendezVousService();
                         RendezVous unRendezVous = null;
-                        unRendezVous = rendezVousDao.verifierRendezVousPris(idMedecinFamille, date.plusDays(j).toString(), String.valueOf(i));                              
-                        
+                        unRendezVous = rendezVousDao.verifierRendezVousPris(idMedecinFamille, date.plusDays(j).toString(), String.valueOf(i));
+
                         DispoMedecinService dispoMedecinDao = new DispoMedecinService();
                         DispoMedecin uneDispo = null;
                         uneDispo = dispoMedecinDao.verifierExistanceDispoMedecin(idMedecinFamille, date.plusDays(j).toString());;
@@ -109,17 +124,17 @@
                             }
                         }
                         if (unRendezVous != null) {%>
-                        Réservé<%
+                        Déja réservé<%
                         } else if (heureDansDispo == true) {%>
-                        <form action="rendezVousController" style="display: block;margin-left: auto;margin-right: auto;width: 50%;">
+                        <form action="rendezVousController" style="display: block;margin-left: auto;margin-right: auto;width: 65%;">
                             <input type="hidden" name="idPatient" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).id}">
                             <input type="hidden" name="idMedecin" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille}">
                             <input type="hidden" name="dateRv" value="<%=date.plusDays(j).toString()%>">
                             <input type="hidden" name="heureRv" value="<%=i%>">
                             <input type="hidden" name="etape1" value="1">
-                            <input type="submit" value="Prendre">
+                            <input type="submit" value="Disponible">
                         </form> 
-                        <%} else {%>Non-disponible<%}
+                        <%} else {%><%}
                         %>
                     </td>
                     <%}%>
