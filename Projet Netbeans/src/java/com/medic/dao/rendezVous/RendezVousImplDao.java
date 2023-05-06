@@ -56,7 +56,7 @@ public class RendezVousImplDao implements RendezVousDao {
                 unRendezVous.setDateRv(result.getString("dateRv"));
                 unRendezVous.setHeureRv(result.getString("heureRv"));
                 unRendezVous.setRaisonConsult(result.getString("raisonConsult"));
-                unRendezVous.setRaisonConsult(result.getString("descriptionConsult"));
+                unRendezVous.setDescriptionConsult(result.getString("descriptionConsult"));
                 
                 listeRendezVous.add(unRendezVous);
             }
@@ -90,7 +90,7 @@ public class RendezVousImplDao implements RendezVousDao {
                 unRendezVous.setDateRv(result.getString("dateRv"));
                 unRendezVous.setHeureRv(result.getString("heureRv"));
                 unRendezVous.setRaisonConsult(result.getString("raisonConsult"));
-                unRendezVous.setRaisonConsult(result.getString("descriptionConsult"));
+                unRendezVous.setDescriptionConsult(result.getString("descriptionConsult"));
 
             }
             ConnexionBD.closeConnection();
@@ -126,7 +126,7 @@ public class RendezVousImplDao implements RendezVousDao {
                 unRendezVous.setDateRv(result.getString("dateRv"));
                 unRendezVous.setHeureRv(result.getString("heureRv"));
                 unRendezVous.setRaisonConsult(result.getString("raisonConsult"));
-                unRendezVous.setRaisonConsult(result.getString("descriptionConsult"));
+                unRendezVous.setDescriptionConsult(result.getString("descriptionConsult"));
                 
                 listeRendezVous.add(unRendezVous);
 
@@ -164,7 +164,7 @@ public class RendezVousImplDao implements RendezVousDao {
                 unRendezVous.setDateRv(result.getString("dateRv"));
                 unRendezVous.setHeureRv(result.getString("heureRv"));
                 unRendezVous.setRaisonConsult(result.getString("raisonConsult"));
-                unRendezVous.setRaisonConsult(result.getString("descriptionConsult"));
+                unRendezVous.setDescriptionConsult(result.getString("descriptionConsult"));
                 
                 listeRendezVous.add(unRendezVous);
 
@@ -329,7 +329,7 @@ public class RendezVousImplDao implements RendezVousDao {
                 unRendezVous.setDateRv(result.getString("dateRv"));
                 unRendezVous.setHeureRv(result.getString("heureRv"));
                 unRendezVous.setRaisonConsult(result.getString("raisonConsult"));
-                unRendezVous.setRaisonConsult(result.getString("descriptionConsult"));
+                unRendezVous.setDescriptionConsult(result.getString("descriptionConsult"));
 
             }
             ConnexionBD.closeConnection();
