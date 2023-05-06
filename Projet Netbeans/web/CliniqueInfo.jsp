@@ -48,7 +48,7 @@
                     <input type="radio" name="typeService" value="Assistant"/> <label>Dermatologie</label> <br><!-- comment -->
                     <input type="radio" name="typeService" value="Editeur"/> <label>Grippe, rhume</label><br><!-- comment -->
                     <input type="radio" name="typeService" value="Expediteur"/> <label>Dépistage d'ITSS</label> <br><!-- comment -->
-                    <input type="submit"  value="typeService" />
+                    <input type="submit"  value="Affichage de tous les cliniques" />
                 </form>
                 <c:choose>
           

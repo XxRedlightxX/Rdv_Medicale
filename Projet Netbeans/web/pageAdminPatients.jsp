@@ -52,6 +52,7 @@
                 <c:choose>
                     <c:when test= "${not empty sessionScope.listePatients}">
                     <div>
+                        <a href="pageAdminMedecins.jsp"></a>
                         <c:forEach var="unPatient" items="${sessionScope.listePatients}" >
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>

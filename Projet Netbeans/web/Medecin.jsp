@@ -18,11 +18,13 @@
     </head>
 
     <jsp:include page="EnTete.jsp"/>
-    
+    <jsp:useBean id="medecinTest" class="com.medic.service.MedecinService"/>
+    <h1>Bonjour Dr ${medecinTest.chercherMedecinParId(username).nom}</h1>
     <body id="body">
         <div id="tab">
 
             <div class="container">
+                
 
                 <div class="section">
 
@@ -104,9 +106,17 @@
                                 <h2> <a href="#" onclick="afficherMontant()">Tarif de rendez-vous:</a></h2>
                                 <div id="montant" style="display:none;">
                                     <h3>Fixer le tarif</h3>
+                                    <p>${medecinTest.chercherMedecinParId(username).facturation}<br> $<p>
                                     <input type="number" id="tarif" name="tarif" min="0" max="9999">
                                     <button onclick="validerTarif()">Valider</button>
+                                    
+                                  
                                 </div>
+                                    <form action="medecinGestionController" method="post">
+                                        <input type="hidden" name="gestionAction" value="modifier">
+                                        <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
+                                        <input type="submit" value="Modifier">
+                                    </form> </td>
                             </td>
                         </tr>
 
@@ -115,10 +125,15 @@
                 </div>
                 <div class="section">
                     <h2 id="infoTitre">information du medecine</h2>
+                    <div> ${medecinTest.chercherMedecinParId(username).prenom} ${medecinTest.chercherMedecinParId(username).nom}</div>
+                    <div> ${medecinTest.chercherMedecinParId(username).specialite}</div>
+                    <div> ${medecinTest.chercherMedecinParId(username).coordonnees}</div>
+                    
 
                     <div>
                         <img src="imageWeb2/med.png" height="100" width=110>
                     </div>
+                    
 
                     <div id="courriel">
                         <h2>Vous avez un courriel de:</h2>
