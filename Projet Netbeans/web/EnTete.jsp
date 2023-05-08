@@ -25,7 +25,7 @@
                             <!-- probablement affiche les informations d'un cours dedans -->
                             <a href="Patient.jsp">Accueil Patient</a>  
                             <a href="AfficherRendezVousPatient.jsp">Consulter mes rendez-vous</a>  
-                            <a href="choixMedecinRendezVousController">Prendre un rendez-vous</a>
+                            <a href="PriseRendezVous.jsp">Prendre un rendez-vous</a>
                             <a href="xyz.jsp">Annuler/Modifier un rendez-vous</a>
                             <a href="xyz.jsp">Contacter un médecin</a>
                             <a href="CliniqueInfo.jsp">Recherche de cliniques</a>
