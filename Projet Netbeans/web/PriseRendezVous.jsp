@@ -58,7 +58,7 @@
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
-            
+
         </style>
 
     </head>
@@ -72,10 +72,32 @@
     <div >
         <jsp:useBean id="daoMedecin" class="com.medic.service.MedecinService"/>
         <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>
-        <h2>Prendre un rendez-vous avec son medecin de famille : 
-            Dr. ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).prenom}
-            ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).nom}</h2>
+        <c:choose>
+            <c:when test = "${not empty requestScope.medecinChoisi}">    
+                <c:set var="medecinRv" value="${requestScope.medecinChoisi}"/>  
+            </c:when>
+            <c:otherwise>    
+                <c:set var="medecinRv" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille}"/>  
+            </c:otherwise>
+        </c:choose>
+        <h2 >Prendre un rendez-vous
+            <c:choose>
+                <c:when test = "${medecinRv == daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille}">
+                    avec son medecin de famille : 
+                </c:when>
+                <c:when test = "${requestScope.typeRecherche == 'memeGMF'}">  
+                    avec un médecin du même GMF : 
+                </c:when>
+                <c:otherwise>  
+                    avec un médecin : 
+                </c:otherwise>
+            </c:choose>
+
+            Dr. ${daoMedecin.chercherMedecinParId(medecinRv).prenom}
+            ${daoMedecin.chercherMedecinParId(medecinRv).nom}
+            <a href="RechercherMedecinRv.jsp" style="float:right;">Rechercher un rendez-vous avec un autre médecin</a></h2>
     </div>
+
     <body id="body">
         <div style="overflow: auto;height:70vh">
             <table>
@@ -105,7 +127,7 @@
                     <% for (int j = 0; j <= 6; j++) {%>
                     <td><%
                         PatientService patientDao = new PatientService();
-                        int idMedecinFamille = patientDao.chercherParAssuranceMaladie((String) session.getAttribute("username")).getIdMedecinFamille();
+                        int idMedecinFamille = Integer.valueOf("" + pageContext.getAttribute("medecinRv"));
 
                         RendezVousService rendezVousDao = new RendezVousService();
                         RendezVous unRendezVous = null;
@@ -128,7 +150,7 @@
                         } else if (heureDansDispo == true) {%>
                         <form action="rendezVousController" style="display: block;margin-left: auto;margin-right: auto;width: 65%;">
                             <input type="hidden" name="idPatient" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).id}">
-                            <input type="hidden" name="idMedecin" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille}">
+                            <input type="hidden" name="idMedecin" value="${medecinRv}">
                             <input type="hidden" name="dateRv" value="<%=date.plusDays(j).toString()%>">
                             <input type="hidden" name="heureRv" value="<%=i%>">
                             <input type="hidden" name="etape1" value="1">
