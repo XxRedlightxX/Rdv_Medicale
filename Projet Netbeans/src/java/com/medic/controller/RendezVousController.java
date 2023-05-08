@@ -55,7 +55,6 @@ public class RendezVousController extends HttpServlet {
             unRendezVous.setRaisonConsult(raisonConsult);
             unRendezVous.setDescriptionConsult(descriptionConsult);
             dao.ajouterRendezVous(unRendezVous);
-            System.out.println(unRendezVous);
             request.setAttribute("reeee", unRendezVous);
             request.getRequestDispatcher("Patient.jsp").forward(request, response);
         }

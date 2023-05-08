@@ -35,6 +35,10 @@
         <servlet-name>RendezVousController</servlet-name>
         <servlet-class>com.medic.controller.RendezVousController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChoixMedecinRendezVousController</servlet-name>
+        <servlet-class>com.medic.controller.ChoixMedecinRendezVousController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/testController</url-pattern>
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>RendezVousController</servlet-name>
         <url-pattern>/rendezVousController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChoixMedecinRendezVousController</servlet-name>
+        <url-pattern>/choixMedecinRendezVousController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

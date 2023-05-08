@@ -8,6 +8,7 @@ import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
 import com.medic.entities.ServicesClinique;
 import com.medic.service.CliniqueService;
+import com.medic.service.MedecinService;
 import com.medic.service.PatientService;
 import com.medic.singleton.ConnexionBD;
 import java.sql.PreparedStatement;
@@ -32,9 +33,9 @@ public class TestDeBase {
         //testUpdate();
         ServicesCliniqueImplDao s = new ServicesCliniqueImplDao();
        // System.out.println(s.supprimerSeviceUneClinique(20, 4));
-        PatientService pas = new PatientService ();
-        pas.chercherPatientParNom("");
-       System.out.println(pas);
+        MedecinService da = new MedecinService();
+        
+        System.out.println(da.chercherParSpecialite("Cardiologie"));
         
         //cliniqueTestfindAllService();
         //findmaxidpatient();
