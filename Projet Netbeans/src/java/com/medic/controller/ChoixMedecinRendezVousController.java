@@ -7,6 +7,7 @@ package com.medic.controller;
 import com.medic.service.MedecinService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,19 +34,30 @@ public class ChoixMedecinRendezVousController extends HttpServlet {
         MedecinService medecinService = new MedecinService();
 
         String typeRecherche = request.getParameter("typeRecherche");
-        
-        if ("memeGMF".equals(typeRecherche)) {
-            String medecinChoisi = request.getParameter("medecinChoisi");
-            request.setAttribute("medecinChoisi", medecinChoisi);
-            request.setAttribute("typeRecherche", typeRecherche);
-            request.getRequestDispatcher("PriseRendezVous.jsp").forward(request, response);
+        if (typeRecherche != null) {
+            if (typeRecherche.equals("prendreRendezVous")) {
+                String medecinChoisi = request.getParameter("medecinChoisi");
+                request.setAttribute("medecinChoisi", medecinChoisi);
+                request.setAttribute("typeRecherche", typeRecherche);
+                request.getRequestDispatcher("PriseRendezVous.jsp").forward(request, response);
 
-        } else if ("filtrerSpecialite".equals(typeRecherche)) {
-            String nomSpecialite = request.getParameter("nomSpecialite");
-            request.setAttribute("listeMedecinRecherche", medecinService.chercherParSpecialite(nomSpecialite));
-            request.getRequestDispatcher("RechercherMedecinRv.jsp").forward(request, response);
+            } else if (typeRecherche.equals("filtrerSpecialite")) {
+                String nomSpecialite = request.getParameter("nomSpecialite");
+                byte[] bytes = nomSpecialite.getBytes(StandardCharsets.ISO_8859_1);
+                nomSpecialite = new String(bytes, StandardCharsets.UTF_8);
+                request.setAttribute("listeMedecinRecherche", medecinService.chercherParSpecialite(nomSpecialite));
+                request.getRequestDispatcher("RechercherMedecinRv.jsp").forward(request, response);
+
+            } else if (typeRecherche.equals("filtrerGMF")) {
+                int medecinGMF = Integer.parseInt(request.getParameter("medecinGMF"));
+                request.setAttribute("listeMedecinRecherche", medecinService.chercherParClinique(medecinGMF));
+                request.getRequestDispatcher("RechercherMedecinRv.jsp").forward(request, response);
+            } else if (typeRecherche.equals("toutAfficher")) {   
+                request.setAttribute("listeMedecinRecherche", medecinService.afficherLesMedecin());
+                request.getRequestDispatcher("RechercherMedecinRv.jsp").forward(request, response);
+            }
         } else {
-            //request.getRequestDispatcher("PriseRendezVous.jsp").forward(request, response);
+            request.getRequestDispatcher("PriseRendezVous.jsp").forward(request, response);
         }
     }
 

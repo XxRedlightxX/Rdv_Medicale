@@ -13,6 +13,14 @@
         <title>JSPdsds Page</title>
         <link rel="stylesheet" href="style.css">
     </head>
+    <style>
+        th {
+            text-align: left;
+        }
+        tr tr td {
+            text-align: left;
+        }
+    </style>
     <jsp:include page="EnTete.jsp"/>
 
 
@@ -26,17 +34,10 @@
         <div style="font-size: 14px;float: left">
             <div>
                 <h4>Rendez-vous avec un médecin du même GMF</h4>
-                <form action="choixMedecinRendezVousController" method="get">
-                    <input type="hidden" name="typeRecherche" value="memeGMF">
-                    <select name="medecinChoisi" id="medecinChoisi">
-
-                        <c:forEach var="unMedecin" items="${test.chercherParClinique((test.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).idCliniqueEmploi))}" >
-                            <c:if test = "${unMedecin.numeroProfessionel != daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille}">
-                                <option value="${unMedecin.numeroProfessionel}">Dr. ${unMedecin.nom}</option> 
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                    <input type="submit"  value="Prendre rendez-vous" />
+                <form action="choixMedecinRendezVousController" method="get">   
+                    <input type="hidden" name="typeRecherche" value="filtrerGMF">
+                    <input type="hidden" name="medecinGMF" value="${test.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).idCliniqueEmploi}">   
+                    <input type="submit"  value="Afficher les médecins" />
                 </form>
             </div>
 
@@ -73,14 +74,62 @@
                 </form>
             </div>
         </div>
-        <div>
-            <c:forEach var="uneListeMedecinRecherche" items="${listeMedecinRecherche}" >
-                ${uneListeMedecinRecherche.nom}
-            </c:forEach>
-        </div>
+        <jsp:useBean id="rechercheTest" class="com.medic.service.CliniqueService"/>
+        <c:choose>
+            <c:when test = "${not empty requestScope.listeMedecinRecherche}">    
+                <c:forEach var="medecinRecherche" items="${listeMedecinRecherche}">
+                    <div>
+                        <table style="border: 1px solid black;border-radius: 10px;width:35%;background-color: white;float:left;margin: 30px">
+
+                            <td rowspan="2"><img src="imageWeb2/patient_icon.png" alt="Trulli" width="125" height="125"></td>
+                            <td rowspan="2"><table>
+                                    <tr>
+                                        <th>Nom :</th>
+                                        <td>${medecinRecherche.nom}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Prenom :</th>
+                                        <td>${medecinRecherche.prenom}</td>
+                                        <th>Spécialitée :</th>
+                                        <td>${medecinRecherche.specialite}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Facturation :</br></th>
+                                        <td>${medecinRecherche.facturation} $</td>
+                                        <th>Coordonnées :</th>
+                                        <td>${medecinRecherche.coordonnees}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px" >Clinique où médecin est employé :</th>
 
 
 
+                                        <c:if test = "${medecinRecherche.idCliniqueEmploi != 0}">
+                                            <td>${rechercheTest.chercherCliniqueParId(medecinRecherche.idCliniqueEmploi).nom}</td>
+                                        </c:if>
+
+                                        <c:if test = "${medecinRecherche.idCliniqueEmploi == 0}">
+                                            <td>Aucun</td>
+                                        </c:if>
+                                    </tr>
+                                    <tr><td colspan="3" style="text-align: center;">
+                                            <form action="choixMedecinRendezVousController" method="get">
+                                                <input type="hidden" name="typeRecherche" value="prendreRendezVous">
+                                                <input type="hidden" name="medecinChoisi" value="${medecinRecherche.numeroProfessionel}">
+                                                <input type="submit"  value="Prendre rendez-vous" />
+                                            </form></td>
+                                    </tr>
+
+                                </table>
+                        </table>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>    
+                <h1 style="text-align: center">Aucun résultat de recherche<h1>
+            </c:otherwise>
+        </c:choose>
     </body>
     <jsp:include page="pied.jsp"/>
 </html>

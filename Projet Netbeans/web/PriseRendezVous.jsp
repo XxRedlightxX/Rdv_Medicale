@@ -95,7 +95,7 @@
 
             Dr. ${daoMedecin.chercherMedecinParId(medecinRv).prenom}
             ${daoMedecin.chercherMedecinParId(medecinRv).nom}
-            <a href="RechercherMedecinRv.jsp" style="float:right;">Rechercher un rendez-vous avec un autre médecin</a></h2>
+            <a href="choixMedecinRendezVousController?typeRecherche=toutAfficher" style="float:right;">Rechercher un rendez-vous avec un autre médecin</a></h2>
     </div>
 
     <body id="body">
@@ -153,7 +153,7 @@
                             <input type="hidden" name="idMedecin" value="${medecinRv}">
                             <input type="hidden" name="dateRv" value="<%=date.plusDays(j).toString()%>">
                             <input type="hidden" name="heureRv" value="<%=i%>">
-                            <input type="hidden" name="etape1" value="1">
+                            <input type="hidden" name="etape1Rv" value="ajouter">
                             <input type="submit" value="Disponible">
                         </form> 
                         <%} else {%><%}
