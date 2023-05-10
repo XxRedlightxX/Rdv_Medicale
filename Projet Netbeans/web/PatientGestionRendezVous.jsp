@@ -37,6 +37,7 @@
         <jsp:useBean id="unMedecin" class="com.medic.service.MedecinService"/>
         <jsp:useBean id="medecinTest" class="com.medic.service.MedecinService"/>
         <jsp:useBean id="cliniqueTest" class="com.medic.service.CliniqueService"/>
+        <c:set var="rendezVous" value="${requestScope.unRendezVous}"/>  
 
     </style>
 
@@ -91,15 +92,15 @@
             </div> <br>
             <div>
                 <div style="text-align:left;margin-left: auto;margin-right: auto;width: 13%;">
-                    Pour : ${unPatient.chercherPatientParId(requestScope.idPatient).prenom} ${unPatient.chercherPatientParId(requestScope.idPatient).nom}</br></br>
-                    Médecin : Dr.${unMedecin.chercherMedecinParId(requestScope.idMedecin).prenom} ${unMedecin.chercherMedecinParId(requestScope.idMedecin).nom}</br></br>
-                    Date du rendez-vous : ${requestScope.dateRv} </br></br>
-                    Heure : ${requestScope.heureRv}:00</br></br>
+                    Pour : ${unPatient.chercherPatientParId(requestScope.unRendezVous.idPatientRv).prenom} ${unPatient.chercherPatientParId(requestScope.unRendezVous.idPatientRv).nom}</br></br>
+                    Médecin : Dr.${unMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).prenom} ${unMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).nom}</br></br>
+                    Date du rendez-vous : ${requestScope.unRendezVous.dateRv} </br></br>
+                    Heure : ${requestScope.unRendezVous.heureRv}:00</br></br>
                     <form action="rendezVousController">
-                        <input type="hidden" name="idPatient" value="${requestScope.idPatient}">
-                        <input type="hidden" name="idMedecin" value="${requestScope.idMedecin}">
-                        <input type="hidden" name="dateRv" value="${requestScope.dateRv}">
-                        <input type="hidden" name="heureRv" value="${requestScope.heureRv}">
+                        <input type="hidden" name="idPatient" value="${requestScope.unRendezVous.idPatientRv}">
+                        <input type="hidden" name="idMedecin" value="${requestScope.unRendezVous.idMedecinRv}">
+                        <input type="hidden" name="dateRv" value="${requestScope.unRendezVous.dateRv}">
+                        <input type="hidden" name="heureRv" value="${requestScope.unRendezVous.heureRv}">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
                         <select name="raisonConsult" id="raisonConsult">
                             <option value="Urgence mineure">Urgence mineure</option>
@@ -117,11 +118,11 @@
                 <h2 style="text-align:center"> Voulez confirmer ce rendez-vous ?</h2></br>
 
 
-                <input type="hidden" name="actionRv" value="ajouter">
+                <input type="hidden" name="actionRv" value="modifier">
                 <input style="width:100px;" type="submit" value="Réserver">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" action="PriseRendezVous.jsp" method="post">
+                <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
             </div>                     
@@ -137,32 +138,32 @@
                         <tr>
                         <tr>
                             <th>Nom du Médecin :</th>
-                            <td>Dr. ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).prenom} ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).nom}</td>
+                            <td>Dr. ${medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).prenom} ${medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).nom}</td>
                         </tr>
                         <tr>
                             <th>Date du rendez-vous</th>
-                            <td>${unRendezVous.dateRv}</td>
+                            <td>${requestScope.unRendezVous.dateRv}</td>
                         </tr>
                         <tr>
                             <th>Clinique</th>
-                            <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).idCliniqueEmploi).nom}</td>
+                            <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).idCliniqueEmploi).nom}</td>
                         </tr>
                         <tr>
                             <th>Adresse</th>
-                            <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).idCliniqueEmploi).coordonnees}</td>
+                            <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).idCliniqueEmploi).coordonnees}</td>
                         </tr>
                         <tr>
                             <th>Heure :</th>
-                            <td>${unRendezVous.heureRv}:00</td>
+                            <td>${requestScope.unRendezVous.heureRv}:00</td>
                         </tr>
                         <tr>
                             <th>Raison de la Consultation :</th>
-                            <td>${unRendezVous.raisonConsult}</td>
+                            <td>${requestScope.unRendezVous.raisonConsult}</td>
 
                         </tr>
                         <tr>
                             <th>Description de la consultation :</th>
-                            <td>${unRendezVous.descriptionConsult}</td>
+                            <td>${requestScope.unRendezVous.descriptionConsult}</td>
                         </tr>
                     </table>
                 </div>

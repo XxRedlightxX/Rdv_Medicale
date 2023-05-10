@@ -49,7 +49,13 @@
                         <input type="text" name="prenom" id="prenom"><br> <br>
 
                         <label for="specialite">Specialite : </label>
-                        <input type="text" name="specialite" id="specialite"><br> <br>
+                        <jsp:useBean id="daoServices" class="com.medic.service.ServicesCliniqueService"/>
+                        <select id="specialite" name="specialite">
+                            <c:forEach var="uneSpecialite" items="${daoServices.afficherServicesClinique()}" >
+                                <option value="${uneSpecialite.nom}">
+                                    ${uneSpecialite.nom}</option>
+                            </c:forEach>
+                        </select> <br> <br>
 
                         <label for="numeroProfessionel">Numéro de professionel : </label>
                         <input type="text" name="numeroProfessionel" id="numeroProfessionel"><br> <br>

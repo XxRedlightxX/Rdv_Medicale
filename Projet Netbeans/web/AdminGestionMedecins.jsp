@@ -31,7 +31,7 @@
         </style>
     </head>
     <jsp:include page="EnTete.jsp" />
-
+    <jsp:useBean id="daoServices" class="com.medic.service.ServicesCliniqueService"/>
     <body id="body">
         <jsp:useBean id="cliniqueTest" class="com.medic.service.CliniqueService"/>
         <c:choose>
@@ -51,8 +51,13 @@
                         <label for="prenom">Prenom : </label>
                         <input type="text" name="prenom" id="prenom"><br> <br>
 
-                        <label for="specialite">Specialite : </label>
-                        <input type="text" name="specialite" id="specialite"><br> <br>
+
+                        <select id="specialite" name="specialite">
+                            <c:forEach var="uneSpecialite" items="${daoServices.afficherServicesClinique()}" >
+                                <option value="${uneSpecialite.nom}">
+                                    ${uneSpecialite.nom}</option>
+                                </c:forEach>
+                        </select> <br> <br>
 
                         <label for="numeroProfessionel">Numéro de professionel : </label>
                         <input type="text" name="numeroProfessionel" id="numeroProfessionel"><br> <br>
@@ -126,7 +131,13 @@
                                 <tr>
                                     <td><label for="specialite">Specialite : </label></td>
                                     <td>${unMedecin.specialite}</td>
-                                    <td><input type="text" name="specialite" id="specialite" value="${unMedecin.specialite}">
+                                    <td>
+                                        <select id="specialite" name="specialite">
+                                            <c:forEach var="uneSpecialite" items="${daoServices.afficherServicesClinique()}" >
+                                                <option value="${uneSpecialite.nom}">
+                                                    ${uneSpecialite.nom}</option>
+                                                </c:forEach>
+                                        </select> <br> <br>
                                     </td>
                                 </tr>
 
@@ -168,7 +179,7 @@
                                     <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
                                         <td>Aucun</td>
                                     </c:if>
-                                                                 
+
                                     <td><select id="idClinique" name="idClinique">
                                             <option value = "0"
                                                     <c:if test = "${unMedecin.idCliniqueEmploi == 0}">

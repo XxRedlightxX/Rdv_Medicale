@@ -7,6 +7,7 @@ package com.medic.controller;
 import com.medic.entities.RendezVous;
 import com.medic.service.RendezVousService;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +26,21 @@ public class RendezVousController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String idPatient = request.getParameter("idPatient");
         String idMedecin = request.getParameter("idMedecin");
         String dateRv = request.getParameter("dateRv");
         String heureRv = request.getParameter("heureRv");
         String raisonConsult = request.getParameter("raisonConsult");
+        if (raisonConsult != null) {
+            byte[] bytes = raisonConsult.getBytes(StandardCharsets.ISO_8859_1);
+            raisonConsult = new String(bytes, StandardCharsets.UTF_8);
+        }
+
         String descriptionConsult = request.getParameter("descriptionConsult");
         String etape1Rv = request.getParameter("etape1Rv");
         String idRendezVous = request.getParameter("idRendezVous");
-        String actionRv = request.getParameter("actionRv");    
+        String actionRv = request.getParameter("actionRv");
 
         if (etape1Rv != null) {
             switch (etape1Rv) {
@@ -49,13 +55,14 @@ public class RendezVousController extends HttpServlet {
                     request.getRequestDispatcher("PatientGestionRendezVous.jsp").forward(request, response);
                     break;
                 case "modifier":
-                    unRendezVous =dao.chercherRendezVousParId(Integer.parseInt(idRendezVous));
+                    unRendezVous = dao.chercherRendezVousParId(Integer.parseInt(idRendezVous));
+                    System.out.println(unRendezVous);
                     request.setAttribute("unRendezVous", unRendezVous);
                     request.setAttribute("typeAction", "modifier");
                     request.getRequestDispatcher("PatientGestionRendezVous.jsp").forward(request, response);
                     break;
                 case "supprimer":
-                    unRendezVous =dao.chercherRendezVousParId(Integer.parseInt(idRendezVous));
+                    unRendezVous = dao.chercherRendezVousParId(Integer.parseInt(idRendezVous));
                     request.setAttribute("unRendezVous", unRendezVous);
                     request.setAttribute("typeAction", "supprimer");
                     request.getRequestDispatcher("PatientGestionRendezVous.jsp").forward(request, response);
@@ -90,6 +97,11 @@ public class RendezVousController extends HttpServlet {
                 dao.ajouterRendezVous(unRendezVous);
                 request.setAttribute("reeee", unRendezVous);
                 request.getRequestDispatcher("Patient.jsp").forward(request, response);
+            } else if (actionRv.equals("supprimer")) {
+                dao.supprimerRendezVous(Integer.parseInt(idRendezVous));
+                String message = "Le rendez-vous à été annulé";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("pagePatientRendezVous.jsp").forward(request, response);
             }
         }
 

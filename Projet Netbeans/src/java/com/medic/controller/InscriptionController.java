@@ -12,6 +12,7 @@ import com.medic.service.MedecinService;
 import com.medic.service.PatientService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,10 @@ public class InscriptionController extends HttpServlet {
             medecin.setNumeroProfessionel(Integer.parseInt(request.getParameter("numeroProfessionel")));
             medecin.setNom(request.getParameter("nom"));
             medecin.setPrenom(request.getParameter("prenom"));
-            medecin.setSpecialite(request.getParameter("specialite"));
+            String nomSpecialite = request.getParameter("specialite");
+            byte[] bytes = nomSpecialite.getBytes(StandardCharsets.ISO_8859_1);
+            nomSpecialite = new String(bytes, StandardCharsets.UTF_8);
+            medecin.setSpecialite(nomSpecialite);
             medecin.setFacturation(Float.parseFloat(request.getParameter("facturation")));
             medecin.setCoordonnees(request.getParameter("coordonnees"));
             medecin.setMotDePasse(request.getParameter("password"));
@@ -66,7 +70,7 @@ public class InscriptionController extends HttpServlet {
             //drop down pour trouver sa clinique -----------------------------------------------------------------
             medecinService.ajouterMedecin(medecin, medecin.getIdCliniqueEmploi());
         }
-            request.getRequestDispatcher("connexionController?typeCompte=" + typeCompte + "&username=" + medecin.getNumeroProfessionel() + "&password=" + medecin.getMotDePasse()).include(request, response);
+        request.getRequestDispatcher("connexionController?typeCompte=" + typeCompte + "&username=" + medecin.getNumeroProfessionel() + "&password=" + medecin.getMotDePasse()).include(request, response);
 
     }
 

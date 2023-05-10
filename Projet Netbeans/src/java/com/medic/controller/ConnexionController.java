@@ -8,6 +8,7 @@ import com.medic.entities.Administrateur;
 import com.medic.entities.Medecin;
 import com.medic.entities.Patient;
 import com.medic.entities.Clinique;
+import com.medic.entities.ServicesClinique;
 import com.medic.service.AdministrateurService;
 import com.medic.service.MedecinService;
 import com.medic.service.PatientService;

@@ -50,12 +50,12 @@ public class RendezVousService {
         return retour;
     }
 
-    public boolean modifierDispoMedecin(RendezVous rendezVous) {
+    public boolean modifierRendezVous(RendezVous rendezVous) {
         retour = dao.update(rendezVous);
         return retour;
     }
 
-    public boolean supprimerDispoMedecin(int idRendezVous) {
+    public boolean supprimerRendezVous(int idRendezVous) {
         retour = dao.delete(idRendezVous);
         return retour;
     }

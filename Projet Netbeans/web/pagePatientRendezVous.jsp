@@ -48,57 +48,57 @@
     <div style="height:65vh;overflow:auto;">
         <body id="body">
             </br>
-            <br>
+            <br>     
             <c:forEach var="unRendezVous" items="${rendezVous.chercherToutLesRendezVousIdPatient(patientTest.chercherParAssuranceMaladie(sessionScope.username).id)}" >
                 <table style="border-radius: 10px;margin-left:35%">
                     <td style="width:70vh;background-color: white;"><table style="margin-left: auto;margin-right: auto;width: 100%;">
                             <tr>
-                                <tr>
-                                    <th>Nom du Médecin :</th>
-                                    <td>Dr. ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).prenom} ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).nom}</td>
-                                </tr>
-                                <tr>
-                                    <th>Date du rendez-vous</th>
-                                    <td>${unRendezVous.dateRv}</td>
-                                </tr>
-                                <tr>
-                                    <th>Clinique</th>
-                                    <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).idCliniqueEmploi).nom}</td>
-                                </tr>
-                                <tr>
-                                    <th>Adresse</th>
-                                    <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).idCliniqueEmploi).coordonnees}</td>
-                                </tr>
-                                <tr>
-                                    <th>Heure :</th>
-                                    <td>${unRendezVous.heureRv}:00</td>
-                                </tr>
-                                <tr>
-                                    <th>Raison de la Consultation :</th>
-                                    <td>${unRendezVous.raisonConsult}</td>
+                            <tr>
+                                <th>Nom du Médecin :</th>
+                                <td>Dr. ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).prenom} ${medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).nom}</td>
+                            </tr>
+                            <tr>
+                                <th>Date du rendez-vous</th>
+                                <td>${unRendezVous.dateRv}</td>
+                            </tr>
+                            <tr>
+                                <th>Clinique</th>
+                                <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).idCliniqueEmploi).nom}</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(unRendezVous.idMedecinRv).idCliniqueEmploi).coordonnees}</td>
+                            </tr>
+                            <tr>
+                                <th>Heure :</th>
+                                <td>${unRendezVous.heureRv}:00</td>
+                            </tr>
+                            <tr>
+                                <th>Raison de la Consultation :</th>
+                                <td>${unRendezVous.raisonConsult}</td>
 
-                                </tr>
-                                <tr>
-                                    <th>Description de la consultation :</th>
-                                    <td>${unRendezVous.descriptionConsult}</td>
-                                </tr>
-                            </table></td>
-                            
-                            <td style="text-align: center;border: none;"><form action="rendezVousController" method="post">
-                                        <input type="hidden" name="etape1Rv" value="modifier">
-                                        <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
-                                        <input type="submit" value="Modifier le rendez-vous">
-                                    </form> <br><br>
-                           
-                                <form action="rendezVousController" method="post">
-                                        <input type="hidden" name="etape1Rv" value="supprimer">
-                                        <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
-                                        <input type="submit" value="Annuler le rendez-vous">
-                                    </form> </td>
-                            
+                            </tr>
+                            <tr>
+                                <th>Description de la consultation :</th>
+                                <td>${unRendezVous.descriptionConsult}</td>
+                            </tr>
+                        </table></td>
 
-                            
-                        </table>
+                    <td style="text-align: center;border: none;"><form action="rendezVousController" method="post">
+                            <input type="hidden" name="etape1Rv" value="modifier">
+                            <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
+                            <input type="submit" value="Modifier le rendez-vous">
+                        </form> <br><br>
+
+                        <form action="rendezVousController" method="post">
+                            <input type="hidden" name="etape1Rv" value="supprimer">
+                            <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
+                            <input type="submit" value="Annuler le rendez-vous">
+                        </form> </td>
+
+
+
+                </table>
                 <br><br>
             </c:forEach>
         </body>

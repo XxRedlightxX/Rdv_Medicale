@@ -90,13 +90,13 @@
 
                                         </tr>
                                     </table></td>
-                                <td><form action="rendezVousController" method="post">
+                                <td><form action="administrateurController" method="post">
                                         <input type="hidden" name="gestionAction" value="modifier">
                                         <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
                                         <input type="submit" value="Modifier">
                                     </form> </td>
                             <tr>
-                                <td><form action="rendezVousController" method="post">
+                                <td><form action="administrateurController" method="post">
                                         <input type="hidden" name="gestionAction" value="supprimer">
                                         <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
                                         <input type="submit" value="Supprimer">

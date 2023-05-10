@@ -105,7 +105,9 @@ public class Medecin {
 
     @Override
     public String toString() {
-        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", motDePasse=" + motDePasse + ", coordonnees=" + coordonnees + ", listePatients=" + listePatients + '}';
+        return "Medecin{" + "numeroProfessionel=" + numeroProfessionel + ", nom=" + nom + ", prenom=" + prenom + ", specialite=" + specialite + ", facturation=" + facturation + ", motDePasse=" + motDePasse + ", coordonnees=" + coordonnees + ", idCliniqueEmploi=" + idCliniqueEmploi + ", listePatients=" + listePatients + '}';
     }
+
+ 
 
 }
