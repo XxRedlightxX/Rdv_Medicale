@@ -112,12 +112,12 @@
                         <input id="saveheureRv"type="hidden" name="heureRv" value="${requestScope.unRendezVous.heureRv}">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
                         <select name="raisonConsult" id="raisonConsult">
-                            <option value="Urgence mineure">Urgence mineure</option>
-                            <option value="Consultation propriétaire">Consultation propriétaire</option>
-                            <option value="Suivi périodique ou préventif">Suivi périodique ou préventif</option>
-                            <option value="Suivi régulier">Suivi régulier</option>
-                            <option value="Suivi de grossesse">Suivi de grossesse</option>
-                            <option value="Suivi d’un enfant 0 à 5 ans">Suivi d’un enfant 0 à 5 ans</option>
+                            <option value="Urgence mineure"<c:if test="${requestScope.unRendezVous.raisonConsult == 'Urgence mineure'}">selected="selected"</c:if> >Urgence mineure</option>
+                            <option value="Consultation propriétaire" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Consultation propriétaire'}">selected="selected"</c:if> >Consultation propriétaire</option>
+                            <option value="Suivi périodique ou préventif" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi périodique ou préventif'}">selected="selected"</c:if> >Suivi périodique ou préventif</option>
+                            <option value="Suivi régulier" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi régulier'}">selected="selected"</c:if> >Suivi régulier</option>
+                            <option value="Suivi de grossesse" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi de grossesse'}">selected="selected"</c:if> >Suivi de grossesse</option>
+                            <option value="Suivi d’un enfant 0 à 5 ans" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi d’un enfant 0 à 5 ans'}">selected="selected"</c:if> >Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
                         <textarea style="width:30vh;height:10vh;" id="descriptionConsult" name="descriptionConsult" style="height:200px">${requestScope.unRendezVous.descriptionConsult}</textarea>
@@ -128,7 +128,7 @@
 
 
                 <input type="hidden" name="actionRv" value="modifier">
-                <input style="width:100px;" type="submit" value="Modifier">
+                <input style="width:100px;" type="submit" value="Sauvegarder">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
@@ -205,7 +205,7 @@
         var dateRv = document.getElementById("savedateRv").value;
         var heureRv = document.getElementById("saveheureRv").value;
         var raisonConsult = document.getElementById("raisonConsult").value;
-        var descriptionConsult = document.getElementById("descriptionConsult").innerHTML;
+        var descriptionConsult = document.getElementById("descriptionConsult").value;
         
         window.location.href = "rendezVousController?actionRv=changerTemps&idRendezVous="+idRendezVous+"&idPatient="+idPatient+"&idMedecin="+idMedecin+"&dateRv="+
                 dateRv+"&heureRv="+heureRv+"&raisonConsult="+raisonConsult+"&descriptionConsult="+descriptionConsult;

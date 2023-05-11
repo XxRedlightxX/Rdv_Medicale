@@ -74,9 +74,17 @@
         <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>   
         <c:set var="medecinRv" value="${daoMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).numeroProfessionel}"/>  
 
-        <h2 >Prendre un rendez-vous a un autre moment <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
-                <input style="all:revert" type="submit" value="Annuler le changement">
-            </form></h2>
+        <h2 >Prendre un rendez-vous a un autre moment <form action="rendezVousController" style="display:inline;float:right;margin-right: 49%">
+                            <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
+                            <input type="hidden" name="idPatient" value="${unRendezVous.idPatientRv}">
+                            <input type="hidden" name="idMedecin" value="${unRendezVous.idMedecinRv}">
+                            <input type="hidden" name="raisonConsult" value="${unRendezVous.raisonConsult}">
+                            <input type="hidden" name="descriptionConsult" value="${unRendezVous.descriptionConsult}">
+                            <input type="hidden" name="dateRv" value="${unRendezVous.dateRv}">
+                            <input type="hidden" name="heureRv" value="${unRendezVous.heureRv}">
+                            <input type="hidden" name="etape1Rv" value="modifier2">
+                            <input style="all:revert" type="submit" value="Annuler le changement">
+                        </form> </h2>
     </div>
     <body id="body">
         <div style="overflow: auto;height:70vh">
@@ -132,6 +140,8 @@
                             <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
                             <input type="hidden" name="idPatient" value="${unRendezVous.idPatientRv}">
                             <input type="hidden" name="idMedecin" value="${unRendezVous.idMedecinRv}">
+                            <input type="hidden" name="raisonConsult" value="${unRendezVous.raisonConsult}">
+                            <input type="hidden" name="descriptionConsult" value="${unRendezVous.descriptionConsult}">
                             <input type="hidden" name="dateRv" value="<%=date.plusDays(j).toString()%>">
                             <input type="hidden" name="heureRv" value="<%=i%>">
                             <input type="hidden" name="etape1Rv" value="modifier2">

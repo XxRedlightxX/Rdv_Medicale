@@ -134,7 +134,9 @@
                                     <td>
                                         <select id="specialite" name="specialite">
                                             <c:forEach var="uneSpecialite" items="${daoServices.afficherServicesClinique()}" >
-                                                <option value="${uneSpecialite.nom}">
+                                                <option value="${uneSpecialite.nom}"<c:if test="${uneSpecialite.nom == unMedecin.specialite}"> 
+                                                            selected="selected"
+                                                        </c:if>>
                                                     ${uneSpecialite.nom}</option>
                                                 </c:forEach>
                                         </select> <br> <br>
