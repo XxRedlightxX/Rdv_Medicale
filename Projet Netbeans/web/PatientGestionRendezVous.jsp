@@ -91,16 +91,25 @@
 
             </div> <br>
             <div>
-                <div style="text-align:left;margin-left: auto;margin-right: auto;width: 13%;">
+                <div style="text-align:left;margin-left: auto;margin-right: auto;width: 15%;">
                     Pour : ${unPatient.chercherPatientParId(requestScope.unRendezVous.idPatientRv).prenom} ${unPatient.chercherPatientParId(requestScope.unRendezVous.idPatientRv).nom}</br></br>
                     Médecin : Dr.${unMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).prenom} ${unMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).nom}</br></br>
                     Date du rendez-vous : ${requestScope.unRendezVous.dateRv} </br></br>
-                    Heure : ${requestScope.unRendezVous.heureRv}:00</br></br>
+                    Heure : ${requestScope.unRendezVous.heureRv}:00<br><br>
+
+
+
+
+                        <Button onclick="sauvegarderChangements()">Changer la date et l'heure du rendez-vous</Button><br><br>
+
+
+
                     <form action="rendezVousController">
-                        <input type="hidden" name="idPatient" value="${requestScope.unRendezVous.idPatientRv}">
-                        <input type="hidden" name="idMedecin" value="${requestScope.unRendezVous.idMedecinRv}">
-                        <input type="hidden" name="dateRv" value="${requestScope.unRendezVous.dateRv}">
-                        <input type="hidden" name="heureRv" value="${requestScope.unRendezVous.heureRv}">
+                        <input id="saveidRendezVous" type="hidden" name="idRendezVous" value="${requestScope.unRendezVous.idRendezVous}">
+                        <input id="saveidPatient" type="hidden" name="idPatient" value="${requestScope.unRendezVous.idPatientRv}">
+                        <input id="saveidMedecin"type="hidden" name="idMedecin" value="${requestScope.unRendezVous.idMedecinRv}">
+                        <input id="savedateRv"type="hidden" name="dateRv" value="${requestScope.unRendezVous.dateRv}">
+                        <input id="saveheureRv"type="hidden" name="heureRv" value="${requestScope.unRendezVous.heureRv}">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
                         <select name="raisonConsult" id="raisonConsult">
                             <option value="Urgence mineure">Urgence mineure</option>
@@ -111,15 +120,15 @@
                             <option value="Suivi d’un enfant 0 à 5 ans">Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
-                        <textarea style="width:25vh;height:15vh;" id="descriptionConsult" name="descriptionConsult" placeholder="Description de la raison.." style="height:200px"></textarea>
+                        <textarea style="width:30vh;height:10vh;" id="descriptionConsult" name="descriptionConsult" style="height:200px">${requestScope.unRendezVous.descriptionConsult}</textarea>
 
                 </div>
                 </br>
-                <h2 style="text-align:center"> Voulez confirmer ce rendez-vous ?</h2></br>
+                <h2 style="text-align:center"> Voulez vous modifier ce rendez-vous ?</h2></br>
 
 
                 <input type="hidden" name="actionRv" value="modifier">
-                <input style="width:100px;" type="submit" value="Réserver">
+                <input style="width:100px;" type="submit" value="Modifier">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
@@ -168,26 +177,40 @@
                     </table>
                 </div>
                 </br>
-                
+
                 <h2 style="text-align:center"> Voulez vous supprimer ce rendez-vous ?</h2></br>
                 <form action="rendezVousController" method="post">
-                <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
-                <input type="hidden" name="actionRv" value="supprimer">
-                <input style="width:100px;" type="submit" value="Supprimer">
-            </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
+                    <input type="hidden" name="actionRv" value="supprimer">
+                    <input style="width:100px;" type="submit" value="Supprimer">
+                </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
-                <input style="width:100px;" type="submit" value="Annuler">
-            </form>
-        </div>    
-    </c:if>
-</c:when>
+                <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
+                    <input style="width:100px;" type="submit" value="Annuler">
+                </form>
+            </div>    
+        </c:if>
+    </c:when>
 </c:choose>
 
 </body>
 
 
 <jsp:include page="pied.jsp" />
+<script>
+    function sauvegarderChangements(){
+        var idRendezVous = document.getElementById("saveidRendezVous").value;
+        var idPatient = document.getElementById("saveidPatient").value;
+        var idMedecin = document.getElementById("saveidMedecin").value;
+        var dateRv = document.getElementById("savedateRv").value;
+        var heureRv = document.getElementById("saveheureRv").value;
+        var raisonConsult = document.getElementById("raisonConsult").value;
+        var descriptionConsult = document.getElementById("descriptionConsult").innerHTML;
+        
+        window.location.href = "rendezVousController?actionRv=changerTemps&idRendezVous="+idRendezVous+"&idPatient="+idPatient+"&idMedecin="+idMedecin+"&dateRv="+
+                dateRv+"&heureRv="+heureRv+"&raisonConsult="+raisonConsult+"&descriptionConsult="+descriptionConsult;
+    }
+</script>
 <script src="javaScript/formValidation.js"></script>
 
 </html>

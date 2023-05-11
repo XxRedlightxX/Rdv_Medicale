@@ -84,7 +84,7 @@
                             </tr>
                         </table></td>
 
-                    <td style="text-align: center;border: none;"><form action="rendezVousController" method="post">
+                    <td style="text-align: center;border: none;"><form action="rendezVousController" method="get">
                             <input type="hidden" name="etape1Rv" value="modifier">
                             <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
                             <input type="submit" value="Modifier le rendez-vous">

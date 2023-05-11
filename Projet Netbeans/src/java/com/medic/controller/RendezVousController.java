@@ -67,6 +67,19 @@ public class RendezVousController extends HttpServlet {
                     request.setAttribute("typeAction", "supprimer");
                     request.getRequestDispatcher("PatientGestionRendezVous.jsp").forward(request, response);
                     break;
+                case "modifier2":
+                    unRendezVous = new RendezVous();
+                    unRendezVous.setIdRendezVous(Integer.parseInt(idRendezVous));
+                    unRendezVous.setIdPatientRv(Integer.parseInt(idPatient));
+                    unRendezVous.setIdMedecinRv(Integer.parseInt(idMedecin));
+                    unRendezVous.setDateRv(dateRv);
+                    unRendezVous.setHeureRv(heureRv);
+                    unRendezVous.setRaisonConsult(raisonConsult);
+                    unRendezVous.setDescriptionConsult(descriptionConsult);
+                    request.setAttribute("typeAction", "modifier");
+                    request.setAttribute("unRendezVous", unRendezVous);
+                    request.getRequestDispatcher("PatientGestionRendezVous.jsp").forward(request, response);
+                    break;
                 default:
                     break;
             }
@@ -83,25 +96,35 @@ public class RendezVousController extends HttpServlet {
                 unRendezVous.setRaisonConsult(raisonConsult);
                 unRendezVous.setDescriptionConsult(descriptionConsult);
                 dao.ajouterRendezVous(unRendezVous);
-                request.setAttribute("reeee", unRendezVous);
                 request.getRequestDispatcher("Patient.jsp").forward(request, response);
             } else if (actionRv.equals("modifier")) {
                 unRendezVous = new RendezVous();
-                unRendezVous.setIdRendezVous(dao.trouverLeIdMaxRendezVous() + 1);
+                unRendezVous.setIdRendezVous(Integer.parseInt(idRendezVous));
                 unRendezVous.setIdPatientRv(Integer.parseInt(idPatient));
                 unRendezVous.setIdMedecinRv(Integer.parseInt(idMedecin));
                 unRendezVous.setDateRv(dateRv);
                 unRendezVous.setHeureRv(heureRv);
                 unRendezVous.setRaisonConsult(raisonConsult);
                 unRendezVous.setDescriptionConsult(descriptionConsult);
-                dao.ajouterRendezVous(unRendezVous);
-                request.setAttribute("reeee", unRendezVous);
-                request.getRequestDispatcher("Patient.jsp").forward(request, response);
+                dao.modifierRendezVous(unRendezVous);
+                request.getRequestDispatcher("pagePatientRendezVous.jsp").forward(request, response);
             } else if (actionRv.equals("supprimer")) {
                 dao.supprimerRendezVous(Integer.parseInt(idRendezVous));
                 String message = "Le rendez-vous à été annulé";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("pagePatientRendezVous.jsp").forward(request, response);
+            } else if (actionRv.equals("changerTemps")) {
+                unRendezVous = new RendezVous();
+                unRendezVous.setIdRendezVous(Integer.parseInt(idRendezVous));
+                unRendezVous.setIdPatientRv(Integer.parseInt(idPatient));
+                unRendezVous.setIdMedecinRv(Integer.parseInt(idMedecin));
+                unRendezVous.setDateRv(dateRv);
+                unRendezVous.setHeureRv(heureRv);
+                unRendezVous.setRaisonConsult(raisonConsult);
+                unRendezVous.setDescriptionConsult(descriptionConsult);
+                System.out.println(unRendezVous);
+                request.setAttribute("unRendezVous", unRendezVous);
+                request.getRequestDispatcher("ModifierTempsRendezVous.jsp").forward(request, response);
             }
         }
 
