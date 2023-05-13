@@ -2,6 +2,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.medic.entities.Clinique"%>
+<%@page import="com.medic.entities.Medecin"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -112,12 +114,15 @@
                                     
                                   
                                 </div>
-                                    <form action="medecinGestionController" method="post">
+                                    <form action="medecinGestionController" method="get">
                                         <input type="hidden" name="gestionAction" value="modifier">
-                                        <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
+                                        <input type="hidden" name="idMedecin" value="${sessionScope.username}">
                                         <input type="submit" value="Modifier">
                                     </form> </td>
-                            </td>
+                                    ${sessionScope.username}
+                        <h1>
+                        <h1>
+                            
                         </tr>
 
                     </table>
@@ -128,8 +133,29 @@
                     <div> ${medecinTest.chercherMedecinParId(username).prenom} ${medecinTest.chercherMedecinParId(username).nom}</div>
                     <div> ${medecinTest.chercherMedecinParId(username).specialite}</div>
                     <div> ${medecinTest.chercherMedecinParId(username).coordonnees}</div>
+                    <div> ${medecinTest.chercherMedecinParId(username).idCliniqueEmploi}</div>
+                    <div>Clinique où médecin est employé:</div>
+                    <form action="administrateurController" method="get">
+                    </form>
+                    <c:choose>
+                    <c:when test= "${not empty sessionScope.listeMedecins}">
+                    <jsp:useBean id="test5" class="com.medic.service.CliniqueService"/>
+                                         <c:forEach var="unMedecin" items="${sessionScope.listeMedecins}" >
+                                            
+                                            <c:if test = "${unMedecin.idCliniqueEmploi != 0}">
+                                            <div>${test5.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</div>
+                                            </c:if>
+                                            <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                            <td>Aucun</td>
+                                            </c:if>
+                                            </c:forEach>
+                                                
+                                                            
+                                            
+                                
                     
-
+                                            <</c:when>
+                                            </c:choose>
                     <div>
                         <img src="imageWeb2/med.png" height="100" width=110>
                     </div>

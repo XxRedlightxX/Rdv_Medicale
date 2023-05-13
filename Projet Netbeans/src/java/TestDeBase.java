@@ -58,6 +58,7 @@ public class TestDeBase {
         //testfindByIdPatient();
         //testCreatePatient();
         //testFindAllServices();
+        testUpdateMed();
 
     }
 
@@ -510,5 +511,32 @@ public class TestDeBase {
             System.out.println("le service dont l'id est " + id + " n'existe de la base des données");
         }
     }
+    
+    public static void testUpdateMed() {
+        System.out.println("update");
+        Medecin medecin = null;
+
+        MedecinImplDao instance = new MedecinImplDao();
+        Scanner lectureClavier = new Scanner(System.in);
+        System.out.println("Entrez l'ide du medecin à mettre à jour : ");
+        int idc = lectureClavier.nextInt();
+        medecin = instance.findByIdMedecin(idc);
+
+//        System.out.println("Change ID  : ");
+//        int idmedecin = lectureClavier.nextInt();
+//        medecin.setNumeroProfessionel(idmedecin);
+        System.out.println("Entrez le nom : ");
+        Float nom = lectureClavier.nextFloat();
+        medecin.setFacturation(nom);
+        
+        boolean result = instance.updateMedecin(medecin);
+        if (result) {
+            System.out.println("L'utilisateur est mis à jour ");
+        } else {
+            System.out.println("Echec de mis à jour ");
+        }
+    }
+    
+    
 
 }

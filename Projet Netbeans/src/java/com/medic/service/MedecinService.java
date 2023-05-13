@@ -83,4 +83,13 @@ public class MedecinService {
      return maxId;
     }
     
+    public boolean modifierJustMedecin(Medecin medecin){
+        if(dao.updateMedecin(medecin)) {
+            retour =true;
+        }
+        return retour;
+    }
+    
+    
+    
 }
