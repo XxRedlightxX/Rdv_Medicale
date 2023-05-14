@@ -15,9 +15,12 @@
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/TestController.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/service/MedecinService.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/AdminGestionPatients.jsp</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/ConfirmationRendezVous.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/MedecinGestionController.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/AdminGestionCliniques.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/TestDeBase.java</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/Connexion_medecin.jsp</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/AfficherRendezVousPatient.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/Connexion_patient.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/pied.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/entities/Medecin.java</file>
@@ -27,9 +30,12 @@
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/service/DispoMedecinService.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/AdministrateurController.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/entities/Patient.java</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/ConnexionController.java</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/MedecinGestion.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/Medecin.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/medecin/MedecinImplDao.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/patient/PatientImplDao.java</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/DeconnexionController.java</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/AdminGestionMedecins.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/EnTete.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/dao/medecin/MedecinDao.java</file>
@@ -39,6 +45,7 @@
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/CSS/ChatZone.css</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/CliniqueInfo.jsp</file>
             <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/service/AdministrateurService.java</file>
+            <file>file:/C:/Users/Admin/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/Medecin_consultation.jsp</file>
         </group>
     </open-files>
 </project-private>
