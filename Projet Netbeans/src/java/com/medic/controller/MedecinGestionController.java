@@ -50,7 +50,7 @@ public class MedecinGestionController extends HttpServlet {
             }
         }
             if (modifierMedecin != null) {
-                 medecin = new Medecin();
+                 medecin = medecinService.chercherMedecinParId(Integer.parseInt(modifierMedecin));
                   //int medecinId = Integer.parseInt(request.getParameter("idMedecin"));
                   //medecin = medecinService.chercherMedecinParId(medecinId);
            
