@@ -32,7 +32,6 @@ public class RendezVousController extends HttpServlet {
         String dateRv = request.getParameter("dateRv");
         String heureRv = request.getParameter("heureRv");
         String raisonConsult = request.getParameter("raisonConsult");
-<<<<<<< HEAD
         if (raisonConsult != null) {
             byte[] bytes = raisonConsult.getBytes(StandardCharsets.ISO_8859_1);
             raisonConsult = new String(bytes, StandardCharsets.UTF_8);
@@ -127,37 +126,6 @@ public class RendezVousController extends HttpServlet {
                 request.setAttribute("unRendezVous", unRendezVous);
                 request.getRequestDispatcher("ModifierTempsRendezVous.jsp").forward(request, response);
             }
-=======
-        String descriptionConsult = request.getParameter("descriptionConsult");
-        String etape1 = request.getParameter("etape1");
-        String ajouterRv = request.getParameter("ajouterRv");
-        String consulter = request.getParameter("consulter");
-        
-        if(etape1!=null){
-            request.setAttribute("idPatient", idPatient);
-            request.setAttribute("idMedecin", idMedecin);
-            request.setAttribute("dateRv", dateRv);
-            request.setAttribute("heureRv", heureRv);
-            request.setAttribute("raisonConsult", raisonConsult);
-            request.setAttribute("descriptionConsult", descriptionConsult);
-            
-            request.getRequestDispatcher("ConfirmationRendezVous.jsp").forward(request, response);
-        }
-        
-        if(ajouterRv!=null){
-            unRendezVous = new RendezVous();
-            unRendezVous.setIdRendezVous(dao.trouverLeIdMaxRendezVous()+1);
-            unRendezVous.setIdPatientRv(Integer.parseInt(idPatient));
-            unRendezVous.setIdMedecinRv(Integer.parseInt(idMedecin));
-            unRendezVous.setDateRv(dateRv);
-            unRendezVous.setHeureRv(heureRv);
-            unRendezVous.setRaisonConsult(raisonConsult);
-            unRendezVous.setDescriptionConsult(descriptionConsult);
-            dao.ajouterRendezVous(unRendezVous);
-            System.out.println(unRendezVous);
-            request.setAttribute("reeee", unRendezVous);
-            request.getRequestDispatcher("Patient.jsp").forward(request, response);
->>>>>>> 060a822e7488ecba65357f295f54a1d048abf1ff
         }
 
     }

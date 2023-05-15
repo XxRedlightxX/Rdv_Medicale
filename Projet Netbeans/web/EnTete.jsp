@@ -24,14 +24,8 @@
                         <div class="container" id="menu">
                             <!-- probablement affiche les informations d'un cours dedans -->
                             <a href="Patient.jsp">Accueil Patient</a>  
-<<<<<<< HEAD
                             <a href="pagePatientRendezVous.jsp">Consulter mes rendez-vous</a>  
-                            <a href="choixMedecinRendezVousController">Prendre un rendez-vous</a>
-=======
-                            <a href="AfficherRendezVousPatient.jsp">Consulter mes rendez-vous</a>  
                             <a href="PriseRendezVous.jsp">Prendre un rendez-vous</a>
-                            <a href="xyz.jsp">Annuler/Modifier un rendez-vous</a>
->>>>>>> 060a822e7488ecba65357f295f54a1d048abf1ff
                             <a href="xyz.jsp">Contacter un médecin</a>
                             <a href="CliniqueInfo.jsp">Recherche de cliniques</a>
                         </div>     

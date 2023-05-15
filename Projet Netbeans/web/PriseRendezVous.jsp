@@ -72,7 +72,6 @@
     <div >
         <jsp:useBean id="daoMedecin" class="com.medic.service.MedecinService"/>
         <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>
-<<<<<<< HEAD
         <c:choose>
             <c:when test = "${not empty requestScope.medecinChoisi}">    
                 <c:set var="medecinRv" value="${requestScope.medecinChoisi}"/>  
@@ -97,11 +96,6 @@
             Dr. ${daoMedecin.chercherMedecinParId(medecinRv).prenom}
             ${daoMedecin.chercherMedecinParId(medecinRv).nom}
             <a href="choixMedecinRendezVousController?typeRecherche=toutAfficher" style="float:right;">Rechercher un rendez-vous avec un autre médecin</a></h2>
-=======
-        <h2>Prendre un rendez-vous avec son medecin de famille : 
-            Dr. ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).prenom}
-            ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).nom}</h2>
->>>>>>> 060a822e7488ecba65357f295f54a1d048abf1ff
     </div>
     <body id="body">
         <div style="overflow: auto;height:70vh">
