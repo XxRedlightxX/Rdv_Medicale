@@ -39,6 +39,7 @@ public class DispoMedecinController extends HttpServlet {
             request.getRequestDispatcher("Medecin.jsp").include(request, response);
         } else {
             dispoDao.ajouterDispoMedecin(uneDispo);
+            request.getRequestDispatcher("Medecin.jsp").include(request, response);
         }
 
         

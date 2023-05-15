@@ -34,6 +34,7 @@
                             <td><button onclick="document.getElementById('calForm').style.display = 'block'">Calendrier</button>
                                 
                                 <form id="calForm" style="display: none;" action="dispoMedecinController">
+                                    <input type="hidden" name="idMedecinDispo" value="${sessionScope.username}">
                                     <label for="date">Date:</label>
                                     <input type="date" id="date" name="date"><br><br>
                                     <label for="heureD">Heure debut: </label>
