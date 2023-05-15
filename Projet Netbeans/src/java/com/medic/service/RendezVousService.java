@@ -38,6 +38,7 @@ public class RendezVousService {
         return listeRendezVous;
     }
     
+    // Boot
     public int trouverLeIdMaxRendezVous() {
         int maxId = dao.findMaxIdRv();
         return maxId;
@@ -60,6 +61,7 @@ public class RendezVousService {
         return retour;
     }
     
+    // Boot
      public RendezVous verifierRendezVousPris(int idMedecin, String date, String heure) {
         unRendezVous = dao.verifierRendezVousPris(idMedecin,date,heure);
         return unRendezVous;

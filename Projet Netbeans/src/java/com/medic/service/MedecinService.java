@@ -34,6 +34,7 @@ public class MedecinService {
         return listeMedecin;
     }
     
+    // Boot 
     public List<Medecin> chercherMedecinParPrenom(String prenom){
         listeMedecin = dao.findByFirstName(prenom);
         return listeMedecin;
@@ -78,6 +79,7 @@ public class MedecinService {
         retour = dao.delete(idMedecin);
         return retour;
     }
+    // Boot 
     public int trouverLeIdMaxMedecin(){
      int maxId = dao.findMaxIdMedecin();
      return maxId;

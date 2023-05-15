@@ -8,156 +8,156 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema rendezVousMedical
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema rendezVousMedical
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `rendezVousMedical` DEFAULT CHARACTER SET utf8 ;
+USE `rendezVousMedical` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`clinique`
+-- Table `rendezVousMedical`.`clinique`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`clinique` (
-  `idclinique` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`clinique` (
+  `id_clinique` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
   `coordonnees` VARCHAR(45) NULL,
-  PRIMARY KEY (`idclinique`))
+  PRIMARY KEY (`id_clinique`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`medecin`
+-- Table `rendezVousMedical`.`medecin`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`medecin` (
-  `idmedecin` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`medecin` (
+  `id_medecin` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NOT NULL,
   `prenom` VARCHAR(45) NOT NULL,
   `specialite` VARCHAR(45) NULL,
   `facturation` FLOAT NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `coordonnees_medecin` VARCHAR(45) NOT NULL,
-  `clinique_idclinique` INT NOT NULL,
-  PRIMARY KEY (`idmedecin`),
-  INDEX `fk_medecin_clinique1_idx` (`clinique_idclinique` ASC) VISIBLE,
+  `clinique_id_clinique` INT NOT NULL,
+  PRIMARY KEY (`id_medecin`),
+  INDEX `fk_medecin_clinique1_idx` (`clinique_id_clinique` ASC) VISIBLE,
   CONSTRAINT `fk_medecin_clinique1`
-    FOREIGN KEY (`clinique_idclinique`)
-    REFERENCES `mydb`.`clinique` (`idclinique`)
+    FOREIGN KEY (`clinique_id_clinique`)
+    REFERENCES `rendezVousMedical`.`clinique` (`id_clinique`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`patients`
+-- Table `rendezVousMedical`.`patients`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`patients` (
-  `idpatient` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`patients` (
+  `id_patient` INT NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `prenom` VARCHAR(45) NOT NULL,
-  `assurance` VARCHAR(45) NOT NULL,
-  `numSeq_assurance` INT NOT NULL,
-  `naissance` VARCHAR(45) NOT NULL,
+  `numero_assurance_maladie` VARCHAR(45) NOT NULL,
+  `num_seq_numero_assurance_maladie` INT NOT NULL,
+  `date_naissance` VARCHAR(45) NOT NULL,
   `sexe` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `medecin_idmedecin` INT NOT NULL,
-  PRIMARY KEY (`idpatient`),
-  INDEX `fk_patients_medecin_idx` (`medecin_idmedecin` ASC) VISIBLE,
+  `medecin_id_medecin` INT NOT NULL,
+  PRIMARY KEY (`id_patient`),
+  INDEX `fk_patients_medecin_idx` (`medecin_id_medecin` ASC) VISIBLE,
   CONSTRAINT `fk_patients_medecin`
-    FOREIGN KEY (`medecin_idmedecin`)
-    REFERENCES `mydb`.`medecin` (`idmedecin`)
+    FOREIGN KEY (`medecin_id_medecin`)
+    REFERENCES `rendezVousMedical`.`medecin` (`id_medecin`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`services`
+-- Table `rendezVousMedical`.`services`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`services` (
-  `idservice` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`services` (
+  `id_service` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NOT NULL,
   `description` VARCHAR(100) NULL,
-  PRIMARY KEY (`idservice`))
+  PRIMARY KEY (`id_service`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`clinique_has_services`
+-- Table `rendezVousMedical`.`clinique_has_services`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`clinique_has_services` (
-  `clinique_idclinique` INT NOT NULL,
-  `services_idservice` INT NOT NULL,
-  PRIMARY KEY (`clinique_idclinique`, `services_idservice`),
-  INDEX `fk_clinique_has_services_services1_idx` (`services_idservice` ASC) VISIBLE,
-  INDEX `fk_clinique_has_services_clinique1_idx` (`clinique_idclinique` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`clinique_has_services` (
+  `clinique_id_clinique` INT NOT NULL,
+  `services_id_service` INT NOT NULL,
+  PRIMARY KEY (`clinique_id_clinique`, `services_id_service`),
+  INDEX `fk_clinique_has_services_services1_idx` (`services_id_service` ASC) VISIBLE,
+  INDEX `fk_clinique_has_services_clinique1_idx` (`clinique_id_clinique` ASC) VISIBLE,
   CONSTRAINT `fk_clinique_has_services_clinique1`
-    FOREIGN KEY (`clinique_idclinique`)
-    REFERENCES `mydb`.`clinique` (`idclinique`)
+    FOREIGN KEY (`clinique_id_clinique`)
+    REFERENCES `rendezVousMedical`.`clinique` (`id_clinique`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_clinique_has_services_services1`
-    FOREIGN KEY (`services_idservice`)
-    REFERENCES `mydb`.`services` (`idservice`)
+    FOREIGN KEY (`services_id_service`)
+    REFERENCES `rendezVousMedical`.`services` (`id_service`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`administrateur`
+-- Table `rendezVousMedical`.`administrateur`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`administrateur` (
-  `idadministrateur` INT NOT NULL,
-  `nomUtilisateur` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`administrateur` (
+  `id_administrateur` INT NOT NULL,
+  `nom_utilisateur` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idadministrateur`))
+  PRIMARY KEY (`id_administrateur`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`rendez-vous`
+-- Table `rendezVousMedical`.`rendez_vous`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`rendez-vous` (
-  `idrendez-vous` INT NOT NULL,
-  `idPatientRv` INT NOT NULL,
-  `idMedecinRv` INT NOT NULL,
-  `dateRv` VARCHAR(45) NOT NULL,
-  `heureRv` VARCHAR(45) NOT NULL,
-  `raisonConsult` VARCHAR(45) NOT NULL,
-  `descriptionConsult` VARCHAR(100) NULL,
-  PRIMARY KEY (`idrendez-vous`),
-  INDEX `idPatientRv_idx` (`idPatientRv` ASC) VISIBLE,
-  INDEX `idMedecinRv_idx` (`idMedecinRv` ASC) VISIBLE,
-  CONSTRAINT `idPatientRv`
-    FOREIGN KEY (`idPatientRv`)
-    REFERENCES `mydb`.`patients` (`idpatient`)
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`rendez_vous` (
+  `id_rendez_vous` INT NOT NULL,
+  `patient_rv_id_patient` INT NOT NULL,
+  `medecin_rv_id_medecin` INT NOT NULL,
+  `date_rv` VARCHAR(45) NOT NULL,
+  `heure_rv` VARCHAR(45) NOT NULL,
+  `raison_consult` VARCHAR(45) NOT NULL,
+  `description_consult` VARCHAR(100) NULL,
+  PRIMARY KEY (`id_rendez_vous`),
+  INDEX `patient_rv_id_patient_idx` (`patient_rv_id_patient` ASC) VISIBLE,
+  INDEX `medecin_rv_id_medecin_idx` (`medecin_rv_id_medecin` ASC) VISIBLE,
+  CONSTRAINT `patient_rv_id_patient`
+    FOREIGN KEY (`patient_rv_id_patient`)
+    REFERENCES `rendezVousMedical`.`patients` (`id_patient`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idMedecinRv`
-    FOREIGN KEY (`idMedecinRv`)
-    REFERENCES `mydb`.`medecin` (`idmedecin`)
+  CONSTRAINT `medecin_rv_id_medecin`
+    FOREIGN KEY (`medecin_rv_id_medecin`)
+    REFERENCES `rendezVousMedical`.`medecin` (`id_medecin`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`disponibilites_medecin`
+-- Table `rendezVousMedical`.`disponibilites_medecin`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`disponibilites_medecin` (
-  `iddisponibilites_medecin` INT NOT NULL,
-  `idMedecinDispo` INT NULL,
-  `dateDispo` VARCHAR(45) NOT NULL,
-  `heureDispoDebut` VARCHAR(45) NOT NULL,
-  `heureDispoFin` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`iddisponibilites_medecin`),
-  INDEX `idMedecinDispo_idx` (`idMedecinDispo` ASC) VISIBLE,
-  CONSTRAINT `idMedecinDispo`
-    FOREIGN KEY (`idMedecinDispo`)
-    REFERENCES `mydb`.`medecin` (`idmedecin`)
+CREATE TABLE IF NOT EXISTS `rendezVousMedical`.`disponibilites_medecin` (
+  `id_disponibilites_medecin` INT NOT NULL,
+  `medecin_dispo_id_medecin` INT NOT NULL,
+  `date_dispo` VARCHAR(45) NOT NULL,
+  `heure_dispo_debut` VARCHAR(45) NOT NULL,
+  `heure_dispo_fin` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_disponibilites_medecin`),
+  INDEX `medecin_dispo_id_medecin_idx` (`medecin_dispo_id_medecin` ASC) VISIBLE,
+  CONSTRAINT `medecin_dispo_id_medecin`
+    FOREIGN KEY (`medecin_dispo_id_medecin`)
+    REFERENCES `rendezVousMedical`.`medecin` (`id_medecin`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -170,56 +170,56 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-UPDATE `mydb`.`clinique` SET `idclinique` = '10', `nom` = 'Clinique rosemont', `coordonnees` = '2523 rue rosemont' WHERE (`idclinique` = '10');
+UPDATE `rendezVousMedical`.`clinique` SET `id_clinique` = '10', `nom` = 'Clinique rosemont', `coordonnees` = '2523 rue rosemont' WHERE (`id_clinique` = '10');
 
-INSERT INTO `mydb`.`clinique` (`idclinique`, `nom`, `coordonnees`) VALUES ('10', 'Clinique Rosemont', '1234 rue rosemont');
-INSERT INTO `mydb`.`clinique` (`idclinique`, `nom`, `coordonnees`) VALUES ('20', 'Dr Mathieu et associés', '1255 rue jean-talon');
-INSERT INTO `mydb`.`clinique` (`idclinique`, `nom`, `coordonnees`) VALUES ('30 ', 'Clinique sante vivre', '3512 avenue papineau');
-INSERT INTO `mydb`.`clinique` (`idclinique`, `nom`, `coordonnees`) VALUES ('40 ', 'Clinique du matin', '254 place des lys');
-INSERT INTO `mydb`.`clinique` (`idclinique`, `nom`, `coordonnees`) VALUES ('50', 'Jacques Mercier', '8234 rue Mercier');
+INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('10', 'Clinique Rosemont', '1234 rue rosemont');
+INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('20', 'Dr Mathieu et associés', '1255 rue jean-talon');
+INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('30 ', 'Clinique sante vivre', '3512 avenue papineau');
+INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('40 ', 'Clinique du matin', '254 place des lys');
+INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('50', 'Jacques Mercier', '8234 rue Mercier');
 
-INSERT INTO `mydb`.`services` (`idservice`, `nom`, `description`) VALUES ('1', 'Médecine générale', 'Voir un médecin généraliste');
-INSERT INTO `mydb`.`services` (`idservice`, `nom`, `description`) VALUES ('2', 'Cardiologie', 'Voir un medecin spécialiste pour le coeur ');
-INSERT INTO `mydb`.`services` (`idservice`, `nom`, `description`) VALUES ('3', 'Dermatologie', 'Voir un médecin spécialiste pour la peau');
-INSERT INTO `mydb`.`services` (`idservice`, `nom`, `description`) VALUES ('4', 'Grippe, rhume, toux, fièvre', 'Un médecin va observer ces problèmes');
-INSERT INTO `mydb`.`services` (`idservice`, `nom`, `description`) VALUES ('5', 'Dépistage d\'ITSS', 'Présence d\'infection transmises sexuellement');
+INSERT INTO `rendezVousMedical`.`services` (`id_service`, `nom`, `description`) VALUES ('1', 'Médecine générale', 'Voir un médecin généraliste');
+INSERT INTO `rendezVousMedical`.`services` (`id_service`, `nom`, `description`) VALUES ('2', 'Cardiologie', 'Voir un medecin spécialiste pour le coeur ');
+INSERT INTO `rendezVousMedical`.`services` (`id_service`, `nom`, `description`) VALUES ('3', 'Dermatologie', 'Voir un médecin spécialiste pour la peau');
+INSERT INTO `rendezVousMedical`.`services` (`id_service`, `nom`, `description`) VALUES ('4', 'Grippe, rhume, toux, fièvre', 'Un médecin va observer ces problèmes');
+INSERT INTO `rendezVousMedical`.`services` (`id_service`, `nom`, `description`) VALUES ('5', 'Dépistage d\'ITSS', 'Présence d\'infection transmises sexuellement');
 
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('10', '1');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('10', '2');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('10', '3');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('10', '4');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('20', '2');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('20', '1');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('30', '1');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('40', '1');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('40', '5');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('50', '1');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('50', '2');
-INSERT INTO `mydb`.`clinique_has_services` (`clinique_idclinique`, `services_idservice`) VALUES ('50', '5');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('10', '1');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('10', '2');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('10', '3');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('10', '4');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('20', '2');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('20', '1');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('30', '1');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('40', '1');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('40', '5');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('50', '1');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('50', '2');
+INSERT INTO `rendezVousMedical`.`clinique_has_services` (`clinique_id_clinique`, `services_id_service`) VALUES ('50', '5');
 
-INSERT INTO `mydb`.`medecin` (`idmedecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_idclinique`) VALUES ('100', 'Tremblay', 'Paul', 'Médecine générale', '25.50', '1234','Infos1', '10');
-INSERT INTO `mydb`.`medecin` (`idmedecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_idclinique`) VALUES ('200', 'Molson', 'Marc', 'Médecine générale', '30.0', '4321','Infos2', '40');
-INSERT INTO `mydb`.`medecin` (`idmedecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_idclinique`) VALUES ('300', 'Smith', 'Patrick', 'Cardiologie', '45.0', 'root','Infos3', '20');
-INSERT INTO `mydb`.`medecin` (`idmedecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_idclinique`) VALUES ('400', 'Johnson', 'Luc', 'Médecine générale', '20.0', 'root','Infos4', '30');
-INSERT INTO `mydb`.`medecin` (`idmedecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_idclinique`) VALUES ('500', 'Dufort', 'Marie', 'Dermatologie', '35.50', '1234','Infos5', '50');
-INSERT INTO `mydb`.`medecin` (`idmedecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_idclinique`) VALUES ('600', 'Castle', 'Jack', 'Cardiologie', '25.0', 'root','Infos6', '10');
+INSERT INTO `rendezVousMedical`.`medecin` (`id_medecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_id_clinique`) VALUES ('100', 'Tremblay', 'Paul', 'Médecine générale', '25.50', '1234','Infos1', '10');
+INSERT INTO `rendezVousMedical`.`medecin` (`id_medecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_id_clinique`) VALUES ('200', 'Molson', 'Marc', 'Médecine générale', '30.0', '4321','Infos2', '40');
+INSERT INTO `rendezVousMedical`.`medecin` (`id_medecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_id_clinique`) VALUES ('300', 'Smith', 'Patrick', 'Cardiologie', '45.0', 'root','Infos3', '20');
+INSERT INTO `rendezVousMedical`.`medecin` (`id_medecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_id_clinique`) VALUES ('400', 'Johnson', 'Luc', 'Médecine générale', '20.0', 'root','Infos4', '30');
+INSERT INTO `rendezVousMedical`.`medecin` (`id_medecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_id_clinique`) VALUES ('500', 'Dufort', 'Marie', 'Dermatologie', '35.50', '1234','Infos5', '50');
+INSERT INTO `rendezVousMedical`.`medecin` (`id_medecin`, `nom`, `prenom`, `specialite`, `facturation`, `password`,`coordonnees_medecin`, `clinique_id_clinique`) VALUES ('600', 'Castle', 'Jack', 'Cardiologie', '25.0', 'root','Infos6', '10');
 
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('1000', 'Watson', 'Romeo', 'WATR71121503', '08', '1971-12-15', 'Homme','root', '100');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('2000', 'Mendoza', 'Zaynab', 'MENZ97052106', '05', '1997-05-21', 'Femme','root', '100');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('3000', 'Fisher', 'Hayley', 'FISH84100305', '04', '1984-10-03', 'Femme','root', '200');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('4000', 'Dupont', 'Madeline', 'DUPM00041412', '10', '2000-04-14', 'Femme','root', '300');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('5000', 'Schneider', 'Evan', 'SCHE95030114', '02', '1995-03-01 ', 'Homme','root', '400');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('6000', 'Rioux', 'Archibald', 'RIOA83030911', '01', '1983-03-09', 'Homme','root', '500');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('7000', 'Mcintosh', 'Charles', 'MCIC98070508', '02', '1998-07-05', 'Homme','root', '100');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('8000', 'Anderson', 'Bryan', 'ANDB01102415', '05', '2001-10-24', 'Homme','root', '100');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('9000', 'Ruiz', 'Jimmy', 'RUIJ90100511', '06', '1990-10-05', 'Homme','root', '600');
-INSERT INTO `mydb`.`patients` (`idpatient`, `nom`, `prenom`, `assurance`, `numSeq_assurance`, `naissance`, `sexe`,`password`, `medecin_idmedecin`) VALUES ('9900', 'Lemay', 'Phillipe', 'LEMP08032712', '07', '2008-03-27', 'Homme','root', '200');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('1000', 'Watson', 'Romeo', 'WATR71121503', '08', '1971-12-15', 'Homme','root', '100');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('2000', 'Mendoza', 'Zaynab', 'MENZ97052106', '05', '1997-05-21', 'Femme','root', '100');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('3000', 'Fisher', 'Hayley', 'FISH84100305', '04', '1984-10-03', 'Femme','root', '200');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('4000', 'Dupont', 'Madeline', 'DUPM00041412', '10', '2000-04-14', 'Femme','root', '300');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('5000', 'Schneider', 'Evan', 'SCHE95030114', '02', '1995-03-01 ', 'Homme','root', '400');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('6000', 'Rioux', 'Archibald', 'RIOA83030911', '01', '1983-03-09', 'Homme','root', '500');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('7000', 'Mcintosh', 'Charles', 'MCIC98070508', '02', '1998-07-05', 'Homme','root', '100');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('8000', 'Anderson', 'Bryan', 'ANDB01102415', '05', '2001-10-24', 'Homme','root', '100');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('9000', 'Ruiz', 'Jimmy', 'RUIJ90100511', '06', '1990-10-05', 'Homme','root', '600');
+INSERT INTO `rendezVousMedical`.`patients` (`id_patient`, `nom`, `prenom`, `numero_assurance_maladie`, `num_seq_numero_assurance_maladie`, `date_naissance`, `sexe`,`password`, `medecin_id_medecin`) VALUES ('9900', 'Lemay', 'Phillipe', 'LEMP08032712', '07', '2008-03-27', 'Homme','root', '200');
 
-INSERT INTO `mydb`.`administrateur` (`idadministrateur`, `nomUtilisateur`, `password`) VALUES ('1', 'Admin', 'root');
-INSERT INTO `mydb`.`administrateur` (`idadministrateur`, `nomUtilisateur`, `password`) VALUES ('2', 'root', 'root');
+INSERT INTO `rendezVousMedical`.`administrateur` (`id_administrateur`, `nom_utilisateur`, `password`) VALUES ('1', 'Admin', 'root');
+INSERT INTO `rendezVousMedical`.`administrateur` (`id_administrateur`, `nom_utilisateur`, `password`) VALUES ('2', 'root', 'root');
 
 
-INSERT INTO `mydb`.`disponibilites_medecin` (iddisponibilites_medecin, idMedecinDispo, dateDispo, heureDispoDebut, heureDispoFin)
+INSERT INTO `rendezVousMedical`.`disponibilites_medecin` (id_disponibilites_medecin, medecin_dispo_id_medecin, date_dispo, heure_dispo_debut, heure_dispo_fin)
 VALUES 
 ('1', '100', '2023-05-06', '09', '17'),
 ('2', '200', '2023-05-07', '09', '17'),

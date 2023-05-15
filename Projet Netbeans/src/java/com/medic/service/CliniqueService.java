@@ -48,16 +48,19 @@ public class CliniqueService {
         return listeClinique;
     }
 
+    // Boot
     public List<ServicesClinique> afficherTousServicesDuneClinique(String nomService) {
         List<ServicesClinique> listeServices = dao.findAllServicesClinique(nomService);
         return listeServices;
     }
 
+    // Boot
     public List<Medecin> afficherTousMedecinsDuneClinique(String nomMedecin) {
         List<Medecin> listeMedecins = dao.findAllMedecinsClinique(nomMedecin);
         return listeMedecins;
     }
 
+    // Boot
     public List<Patient> afficherTousPatientsDuneClinique(String nomPatient) {
         List<Patient> listePatients = dao.findAllPatientsClinique(nomPatient);
         return listePatients;
@@ -77,7 +80,7 @@ public class CliniqueService {
         retour = dao.delete(idClinique);
         return retour;
     }
-
+    // Boot
     public int trouverLeIdMaxClinique() {
         int maxId = dao.findMaxIdClinique();
         return maxId;

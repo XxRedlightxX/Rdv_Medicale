@@ -29,11 +29,13 @@ public class DispoMedecinService {
         return uneDispo;
     }
 
+    //Boot
     public List<DispoMedecin> chercherDispoMedecinParIdDuMedecin(int id) {
         listeDispos = dao.findDispoByIdMedecin(id);
         return listeDispos;
     }
 
+    // Boot
     public List<DispoMedecin> chercherDispoMedecinParDate(String date) {
         listeDispos = dao.findDispoByDate(date);
         return listeDispos;
@@ -58,7 +60,7 @@ public class DispoMedecinService {
         retour = dao.delete(idDispo);
         return retour;
     }
-
+    // Boot
     public int trouverLeIdMaxDispoMedecin() {
         int maxId = dao.findMaxIdDispo();
         return maxId;
