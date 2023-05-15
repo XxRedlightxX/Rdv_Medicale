@@ -58,7 +58,7 @@
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
-
+            
         </style>
 
     </head>
@@ -72,6 +72,7 @@
     <div >
         <jsp:useBean id="daoMedecin" class="com.medic.service.MedecinService"/>
         <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>
+<<<<<<< HEAD
         <c:choose>
             <c:when test = "${not empty requestScope.medecinChoisi}">    
                 <c:set var="medecinRv" value="${requestScope.medecinChoisi}"/>  
@@ -96,8 +97,12 @@
             Dr. ${daoMedecin.chercherMedecinParId(medecinRv).prenom}
             ${daoMedecin.chercherMedecinParId(medecinRv).nom}
             <a href="choixMedecinRendezVousController?typeRecherche=toutAfficher" style="float:right;">Rechercher un rendez-vous avec un autre médecin</a></h2>
+=======
+        <h2>Prendre un rendez-vous avec son medecin de famille : 
+            Dr. ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).prenom}
+            ${daoMedecin.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).nom}</h2>
+>>>>>>> 060a822e7488ecba65357f295f54a1d048abf1ff
     </div>
-
     <body id="body">
         <div style="overflow: auto;height:70vh">
             <table>
@@ -127,7 +132,7 @@
                     <% for (int j = 0; j <= 6; j++) {%>
                     <td><%
                         PatientService patientDao = new PatientService();
-                        int idMedecinFamille = Integer.valueOf("" + pageContext.getAttribute("medecinRv"));
+                        int idMedecinFamille = patientDao.chercherParAssuranceMaladie((String) session.getAttribute("username")).getIdMedecinFamille();
 
                         RendezVousService rendezVousDao = new RendezVousService();
                         RendezVous unRendezVous = null;
@@ -150,7 +155,7 @@
                         } else if (heureDansDispo == true) {%>
                         <form action="rendezVousController" style="display: block;margin-left: auto;margin-right: auto;width: 65%;">
                             <input type="hidden" name="idPatient" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).id}">
-                            <input type="hidden" name="idMedecin" value="${medecinRv}">
+                            <input type="hidden" name="idMedecin" value="${daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille}">
                             <input type="hidden" name="dateRv" value="<%=date.plusDays(j).toString()%>">
                             <input type="hidden" name="heureRv" value="<%=i%>">
                             <input type="hidden" name="etape1Rv" value="ajouter">
