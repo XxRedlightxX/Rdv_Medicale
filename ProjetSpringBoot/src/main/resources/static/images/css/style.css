@@ -1,0 +1,176 @@
+#header{
+    background-color:#358045;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    height: 100px;
+}
+#footer{
+    background-color: #358045;
+    padding: 10px;
+    text-align: center;
+    font-size: 2px;
+    font-weight: bold;
+    height: 100px;
+    position: fixed;
+    bottom: 0;
+    width: 97%;
+
+}
+
+#body{
+    background-color: #3375bc;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    height: 150px;
+}
+#patient{
+    padding: 10px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 350px;
+
+}
+
+#medecin{
+    padding: 10px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 350px;
+
+}
+#clinique{
+    padding: 10px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 350px;
+}
+
+
+
+#lsl{
+    background-color: #baabab;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: right;
+}
+
+#ls{
+    background-color:#baabab;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+}
+
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+h2{
+    font-size: medium;
+    text-align: left;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(238, 231, 218);
+
+}
+
+h3{
+    font-size: medium;
+    text-align: left;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(19, 18, 14);
+
+}
+
+#infoTitre{
+    margin-right: 500px;
+
+}
+#courriel{
+    text-align: right;
+}
+#barCherche{
+    margin-right: 70%;
+}
+
+
+
+#partageDoc{
+    margin-left: 1000px;
+
+    margin-top: 16%
+}
+
+#patientTable {
+    border:1px black;
+    width: 900px;
+    margin-left: 25%;
+
+}
+
+#patientRow
+{
+    background-color: white;
+
+}
+#ip{
+    margin-left: 25%;
+}
+
+#menuService{
+    margin-top: 8%;
+}
+
+#tableService{
+    width: 1000px;
+    margin-top: 5%;
+}
+
+#souF{
+    margin-left: 75%;
+}
+
+a.services {
+    font-size: medium;
+    text-align: left;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(19, 18, 14);
+}
+
+a.servicesClinique{
+    font-size: medium;
+    text-align: left;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(245, 243, 237);
+}
+
+a{
+    font-size: medium;
+    text-align: left;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(239, 241, 231);
+}
+body.background-image{
+    background-image: url(../back.PNG);
+}
+
+#menu{
+    margin-top: 1%;
+}
+
+#logo{
+    margin-right: 100%;
+}
+
+#tab{
+    margin-top: 8%;
+}
+
+

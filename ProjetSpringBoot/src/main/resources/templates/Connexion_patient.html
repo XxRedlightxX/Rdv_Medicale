@@ -1,0 +1,145 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Connexion</title>
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script
+        src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            .error{
+                color:red;
+            }
+            input.error{
+                border:1px solid red;
+            }
+
+        </style>
+    </head>
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <div id=ls>
+        <h1 id="etatPatient">Connexion patient</h1>
+
+    </div> <br>
+    <a style="color:black" onclick="myFunction('connection')" id="btnConnexion">Connexion</a>&nbsp;&nbsp;&nbsp;
+    <a onclick="myFunction('inscription')" alt="Passe" id="btnInscription" style="text-decoration:underline;cursor:pointer;">Inscription</a>
+
+    <body id="body">
+        </br></br>
+        <span th:if="${message != null}">
+        <center><b><font color=red>[[${message}]]</font><b></center>
+        </span>
+                <div id="formuInscr" style="display:none">
+                    <form id="signupForm" class="login" action="inscriptionController" method="get" th:object="${patient}">
+                        <input type="hidden" name="typeCompte" value="patient" >
+
+                        <label for="nom">Nom : </label>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}"><br> <br>
+
+                        <label for="prenom">Prenom : </label>
+                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}"><br> <br>
+
+                        <label for="assuranceMaladie">Numero d'assurance maladie : </label>
+                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" th:field="*{numero_assurance_maladie}"><br> <br>
+
+                        <label for="numeroSeq">Numero sequentiel : </label>
+                        <input type="text" name="numeroSeq" id="numeroSeq" th:field="*{num_seq_numero_assurance_maladie}"><br> <br>
+
+                        <label for="dateNaissance">Date de naissance : </label>
+                        <input type="date" name="dateNaissance" id="dateNaissance" th:field="*{date_naissance}"><br> <br>
+
+                        <label> Sexe : </label>
+
+                        <label for="gender_male" id="labelgenderM"> 
+                            <input type="radio" id="gender_male" value="Homme" name="sexe" th:field="*{sexe}">Male</label>
+                        <label for="gender_female" id="labelgenderF"> 
+                            <input type="radio" id="gender_female" value="Femme" name="sexe" th:field="*{sexe}">Female</label><br> <br>
+
+
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" name="password" id="password" th:field="*{password}"> <br><br>
+
+                        <label for="passwordConfirm">Confirmation du mot de passe:</label>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm"> <br><br>
+
+                        <label for="password">Médecin de famille:</label>
+                        <select id="idMedecinFamille" name="idMedecinFamille" th:field="*{medecin}">
+                            <option value = "0">Aucun</option>
+                            <span th:each="unMedecin:${medecinService.afficherLesMedecins()}">
+                                <option value="${unMedecin.numeroProfessionel}">
+                                    Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
+                            </span>
+                        </select> <br><br>
+
+
+                        <input type="submit"  class="btn btn-primary btn-lg" 
+                               value="Inscription"  id="submits"  />
+                        <label class="checkbox pull-left">
+                            <input type="checkbox" th:name="sauvegarde" th:value="true">
+                            Se souvenir </br>
+                        </label>
+                    </form>
+                </div>
+                <div id="formuLog" >
+                    <form class="login" th:action="@{/connexion/patient}" method="post">
+                        <input type="hidden" name="typeCompte" value="patient">
+                        <label for="username">Numero d'assurance maladie: </label>
+                        <input type="text" th:name="username" id="username"><br> <br>
+
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" th:name="password" id="password"> <br><br>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            Se connecter</button>
+                        <label class="checkbox pull-left">
+                            <input type="checkbox" th:name="sauvegarde" th:value="true">Se souvenir </br>
+                        </label>
+                    </form>
+                </div>
+                </body>
+                <script>
+
+
+                    function myFunction(choix) {
+                        if (choix === "connection") {
+                            document.getElementById("formuInscr").style.display = "none";
+                            document.getElementById("formuLog").style.display = "block";
+                            document.getElementById("etatPatient").innerHTML = "Connexion patient";
+
+                            document.getElementById("btnConnexion").style.color = "black";
+                            document.getElementById("btnInscription").style.color = "white";
+
+                            document.getElementById("btnInscription").style.textDecoration = "underline";
+                            document.getElementById("btnConnexion").style.textDecoration = "none";
+
+                            document.getElementById("btnInscription").style.cursor = "pointer";
+                            document.getElementById("btnConnexion").style.cursor = "default";
+
+
+                        }
+                        if (choix === "inscription") {
+                            document.getElementById("formuLog").style.display = "none";
+                            document.getElementById("formuInscr").style.display = "block";
+                            document.getElementById("etatPatient").innerHTML = "Inscription d'un patient";
+
+                            document.getElementById("btnInscription").style.color = "black";
+                            document.getElementById("btnConnexion").style.color = "white";
+
+                            document.getElementById("btnConnexion").style.textDecoration = "underline";
+                            document.getElementById("btnInscription").style.textDecoration = "none";
+
+                            document.getElementById("btnConnexion").style.cursor = "pointer";
+                            document.getElementById("btnInscription").style.cursor = "default";
+                        }
+                    }
+                </script>
+                <span th:insert="pied:: pied_de_page"></span>
+                <script src="javaScript/formValidation.js"></script> 
+                </html>

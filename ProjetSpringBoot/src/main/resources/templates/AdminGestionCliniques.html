@@ -1,0 +1,167 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Connexion</title>
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            .error {
+                color: red;
+            }
+
+            input.error {
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <body id="body">
+
+    <div th:switch="${typeAction}">
+            <span th:case="'ajouter'">
+                <div id=ls>
+                    <h1 id="etatClinique">Ajout d'une nouvelle clinique</h1>
+
+                </div> 
+                </br>
+                <div id="formuInscr">
+                    <form  th:action="@{/administrateur/clinique/ajouterClinique}" method="get" th:object="${clinique}">
+                        <input type="hidden" name="ajouterClinique">
+
+                        <label for="nom">Nom de la clinique : </label>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}"><br> <br>
+
+                        <label for="coordonnees">Coordonnées : </label>
+                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees}"><br> <br>
+
+                        <input type="submit"  class="btn btn-primary btn-lg" value="Ajouter la clinique"  id="submits">
+                    </form>
+                    <br>
+                    <form style="display:inline;" action="pageAdminCliniques.html" method="post">
+                        <input style="width:100px;" type="submit" value="Annuler">
+                    </form>
+                </div>
+            </span>
+
+            <span th:case="'modifier'">
+                <div id=ls>
+                    <h1 id="etatClinique">Modifier une clinique</h1>
+
+                </div> <br><br><br>
+                <span th:if="${uneClinique != null}">
+                    </br></br>
+                    <div id="formuInscr">
+                        <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/clinique/modifierClinique/'+ ${uneClinique.getId_clinique()}}" method="get" th:object="${clinique}">
+                            <input type="hidden" name="modifierClinique" value="${uneClinique.id}" th:field="*{id_clinique}">
+                            <table style="background-color:white;margin-left:auto;margin-right:auto;">
+
+                                <tr>
+                                    <th>Informations Clinique</label></th>
+                                    <th>Données courantes</th>
+                                    <th>Modifications</th>
+                                </tr>
+                                <tr>
+                                    <td><label for="nom">Nom : </label></td>
+                                    <td>[[${uneClinique.nom}]]</td>
+                                    <td><input type="text" name="nom" id="nom" value="${uneClinique.nom}" th:field="*{nom}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="coordonnees">Coordonnées : </label></td>
+                                    <td>[[${uneClinique.coordonnees}]]</td>
+                                    <td><input type="text" name="coordonnees" id="coordonnees" value="${uneClinique.coordonnees}" th:field="*{coordonnees}">
+                                    </td>
+                                </tr>
+
+
+                            </table>
+
+
+                            <br><br><br>
+
+                            <input type="submit" style="display:inline;"  class="btn btn-primary btn-lg" value="Sauvegarder"  id="submits">
+                        </form>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <form style="display:inline;" action="pageAdminCliniques.jsp" method="post">
+                            <input style="width:100px;" type="submit" value="Annuler">
+                        </form>
+
+                    </span>
+                </span>
+
+            <span th:case="'supprimer'">
+                    <style>
+                        th {
+                            text-align: left;
+                            width: 500px;
+                        }
+
+                        tr tr td {
+                            text-align: left;
+                            padding-left: 5%;
+                            width: 25%;
+                        }
+
+                        td input {
+                            width: 100px;
+                            margin-right: 15px;
+                        }
+                    </style>
+                    <div id=ls>
+                        <h1 id="etatClinique">Supression d'une clinique</h1>
+
+                    </div> <br>
+
+                    <span th:if="${uneClinique != null}">
+                        </br></br>
+                        <div>
+                            <H1 style="margin-right: 50%">Clinique : </H1>
+                            <table style="border: 1px solid black;border-radius: 10px;width:50%;margin: auto;background-color: white">
+                                <tr>
+                                    <td rowspan="2"><img th:src="@{/images/clinique_icon.png}" alt="Trulli" width="125" height="125"></td>
+                                    <td rowspan="2"><table>
+                                            <tr>
+                                                <th>Nom de la clinique :</th>
+                                                <td>[[${uneClinique.nom}]]</td>
+                                            </tr>
+                                            <tr >
+                                                <th style="width:10%">Coordonnées :</th>
+                                                <td>[[${uneClinique.coordonnees}]]</td>
+                                            </tr>
+
+                                        </table></td>
+                       
+                               
+
+                                </tr>
+                            </table>
+                            </br>
+                            <h2 style="text-align:center"> Voulez vous vraiment supprimer cette clinique ?</h2></br>
+                        </div>
+                        <form style="display:inline;" th:action="@{'/administrateur/clinique/supprimerClinique/'+${uneClinique.id_clinique}}" method="post" >
+                            <input type="hidden" name="supprimerClinique" value="${uneClinique.id}">
+                            <input style="width:100px;" type="submit" value="Supprimer">
+                        </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <form style="display:inline;" action="pageAdminCliniques.jsp" method="post">
+                            <input style="width:100px;" type="submit" value="Annuler">
+                        </form>
+
+                    </span>
+                </span>
+    </div>
+    </body>
+
+
+    <span th:insert="pied:: pied_de_page"></span>
+    <script src="javaScript/formValidation.js"></script>
+
+</html>

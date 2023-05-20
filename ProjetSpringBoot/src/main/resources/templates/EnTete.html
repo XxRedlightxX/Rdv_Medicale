@@ -1,0 +1,60 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+
+    </head>
+    <span th:fragment="en_tete">
+    <body>
+
+        <header id="header">
+
+            <div id="logo">
+                <img th:src="@{/images/logo.png}" width="60px" , height="50px">
+            </div>
+            <span th:if="${session.typeCompte != null}">
+                <div th:switch="${session.typeCompte}">
+                    <span th:case="'patient'">
+                        <div class="container" id="menu">
+                            <a th:href="@{/enTete/patient/accueil}">Accueil Patient</a>
+                            <a th:href="@{/enTete/patient/rendezVous}">Consulter mes rendez-vous</a>
+                            <a th:href="@{/enTete/patient/priseRendezVous}">Prendre un rendez-vous</a>
+                            <a href="xyz.jsp">Contacter un médecin</a>
+                            <a th:href="@{/enTete/patient/rechercheClinique}">Recherche de cliniques</a>
+                        </div>
+                    </span>
+                    <span th:case="'medecin'">
+                        <div class="container" id="menu">
+                            <a th:href="@{/enTete/medecin/Accueil}">Accueil Médecin</a>
+                            <a th:href="@{/enTete/medecin/rechercheClinique}">Recherche de cliniques</a>
+                        </div>
+                    </span>
+                    <span th:case="'admin'">
+                        <div class="container" id="menu">
+                            <a th:href="@{/enTete/admin/pagePatients}">Gestion des Patients</a>
+                            <a th:href="@{/enTete/admin/pageMedecin}">Gestion des Médecins</a>
+                            <a th:href="@{/enTete/admin/pageClinique}">Gestion des Cliniques</a>
+                            <a th:href="@{/enTete/admin/rechercheClinique}">Recherche de cliniques</a>
+                        </div>
+                    </span>
+                </div>
+            </span>
+            <span th:if="${session.typeCompte == null}">
+                <div class="container" id="menu">
+                    <a th:href="@{/}">Accueil</a>
+                    <a th:href="@{/enTete/connexion/patient}">Portail Patients</a>
+                    <a th:href="@{/enTete/connexion/medecin}">Portail Medecins</a>
+                    <a th:href="@{/enTete/connexion/administrateur}">Portail Administrateurs</a>
+                </div>
+            </span>
+
+
+        </header>
+    </body>
+</span>
+</html>

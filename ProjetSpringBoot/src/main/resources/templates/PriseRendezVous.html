@@ -1,0 +1,128 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Admin</title>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: white;
+            }
+
+            td {
+                border: 1px solid #dddddd;
+                text-align: center;
+                height: 37px;
+            }
+
+            th {
+                border: 1px solid #dddddd;
+                text-align: center;
+                padding: 8px;
+                height: 20px;
+            }
+            input[type=submit] {
+                background-color: #0E86D4;
+                font-size: 15px;
+                border: none;
+                color: white;
+                width: 90%;
+                height: 80%;
+                text-decoration: none;
+
+                cursor: pointer;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+            
+        </style>
+
+    </head>
+
+    <span th:insert="EnTete:: en_tete"></span>
+    <div>
+
+
+        <h2 >Prendre un rendez-vous avec
+
+
+            Dr. [[${medecinRv.prenom}]]
+            [[${medecinRv.nom}]]
+            <a th:href="@{/administrateur/medecin/ajouterMedecin}" style="float:right;">Rechercher un rendez-vous avec un autre médecin</a></h2>
+    </div>
+    <body id="body">
+        <div style="overflow: auto;height:70vh;">
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Dimanche</th>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                    <th>Samedi</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>[[${jourSemaine.plusDays(0)}]]</th>
+                    <th>[[${jourSemaine.plusDays(1)}]]</th>
+                    <th>[[${jourSemaine.plusDays(2)}]]</th>
+                    <th>[[${jourSemaine.plusDays(3)}]]</th>
+                    <th>[[${jourSemaine.plusDays(4)}]]</th>
+                    <th>[[${jourSemaine.plusDays(5)}]]</th>
+                    <th>[[${jourSemaine.plusDays(6)}]]</th>
+                </tr>
+                <span th:each="i: ${#numbers.sequence(6, 20)}" >
+                <tr>
+                    <td>[[${i}]]:00</td>
+                    <span th:each="j: ${#numbers.sequence(0, 6)}" >
+                    <td>
+                        <span th:with="idMedecinFamille=${medecinRv.id_medecin}">
+
+                        <span th:with="unRendezVous=${rendezVousService.verifierExistenceRendezVous(medecinRv,jourSemaine.plusDays(j).toString(),i.toString())}">
+                        <span th:with="uneDispo=${dispomedecinService.verifierExistenceDispo(medecinRv.id_medecin,jourSemaine.plusDays(j).toString())}">
+
+                        <span th:with="heureDansDispo=${false}">
+                            <span th:if="${uneDispo != null}">
+                            <span th:if="${i >= uneDispo.convertirHeure_dispo_debut() && i <= uneDispo.convertirHeure_dispo_fin() && unRendezVous == null}">
+                                <form th:action="@{/rendezVous/page/ajouter}"  th:object="${rendezVous}" style="display: block;margin:auto;width: 80%;" method="post">
+                                    <input type="hidden" th:field="*{patient_rv}">
+                                    <input type="hidden" th:field="*{medecin_rv}">
+                                    <input type="hidden" value="1" th:field="*{id_rendez_vous}">
+                                    <input type="hidden" th:value="${i}" th:name="date_rv">
+                                    <input type="hidden" th:field="*{heure_rv}">
+
+                                    <input type="hidden" th:value="${i}" th:name="date_rv">
+                                    <input type="submit" value="Disponible">
+                                </form>
+                            </span>
+                                <span th:if="${unRendezVous != null}">
+                                Déja réservé
+                            </span>
+                            </span>
+                        </span>
+                        </span>
+                        </span>
+                    </td>
+                    </span>
+                </tr>
+                </span>
+
+            </table>
+        </div>
+    </body>
+
+    <span th:insert="pied:: pied_de_page"></span>
+
+</html>

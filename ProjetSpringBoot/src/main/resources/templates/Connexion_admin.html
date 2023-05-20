@@ -1,0 +1,48 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Connexion</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+
+</head>
+<span th:insert="EnTete:: en_tete"></span>
+
+<div id=ls>
+  <h1 id="etatPatient">Connexion Administrateur</h1>
+
+</div> <br>
+
+<body id="body">
+</br></br>
+
+<span th:if="${message!=null}">
+    <center><b><font color=red>[[${message}]]</font><b></center>
+</span>
+
+<div id="formuLog">
+<form class="login" th:action="@{/connexion/administrateur}"  method="post" >
+      <input type="hidden" name="typeCompte" value="admin" >
+      <label for="username">Nom d'utilisateur: </label>
+      <input type="text" th:name="username" id="username" ><br> <br>
+      
+      <label for="password">Mot de passe:</label>
+      <input type="password" th:name="password" id="password" > <br><br>
+      
+	  <button class="btn btn-lg btn-primary btn-block" type="submit">
+                   Se connecter</button>
+      <label class="checkbox pull-left">
+	  <input type="checkbox" th:name="sauvegarde" th:value="true">Se souvenir </br>
+      </label>
+    </form>
+</div>
+</body>
+
+<span th:insert="pied:: pied_de_page"></span>
+
+</html>

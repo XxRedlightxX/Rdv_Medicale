@@ -1,0 +1,286 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Connexion</title>
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            .error {
+                color: red;
+            }
+
+            input.error {
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <body id="body">
+    <div th:switch="${typeAction}">
+        <span th:case="'ajouter'">
+                <div id=ls>
+                    <h1 id="etatPatient">Ajout d'un nouveau patient</h1>
+
+                </div> 
+                </br>
+                <div id="formuInscr">
+                    <form id="signupForm" class="login" th:action="@{/administrateur/patient/ajouterPatient}" method="post" th:object="${patient}">
+                        <input type="hidden" name="ajouterPatient">
+
+                        <label for="nom">Nom : </label>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}"><br> <br>
+
+                        <label for="prenom">Prenom : </label>
+                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}"><br> <br>
+
+                        <label for="assuranceMaladie">Numero d'assurance maladie : </label>
+                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" th:field="*{numero_assurance_maladie}"><br> <br>
+
+                        <label for="numeroSeq">Numero sequentiel : </label>
+                        <input type="text" name="numeroSeq" id="numeroSeq" th:field="*{num_seq_numero_assurance_maladie}"><br> <br>
+
+                        <label for="dateNaissance">Date de naissance : </label>
+                        <input type="date" name="dateNaissance" id="dateNaissance" th:field="*{date_naissance}"><br> <br>
+
+                        <label> Sexe : </label>
+
+                        <label for="gender_male" id="labelgenderM">
+                            <input type="radio" id="gender_male" value="Homme" name="sexe" th:field="*{sexe}">Male</label>
+                        <label for="gender_female" id="labelgenderF">
+                            <input type="radio" id="gender_female" value="Femme" name="sexe" th:field="*{sexe}">Female</label><br> <br>
+
+
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" name="password" id="password" th:field="*{password}"> <br><br>
+                        <label for="password">Médecin de famille:</label>
+                        <select id="idMedecinFamille" name="idMedecinFamille" th:field="*{medecin}">
+                            <option value = "0">Aucun</option>
+                            <span th:each="unMedecin : ${medecinService.afficherLesMedecins()}">
+                                <option value="${unMedecin.id_medecin}">
+                                    Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
+                            </span>
+                        </select> <br><br> <br><br>
+
+                        <input type="submit"  class="btn btn-primary btn-lg" value="Ajouter le patient"  id="submits">
+                    </form>
+                    <br>
+                    <form style="display:inline;" action="pageAdminPatients.jsp" method="post">
+                        <input style="width:100px;" type="submit" value="Annuler">
+                    </form>
+                </div>
+        </span>
+        <span th:case="'modifier'">
+                <div id=ls>
+                    <h1 id="etatPatient">Modifier un patient</h1>
+
+                </div> <br><br><br>
+            <span th:if="${unPatient != null}">
+                    </br></br>
+                    <div id="formuInscr">
+                        <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/patient/modifierPatient/'+${unPatient.id_patient}}" th:object="${patient}" method="get">
+
+
+                            <input type="hidden" name="modifierPatient" value="${unPatient.id}" th:field="*{id_patient}">
+                            <table style="background-color:white;margin-left:auto;margin-right:auto;">
+
+
+
+                                <tr>
+                                    <th>Informations patient</label></th>
+                                    <th>Données courantes</th>
+                                    <th>Modifications</th>
+                                </tr>
+                                <tr>
+                                    <td><label for="nom">Nom : </label></td>
+                                    <td>[[${unPatient.nom}]]</td>
+                                    <td><input type="text" name="nom" id="nom" value="${unPatient.nom}" th:field="*{nom}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="prenom">Prenom : </label></td>
+                                    <td>[[${unPatient.prenom}]]</td>
+                                    <td><input type="text" name="prenom" id="prenom" value="${unPatient.prenom}" th:field="*{prenom}">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="assuranceMaladie">Numero d'assurance maladie : </label></td>
+                                    <td>[[${unPatient.numeroAssuranceMaladie}]]</td>
+                                    <td><input type="text" name="assuranceMaladie" id="assuranceMaladie" value="${unPatient.numeroAssuranceMaladie}" th:field="*{numero_assurance_maladie}">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="numeroSeq">Numero sequentiel : </label></td>
+                                    <td>[[${unPatient.numeroSequentiel}]]</td>
+                                    <td><input type="text" name="numeroSeq" id="numeroSeq" value="${unPatient.numeroSequentiel}" th:field="*{num_seq_numero_assurance_maladie}">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="dateNaissance">Date de naissance : </label></td>
+                                    <td>[[${unPatient.dateNaissance}]]</td>
+                                    <td><input type="date" name="dateNaissance" id="dateNaissance" value="${unPatient.dateNaissance}" th:field="*{date_naissance}">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="sexe"> Sexe : </label> </td>
+                                    <td>[[${unPatient.sexe}]]</td>
+                                    <td><label for="gender_male" id="labelgenderM">
+                                            <input type="radio" id="gender_male" th:field="*{sexe}" value="Homme" name="sexe"
+                                                   <span th:if="${unPatient.sexe == 'Homme'}">
+                                                       checked
+                                                   </span>>Male</label>
+                                        <label for="gender_female" id="labelgenderF">
+                                            <input type="radio" id="gender_female" th:field="*{sexe}" value="Femme" name="sexe"
+                                                   <span th:if="${unPatient.sexe == 'Femme'}">
+                                                       checked
+                                                   </span>>Female</label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="password">Mot de passe:</label></td>
+                                    <td>[[${unPatient.motDePasse}]]</td>
+                                    <td><input type="text" name="password" id="password" value="${unPatient.motDePasse}" th:field="*{password}">
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><label for="idMedecinFamille">Médecin de famille :</label></td>
+                                    <span th:if="${unPatient.medecin.id_medecin != 0}">
+                                        <td>Dr. [[${unPatient.medecin.prenom}]] [[${unPatient.medecin.nom}]] </td>
+                                    </span>
+                                    <span th:if="${unPatient.medecin.id_medecin == 0}">
+                                        <td>Aucun</td>
+                                    </span>
+                                    <td><select id="idMedecinFamille" name="idMedecinFamille" th:field="*{medecin}">
+                                            <option value = "0"
+                                        <span th:if="${unPatient.medecin.id_medecin == 0}">
+                                                        selected="selected" 
+                                                    </span>>Aucun</option>
+                                        <span th:each="unMedecin : ${medecinService.afficherLesMedecins()}">
+                                                <option value="${unMedecin.numeroProfessionel}"
+                                                        <span th:if="${unMedecin.id_medecin == unPatient.medecin.id_medecin}">
+                                                            selected="selected"
+                                                        </span>>Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
+
+                                        </span>
+                                        </select>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <br><br><br>
+
+                            <input type="submit" style="display:inline;"  class="btn btn-primary btn-lg" value="Sauvegarder"  id="submits">
+                        </form>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <form style="display:inline;" action="pageAdminPatients.jsp" method="post">
+                            <input style="width:100px;" type="submit" value="Annuler">
+                        </form>
+            </span>
+
+        </span>
+        <span th:case="'supprimer'">
+
+                    <style>
+                        th {
+                            text-align: left;
+                            width: 500px;
+                        }
+
+                        tr tr td {
+                            text-align: left;
+                            padding-left: 5%;
+                            width: 25%;
+                        }
+
+                        td input {
+                            width: 100px;
+                            margin-right: 15px;
+                        }
+                    </style>
+                    <div id=ls>
+                        <h1 id="etatPatient">Supression d'un patient</h1>
+
+                    </div> <br>
+
+                    <span th:if="${unPatient != null}">
+                        </br></br>
+                        <div>
+                            <H1 style="margin-right: 50%">Patient: </H1>
+                            <table
+                                style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
+                                <tr>
+                                    <td rowspan="2"><img th:src="@{/images/patient_icon.png}" alt="Trulli" width="125" height="125">
+                                    </td>
+                                    <td rowspan="2">
+                                        <table>
+                                            <tr>
+                                                <th>Nom:</th>
+                                                <td>[[${unPatient.nom}]]</td>
+                                                <th>Numero d'assurance maladie:</th>
+                                                <td>[[${unPatient.numeroAssuranceMaladie}]]</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prenom:</th>
+                                                <td>[[${unPatient.prenom}]]</td>
+                                                <th>Numéro séquentiel:</th>
+                                                <td>[[${unPatient.numeroSequentiel}]]</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Date de naissance:</br></th>
+                                                <td>[[${unPatient.dateNaissance}]]</td>
+                                                <th>Sexe:</th>
+                                                <td>[[${unPatient.sexe}]]</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom du médecin de famille:</th>
+                                                <span th:if="${unPatient.medecin.id_medecin !=0}">
+                                                    <td>Dr. [[${medecinService.chercherMedecinParId(unPatient.idMedecinFamille).prenom}]] [[${medecinService.chercherMedecinParId(unPatient.idMedecinFamille).nom}]] </td>
+                                                </span>
+                                                <span th:if="${unPatient.medecin.id_medecin ==0}">
+                                                    <td>Aucun</td>
+                                                </span>
+
+
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                            </table>
+                            </br>
+                            <h2 style="text-align:center"> Voulez vous vraiment supprimer ce patient ?</h2></br>
+                        </div>
+                        <form style="display:inline;" th:action="@{'/administrateur/patient/supprimerPatient/'+${unPatient.id_patient}}" method="post">
+                            <input type="hidden" name="supprimerPatient" value="${unPatient.id}">
+                            <input style="width:100px;" type="submit" value="Supprimer">
+                        </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <form style="display:inline;" action="pageAdminPatients.jsp" method="post">
+                            <input style="width:100px;" type="submit" value="Annuler">
+                        </form>
+                    </span>
+
+        </span>
+
+    </div>
+    </body>
+
+
+    <span th:insert="pied:: pied_de_page"></span>
+    <script src="javaScript/formValidation.js"></script>
+
+</html>
