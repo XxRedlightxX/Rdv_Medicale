@@ -39,6 +39,9 @@ public class MedecinImplDao implements MedecinDao {
     private static final String SQL_SELECT_BY_CLINIQUE = "SELECT * from medecin where clinique_idclinique = ?";
     private static final String SQL_SELECT_MAX_ID_MEDECIN = "SELECT max(idmedecin) FROM medecin";
     private static final String SQL_DELETE_ID_MEDECIN_DES_PATIENTS = "UPDATE patients SET medecin_idmedecin = NULL WHERE (medecin_idmedecin = ?)";
+    private static final String SQL_UPDATE_MEDECIN_JUST = "update medecin set facturation=? where idmedecin = ?";
+
+
 
     @Override //Bug avec Le champ mot de passe ne s'insère dans la BD
     public List<Medecin> findAll() {
@@ -525,5 +528,37 @@ public class MedecinImplDao implements MedecinDao {
 
         return idMaximal;
     }
+    
+    @Override
+    public boolean updateMedecin(Medecin medecin) {
+        boolean retour = false;
+        int nbLigne = 0;
+        PreparedStatement ps;
+
+        try {
+
+            ps = ConnexionBD.getConnection().prepareStatement(SQL_UPDATE_MEDECIN_JUST);
+            ps.setFloat(1, medecin.getFacturation());
+            
+
+            ps.setInt(2, medecin.getNumeroProfessionel());
+
+            nbLigne = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            Logger.getLogger(MedecinImplDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+//		System.out.println("nb ligne " + nbLigne);
+        if (nbLigne > 0) {
+            retour = true;
+        }
+        ConnexionBD.closeConnection();
+        return retour;
+    }
+
+    
+    
 
 }

@@ -1,7 +1,7 @@
-
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.medic.entities.Clinique"%>
+<%@page import="com.medic.entities.Medecin"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,11 +18,18 @@
     </head>
 
     <jsp:include page="EnTete.jsp"/>
-    
+    <jsp:useBean id="medecinTest" class="com.medic.service.MedecinService"/>
+    <h1>Bonjour Dr ${medecinTest.chercherMedecinParId(username).nom}</h1>
+    <c:if test = "${not empty requestScope.message}">
+<div id=ls>
+  <h1 id="etatPatient">${requestScope.message}</h1>
+</div>
+</c:if>
     <body id="body">
         <div id="tab">
 
             <div class="container">
+                
 
                 <div class="section">
 
@@ -34,7 +41,6 @@
                             <td><button onclick="document.getElementById('calForm').style.display = 'block'">Calendrier</button>
                                 
                                 <form id="calForm" style="display: none;" action="dispoMedecinController">
-                                    <input type="hidden" name="idMedecinDispo" value="${sessionScope.username}">
                                     <label for="date">Date:</label>
                                     <input type="date" id="date" name="date"><br><br>
                                     <label for="heureD">Heure debut: </label>
@@ -105,10 +111,21 @@
                                 <h2> <a href="#" onclick="afficherMontant()">Tarif de rendez-vous:</a></h2>
                                 <div id="montant" style="display:none;">
                                     <h3>Fixer le tarif</h3>
+                                    <p>${medecinTest.chercherMedecinParId(username).facturation}<br> $<p>
                                     <input type="number" id="tarif" name="tarif" min="0" max="9999">
                                     <button onclick="validerTarif()">Valider</button>
+                                    
+                                  
                                 </div>
-                            </td>
+                                    <form action="medecinGestionController" method="get">
+                                        <input type="hidden" name="gestionAction" value="modifier">
+                                        <input type="hidden" name="idMedecin" value="${sessionScope.username}">
+                                        <input type="submit" value="Modifier">
+                                    </form> </td>
+                                    ${sessionScope.username}
+                        <h1>
+                        <h1>
+                            
                         </tr>
 
                     </table>
@@ -116,10 +133,36 @@
                 </div>
                 <div class="section">
                     <h2 id="infoTitre">information du medecine</h2>
-
+                    <div> ${medecinTest.chercherMedecinParId(username).prenom} ${medecinTest.chercherMedecinParId(username).nom}</div>
+                    <div> ${medecinTest.chercherMedecinParId(username).specialite}</div>
+                    <div> ${medecinTest.chercherMedecinParId(username).coordonnees}</div>
+                    <div> ${medecinTest.chercherMedecinParId(username).idCliniqueEmploi}</div>
+                    <div>Clinique où médecin est employé:</div>
+                    <form action="administrateurController" method="get">
+                    </form>
+                    <c:choose>
+                    <c:when test= "${not empty sessionScope.listeMedecins}">
+                    <jsp:useBean id="test5" class="com.medic.service.CliniqueService"/>
+                                         <c:forEach var="unMedecin" items="${sessionScope.listeMedecins}" >
+                                            
+                                            <c:if test = "${unMedecin.idCliniqueEmploi != 0}">
+                                            <div>${test5.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</div>
+                                            </c:if>
+                                            <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                            <td>Aucun</td>
+                                            </c:if>
+                                            </c:forEach>
+                                                
+                                                            
+                                            
+                                
+                    
+                                            <</c:when>
+                                            </c:choose>
                     <div>
                         <img src="imageWeb2/med.png" height="100" width=110>
                     </div>
+                    
 
                     <div id="courriel">
                         <h2>Vous avez un courriel de:</h2>
