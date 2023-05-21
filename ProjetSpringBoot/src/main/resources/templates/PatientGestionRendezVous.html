@@ -1,13 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List" %>
-<%@page import="com.medic.entities.Medecin"%>
-<%@page import="com.medic.entities.Patient"%>
-<%@page import="com.medic.service.MedecinService"%>
-
-
-
+<html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
 <html lang="en">
@@ -33,34 +24,28 @@
     <span th:insert="EnTete:: en_tete"></span>
 
     <body id="body">
-        <jsp:useBean id="unPatient" class="com.medic.service.PatientService"/>
-        <jsp:useBean id="unMedecin" class="com.medic.service.MedecinService"/>
-        <jsp:useBean id="medecinTest" class="com.medic.service.MedecinService"/>
-        <jsp:useBean id="cliniqueTest" class="com.medic.service.CliniqueService"/>
-        <c:set var="rendezVous" value="${requestScope.unRendezVous}"/>  
 
     </style>
 
-
-    <c:choose>
-        <c:when test="${requestScope.typeAction == 'ajouter'}">
+    <div th:switch="${typeAction}">
+        <span th:case="'ajouter'">
             <div id=ls>
                 <h1 id="etatPatient">Confirmation du rendez-vous</h1>
 
             </div> <br>
             <div>
                 <div style="text-align:left;margin-left: auto;margin-right: auto;width: 13%;">
-                    Pour : ${unPatient.chercherPatientParId(requestScope.idPatient).prenom} ${unPatient.chercherPatientParId(requestScope.idPatient).nom}</br></br>
-                    Médecin : Dr.${unMedecin.chercherMedecinParId(requestScope.idMedecin).prenom} ${unMedecin.chercherMedecinParId(requestScope.idMedecin).nom}</br></br>
-                    Date du rendez-vous : ${requestScope.dateRv} </br></br>
-                    Heure : ${requestScope.heureRv}:00</br></br>
-                    <form action="rendezVousController">
-                        <input type="hidden" name="idPatient" value="${requestScope.idPatient}">
-                        <input type="hidden" name="idMedecin" value="${requestScope.idMedecin}">
-                        <input type="hidden" name="dateRv" value="${requestScope.dateRv}">
-                        <input type="hidden" name="heureRv" value="${requestScope.heureRv}">
+                    Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
+                    Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
+                    Date du rendez-vous : [[${unRendezVous.date_rv}]] </br></br>
+                    Heure : [[${unRendezVous.heure_rv}]]:00</br></br>
+                    <form th:action="@{/rendezVous/action/ajouter}" th:object="${rendezVous}">
+                        <input type="hidden" th:value="${unRendezVous.patient_rv.id_patient}" th:name="id_patient">
+                        <input type="hidden" th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="id_medecin">
+                        <input type="hidden" th:value="${unRendezVous.date_rv}" th:name="date_rv">
+                        <input type="hidden" th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
-                        <select name="raisonConsult" id="raisonConsult">
+                        <select name="raisonConsult" id="raisonConsult" th:field="*{raison_consult}">
                             <option value="Urgence mineure">Urgence mineure</option>
                             <option value="Consultation propriétaire">Consultation propriétaire</option>
                             <option value="Suivi périodique ou préventif">Suivi périodique ou préventif</option>
@@ -69,7 +54,7 @@
                             <option value="Suivi d’un enfant 0 à 5 ans">Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
-                        <textarea style="width:25vh;height:15vh;" id="descriptionConsult" name="descriptionConsult" placeholder="Description de la raison.." style="height:200px"></textarea>
+                        <textarea style="width:25vh;height:15vh;" id="descriptionConsult" name="descriptionConsult" placeholder="Description de la raison.." style="height:200px" th:field="*{description_consult}"></textarea>
 
                 </div>
                 </br>
@@ -80,47 +65,47 @@
                 <input style="width:100px;" type="submit" value="Réserver">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" action="PriseRendezVous.jsp" method="post">
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="post">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
-            </div>                     
-        </c:when>
-        <c:when test="${requestScope.typeAction == 'modifier'}">
+            </div>
+        </span>
+        <span th:case="'modifier'">
             <div id=ls>
                 <h1 id="etatPatient">Modification du rendez-vous</h1>
 
             </div> <br>
             <div>
                 <div style="text-align:left;margin-left: auto;margin-right: auto;width: 15%;">
-                    Pour : ${unPatient.chercherPatientParId(requestScope.unRendezVous.idPatientRv).prenom} ${unPatient.chercherPatientParId(requestScope.unRendezVous.idPatientRv).nom}</br></br>
-                    Médecin : Dr.${unMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).prenom} ${unMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).nom}</br></br>
-                    Date du rendez-vous : ${requestScope.unRendezVous.dateRv} </br></br>
-                    Heure : ${requestScope.unRendezVous.heureRv}:00<br><br>
+                    Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
+                    Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
+                    Date du rendez-vous : [[${unRendezVous.date_rv}]] </br></br>
+                    Heure : [[${unRendezVous.heure_rv}]]:00</br></br>
 
 
 
 
-                        <Button onclick="sauvegarderChangements()">Changer la date et l'heure du rendez-vous</Button><br><br>
+                        <a th:href="@{/rendezVous/action/changerTemps}">Changer la date et l'heure du rendez-vous</a><br><br>
 
 
 
-                    <form action="rendezVousController">
-                        <input id="saveidRendezVous" type="hidden" name="idRendezVous" value="${requestScope.unRendezVous.idRendezVous}">
-                        <input id="saveidPatient" type="hidden" name="idPatient" value="${requestScope.unRendezVous.idPatientRv}">
-                        <input id="saveidMedecin"type="hidden" name="idMedecin" value="${requestScope.unRendezVous.idMedecinRv}">
-                        <input id="savedateRv"type="hidden" name="dateRv" value="${requestScope.unRendezVous.dateRv}">
-                        <input id="saveheureRv"type="hidden" name="heureRv" value="${requestScope.unRendezVous.heureRv}">
+                    <form th:action="@{/rendezVous/action/modifier}" th:object="${rendezVous}">
+                        <input type="hidden" th:value="${unRendezVous.id_rendez_vous}" th:name="id_rendez_vous">
+                        <input type="hidden" th:value="${unRendezVous.patient_rv.id_patient}" th:name="patient_rv">
+                        <input type="hidden" th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="medecin_rv">
+                        <input type="hidden" th:value="${unRendezVous.date_rv}" th:name="date_rv">
+                        <input type="hidden" th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
-                        <select name="raisonConsult" id="raisonConsult">
-                            <option value="Urgence mineure"<c:if test="${requestScope.unRendezVous.raisonConsult == 'Urgence mineure'}">selected="selected"</c:if> >Urgence mineure</option>
-                            <option value="Consultation propriétaire" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Consultation propriétaire'}">selected="selected"</c:if> >Consultation propriétaire</option>
-                            <option value="Suivi périodique ou préventif" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi périodique ou préventif'}">selected="selected"</c:if> >Suivi périodique ou préventif</option>
-                            <option value="Suivi régulier" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi régulier'}">selected="selected"</c:if> >Suivi régulier</option>
-                            <option value="Suivi de grossesse" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi de grossesse'}">selected="selected"</c:if> >Suivi de grossesse</option>
-                            <option value="Suivi d’un enfant 0 à 5 ans" <c:if test="${requestScope.unRendezVous.raisonConsult == 'Suivi d’un enfant 0 à 5 ans'}">selected="selected"</c:if> >Suivi d’un enfant 0 à 5 ans</option>
+                        <select name="raisonConsult" th:field="*{raison_consult}">
+                            <option value="Urgence mineure"<span th:if="${unRendezVous.raison_consult == 'Urgence mineure'}">selected="selected"</span>>Urgence mineure</option>
+                            <option value="Consultation propriétaire" <span th:if="${unRendezVous.raison_consult == 'Consultation propriétaire'}">selected="selected"</span>>Consultation propriétaire</option>
+                            <option value="Suivi périodique ou préventif" <span th:if="${unRendezVous.raison_consult == 'Suivi périodique ou préventif'}">selected="selected"</span>>Suivi périodique ou préventif</option>
+                            <option value="Suivi régulier" <span th:if="${unRendezVous.raison_consult == 'Suivi régulier'}">selected="selected"</span>>Suivi régulier</option>
+                            <option value="Suivi de grossesse" <span th:if="${unRendezVous.raison_consult == 'Suivi de grossesse'}">selected="selected"</span>>Suivi de grossesse</option>
+                            <option value="Suivi d’un enfant 0 à 5 ans" <span th:if="${unRendezVous.raison_consult == 'Suivi d’un enfant 0 à 5 ans'}">selected="selected"</span>>Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
-                        <textarea style="width:30vh;height:10vh;" id="descriptionConsult" name="descriptionConsult" style="height:200px">${requestScope.unRendezVous.descriptionConsult}</textarea>
+                        <textarea style="width:30vh;height:10vh;" id="descriptionConsult" name="descriptionConsult" th:field="*{description_consult}" style="height:200px">${requestScope.unRendezVous.descriptionConsult}</textarea>
 
                 </div>
                 </br>
@@ -131,86 +116,74 @@
                 <input style="width:100px;" type="submit" value="Sauvegarder">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="post">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
-            </div>                     
-        </c:when>
-        <c:when test="${requestScope.typeAction == 'supprimer'}">
+            </div>
+        </span>
+        <span th:case="'supprimer'">
             <div id=ls>
                 <h1 id="etatPatient">Annulation du rendez-vous</h1>
 
             </div> <br>
-            <c:if test="${not empty requestScope.unRendezVous}">
+            <span th:if="${unRendezVous != null}">
                 <div>
                     <table style="margin-left: auto;margin-right: auto;width: 100%;">
                         <tr>
                         <tr>
                             <th>Nom du Médecin :</th>
-                            <td>Dr. ${medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).prenom} ${medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).nom}</td>
+                            <td>Dr. ${unRendezVous.medecin_rv.prenom} ${unRendezVous.medecin_rv.nom}</td>
                         </tr>
                         <tr>
                             <th>Date du rendez-vous</th>
-                            <td>${requestScope.unRendezVous.dateRv}</td>
+                            <td>${unRendezVous.date_rv}</td>
                         </tr>
                         <tr>
                             <th>Clinique</th>
-                            <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).idCliniqueEmploi).nom}</td>
+                            <td>${unRendezVous.medecin_rv.clinique.nom}</td>
                         </tr>
                         <tr>
                             <th>Adresse</th>
-                            <td>${cliniqueTest.chercherCliniqueParId(medecinTest.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).idCliniqueEmploi).coordonnees}</td>
+                            <td>${unRendezVous.medecin_rv.clinique.coordonnees}</td>
                         </tr>
                         <tr>
                             <th>Heure :</th>
-                            <td>${requestScope.unRendezVous.heureRv}:00</td>
+                            <td>${unRendezVous.heure_rv}:00</td>
                         </tr>
                         <tr>
                             <th>Raison de la Consultation :</th>
-                            <td>${requestScope.unRendezVous.raisonConsult}</td>
+                            <td>${unRendezVous.raison_consult}</td>
 
                         </tr>
                         <tr>
                             <th>Description de la consultation :</th>
-                            <td>${requestScope.unRendezVous.descriptionConsult}</td>
+                            <td>${unRendezVous.description_consult}</td>
                         </tr>
                     </table>
                 </div>
                 </br>
 
                 <h2 style="text-align:center"> Voulez vous supprimer ce rendez-vous ?</h2></br>
-                <form action="rendezVousController" method="post">
+                <form th:action="@{'/rendezVous/page/supprimer/'+${unRendezVous.id_rendez_vous}}" method="post">
                     <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
                     <input type="hidden" name="actionRv" value="supprimer">
                     <input style="width:100px;" type="submit" value="Supprimer">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" action="pagePatientRendezVous.jsp" method="post">
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="post">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
             </div>    
-        </c:if>
-    </c:when>
-</c:choose>
+
+    </span>
+        </span>
+    </div>
 
 </body>
 
 
 <span th:insert="pied:: pied_de_page"></span>
-<script>
-    function sauvegarderChangements(){
-        var idRendezVous = document.getElementById("saveidRendezVous").value;
-        var idPatient = document.getElementById("saveidPatient").value;
-        var idMedecin = document.getElementById("saveidMedecin").value;
-        var dateRv = document.getElementById("savedateRv").value;
-        var heureRv = document.getElementById("saveheureRv").value;
-        var raisonConsult = document.getElementById("raisonConsult").value;
-        var descriptionConsult = document.getElementById("descriptionConsult").value;
-        
-        window.location.href = "rendezVousController?actionRv=changerTemps&idRendezVous="+idRendezVous+"&idPatient="+idPatient+"&idMedecin="+idMedecin+"&dateRv="+
-                dateRv+"&heureRv="+heureRv+"&raisonConsult="+raisonConsult+"&descriptionConsult="+descriptionConsult;
-    }
-</script>
+
 <script src="javaScript/formValidation.js"></script>
 
 </html>

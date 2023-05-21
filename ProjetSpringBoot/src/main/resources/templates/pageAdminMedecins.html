@@ -1,8 +1,4 @@
-<%@page import="com.medic.service.CliniqueService"%>
-<%@page import="com.medic.entities.Clinique"%>
-<%@page import="com.medic.entities.Medecin"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
 <html lang="en">
@@ -32,15 +28,15 @@
     </head>
 
     <span th:insert="EnTete:: en_tete"></span>
-    <c:if test = "${not empty requestScope.message}">
+    <span th:if="${message != null}">
         <div id=ls>
             <h1 id="etatMedecin">${requestScope.message}</h1>
         </div>
-    </c:if>
+    </span>
 
     <body id="body">
         <div></br>
-            <form action="administrateurController" method="get">
+            <form th:action="@{/administrateur/medecin/envoiPageAjouter}" method="get">
                 <input type="hidden" name="gestionAction" value="ajouter">
                 <input type="hidden" name="idMedecin" value="00">
                 <input type="submit" value="Ajouter un Médecin">
@@ -49,54 +45,51 @@
         <br>
         <div id="containerListe" style="height:60vh;overflow:auto;">   
             <h1 style="margin-right: 50%">Médecins: </h1>
-                <c:choose>
-                    <c:when test= "${not empty sessionScope.listeMedecins}">
+            <span th:if="${session.listeMedecins != null}">
                     <div>
-                        <c:forEach var="unMedecin" items="${sessionScope.listeMedecins}" >
+                        <span th:each="unMedecin : ${session.listeMedecins}">
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
                                 <td rowspan="2"><img th:src="@{/images/clinique_icon.png}" alt="Trulli" width="125" height="125"></td>
                                 <td rowspan="2"><table>
                                         <tr>
                                             <th>Nom:</th>
-                                            <td>${unMedecin.nom}</td>
+                                            <td>[[${unMedecin.nom}]]</td>
                                             <th>Numero de professionel:</th>
-                                            <td>${unMedecin.numeroProfessionel}</td>
+                                            <td>[[${unMedecin.numeroProfessionel}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Prenom:</th>
-                                            <td>${unMedecin.prenom}</td>
+                                            <td>[[${unMedecin.prenom}]]</td>
                                             <th>Spécialitée:</th>
-                                            <td>${unMedecin.specialite}</td>
+                                            <td>[[${unMedecin.specialite}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Facturation:</br></th>
-                                            <td>${unMedecin.facturation} $</td>
+                                            <td>[[${unMedecin.facturation}]] $</td>
                                             <th>Coordonnées:</th>
-                                            <td>${unMedecin.coordonnees}</td>
+                                            <td>[[${unMedecin.coordonnees}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Clinique où médecin est employé:</th>
-                                                <jsp:useBean id="test" class="com.medic.service.CliniqueService"/>
 
-                                            
-                                            <c:if test = "${unMedecin.idCliniqueEmploi != 0}">
-                                            <td>${test.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}</td>
-                                            </c:if>
-                                            
-                                            <c:if test = "${unMedecin.idCliniqueEmploi == 0}">
+                                            <span th:if="${unMedecin.clinique.id_clinique !=0}">
+                                            <td>[[${unMedecin.clinique.nom}]]</td>
+                                            </span>
+
+                                            <span th:if="${unMedecin.clinique.id_clinique ==0}">
                                             <td>Aucun</td>
-                                            </c:if>
+                                            </span>
 
                                         </tr>
                                     </table></td>
-                                <td><form action="administrateurController" method="post">
+                                <td><form th:action="@{'/administrateur/medecin/envoiPageModifier/'+${unMedecin.id_medecin}}" method="post">
                                         <input type="hidden" name="gestionAction" value="modifier">
                                         <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
                                         <input type="submit" value="Modifier">
                                     </form> </td>
                             <tr>
-                                <td><form action="administrateurController" method="post">
+                                <td><form th:action="@{'/administrateur/medecin/envoiPageSupprimer/'+${unMedecin.id_medecin}}" method="post">
                                         <input type="hidden" name="gestionAction" value="supprimer">
                                         <input type="hidden" name="idMedecin" value="${unMedecin.numeroProfessionel}">
                                         <input type="submit" value="Supprimer">
@@ -106,14 +99,13 @@
                             </tr>
                         </table>
                         </br>
-                    </c:forEach>
+                        </span>
                         </div>
-                </c:when>
-                <c:otherwise>
+                <span th:if="${session.listeMedecins == null}">
                     </br></br>
                     <H1 style="text-align:center;">Il n'y a aucun médecin dans la liste </H1>
-                    </c:otherwise>
-                </c:choose>
+                </span>
+            </span>
         </div>
 
 

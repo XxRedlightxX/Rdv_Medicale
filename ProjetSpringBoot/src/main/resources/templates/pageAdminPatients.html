@@ -1,8 +1,4 @@
-<%@page import="com.medic.service.MedecinService"%>
-<%@page import="com.medic.entities.Medecin"%>
-<%@page import="com.medic.entities.Patient"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
 <html lang="en">
@@ -32,15 +28,15 @@
     </head>
 
     <span th:insert="EnTete:: en_tete"></span>
-    <c:if test = "${not empty requestScope.message}">
+    <span th:if="${message != null}">
         <div id=ls>
-            <h1 id="etatPatient">${requestScope.message}</h1>
+            <h1 id="etatMedecin">${requestScope.message}</h1>
         </div>
-    </c:if>
+    </span>
 
     <body id="body">
         <div></br>
-            <form action="administrateurController" method="get">
+            <form th:action="@{/administrateur/patient/envoiPageAjouter}" method="get">
                 <input type="hidden" name="gestionAction" value="ajouter">
                 <input type="hidden" name="idPatient" value="00">
                 <input type="submit" value="Ajouter un Patient">
@@ -49,55 +45,52 @@
         <br>
         <div id="containerListe" style="height:60vh;overflow:auto;">   
             <h1 style="margin-right: 50%">Patients: </h1>
-                <c:choose>
-                    <c:when test= "${not empty sessionScope.listePatients}">
+            <span th:if="${session.listePatients != null}">
                     <div>
-                        <c:forEach var="unPatient" items="${sessionScope.listePatients}" >
+                        <span th:each="unPatient : ${session.listePatients}">
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
                                 <td rowspan="2"><img th:src="@{/images/patient_icon.png}" alt="Trulli" width="125" height="125"></td>
                                 <td rowspan="2"><table>
                                         <tr>
                                             <th>Nom:</th>
-                                            <td>${unPatient.nom}</td>
+                                            <td>[[${unPatient.nom}]]</td>
                                             <th>Numero d'assurance maladie:</th>
-                                            <td>${unPatient.numeroAssuranceMaladie}</td>
+                                            <td>[[${unPatient.numeroAssuranceMaladie}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Prenom:</th>
-                                            <td>${unPatient.prenom}</td>
+                                            <td>[[${unPatient.prenom}]]</td>
                                             <th>Numéro séquentiel:</th>
-                                            <td>${unPatient.numeroSequentiel}</td>
+                                            <td>[[${unPatient.numeroSequentiel}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Date de naissance:</br></th>
-                                            <td>${unPatient.dateNaissance}</td>
+                                            <td>[[${unPatient.dateNaissance}]]</td>
                                             <th>Sexe:</th>
-                                            <td>${unPatient.sexe}</td>
+                                            <td>[[${unPatient.sexe}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Nom du médecin de famille:</th>
-                                                <jsp:useBean id="medecinTest" class="com.medic.service.MedecinService"/>
-                                     
-                                            <c:if test = "${unPatient.idMedecinFamille != 0}">
-                                            <td>Dr. ${medecinTest.chercherMedecinParId(unPatient.idMedecinFamille).prenom} ${medecinTest.chercherMedecinParId(unPatient.idMedecinFamille).nom} </td>
-                                            </c:if>
-                                            
-                                            <c:if test = "${unPatient.idMedecinFamille == 0}">
+                                            <span th:if="${unPatient.medecin.id_medecin !=0}">
+                                            <td>Dr. [[${unPatient.medecin.prenom}]] [[${unPatient.medecin.nom}]] </td>
+                                            </span>
+
+                                            <span th:if="${unPatient.medecin.id_medecin ==0}">
                                             <td>Aucun</td>
-                                            </c:if>
+                                            </span>
                              
 
                                        
                                         </tr>
                                     </table></td>
-                                <td><form action="administrateurController" method="post">
+                                <td><form th:action="@{'/administrateur/patient/envoiPageModifier/'+${unPatient.id_patient}}" method="post">
                                         <input type="hidden" name="gestionAction" value="modifier">
                                         <input type="hidden" name="idPatient" value="${unPatient.id}">
                                         <input type="submit" value="Modifier">
                                     </form> </td>
                             <tr>
-                                <td><form action="administrateurController" method="post">
+                                <td><form th:action="@{'/administrateur/patient/envoiPageSupprimer/'+${unPatient.id_patient}}" method="post">
                                         <input type="hidden" name="gestionAction" value="supprimer">
                                         <input type="hidden" name="idPatient" value="${unPatient.id}">
                                         <input type="submit" value="Supprimer">
@@ -107,14 +100,13 @@
                             </tr>
                         </table>
                         </br>
-                    </c:forEach>
+                        </span>
                         </div>
-                </c:when>
-                <c:otherwise>
+            </span>
+            <span th:if="${session.listePatients == null}">
                     </br></br>
                     <H1 style="text-align:center;">Il n'y a aucun patient dans la liste </H1>
-                    </c:otherwise>
-                </c:choose>
+            </span>
         </div>
 
 

@@ -87,7 +87,7 @@
                             
                             <td> <c:if test = "${unPatient.idMedecinFamille != 0}">
                                      <c:forEach var="user2" items="${test.chercherParClinique(user.id)}" >
-                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>
+                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>6666666666666666666666666666
                                             
                                      </c:forEach>
                                         </c:if>

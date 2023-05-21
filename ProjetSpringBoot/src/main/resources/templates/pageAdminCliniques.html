@@ -61,13 +61,13 @@
                                         </tr>
 
                                     </table></td>
-                                <td><form action="administrateurController" method="post">
+                                <td><form th:action="@{'/administrateur/clinique/envoiPageModifier/'+${uneClinique.id_clinique}}" method="post">
                                         <input type="hidden" name="gestionAction" value="modifier">
                                         <input type="hidden" name="idClinique" value="${uneClinique.id}">
                                         <input type="submit" value="Modifier">
                                     </form> </td>
                             <tr>
-                                <td><form action="administrateurController" method="post">
+                                <td><form th:action="@{'/administrateur/clinique/envoiPageSupprimer/'+${uneClinique.id_clinique}}" method="post">
                                         <input type="hidden" name="gestionAction" value="supprimer">
                                         <input type="hidden" name="idClinique" value="${uneClinique.id}">
                                         <input type="submit" value="Supprimer">

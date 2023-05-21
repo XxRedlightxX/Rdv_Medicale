@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -73,7 +74,13 @@ public class AppController {
     public String pageAccueilPatient(){ return "Patient";
     }
     @GetMapping("/enTete/patient/rendezVous")
-    public String pageRendezVousPatient(){ return "pagePatientRendezVous";
+    public String pageRendezVousPatient(Model model){
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("RendezVousService",rendezVousService);
+        model.addAttribute("CliniqueService",cliniqueService);
+
+        return "pagePatientRendezVous";
     }
     @GetMapping("/enTete/patient/priseRendezVous")
     public String pagePriseRendezVousPatient(@PathVariable(name = "medecinChoisi",required = false) Medecin medecinChoisi, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
@@ -99,6 +106,23 @@ public class AppController {
         return "PriseRendezVous";
     }
 
+    @GetMapping("/enTete/patient/modifierRendezVous")
+    public String pageModifierRendezVousPatient(@ModelAttribute("rendezVous") RendezVous rendezVous, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
+        HttpSession session = request.getSession(true);
+        String unNom = (String) session.getAttribute("username");
+        Medecin medecinRv = new Medecin();
+        model.addAttribute("typeRecherche", "prendreRendezVous");
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        LocalDate date = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        model.addAttribute("jourSemaine", date);
+        model.addAttribute("rendezVous",rendezVous);
+        model.addAttribute("dispomedecinService",dispoMedecinService);
+        model.addAttribute("rendezVousService",rendezVousService);
+        model.addAttribute("medecinRv",medecinRv);
+        return "PriseRendezVous";
+    }
+
     @GetMapping("/enTete/patient/rechercheClinique")
     public String pageRechereCliniquePatient(){ return "CliniqueInfo";
     }
@@ -110,10 +134,14 @@ public class AppController {
     }
 
     @GetMapping("/enTete/admin/pagePatients")
-    public String pagePatientAdmin(){ return "pageAdminPatients";
+    public String pagePatientAdmin(Model model){
+        model.addAttribute("medcinService",medecinService);
+        return "pageAdminPatients";
     }
     @GetMapping("/enTete/admin/pageMedecin")
-    public String pageMedecinAdmin(){ return "pageAdminMedecins";
+    public String pageMedecinAdmin(Model model){
+        model.addAttribute("cliniqueService",cliniqueService);
+        return "pageAdminMedecins";
     }
 
     @GetMapping("/enTete/admin/pageClinique")

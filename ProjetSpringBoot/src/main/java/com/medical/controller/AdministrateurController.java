@@ -66,7 +66,6 @@ public class AdministrateurController {
     @GetMapping("/administrateur/medecin/envoiPageAjouter")
     public String afficherPageAjouterMedecin(Model model){
         Medecin medecin = new Medecin();
-        ServicesCliniqueService servicesCliniqueService = new ServicesCliniqueService();
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
         model.addAttribute("cliniqueService",cliniqueService);
         model.addAttribute("medecinService",medecinService);

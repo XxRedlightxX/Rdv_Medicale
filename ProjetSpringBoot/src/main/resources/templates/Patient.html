@@ -1,10 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.medic.entities.Patient"%>
-<%@page import="com.medic.service.PatientService"%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
+
 
 <html lang="en">
 
@@ -18,7 +14,6 @@
 </head>
 <span th:insert="EnTete:: en_tete"></span>
 
-<jsp:useBean id="patientTest" class="com.medic.service.PatientService"/>
 
 <body id="body">
 
@@ -29,28 +24,28 @@
             <tr id="serviceRow">
                 <td>
                     <h2><a href="xyz" class="services">Votre nom :</a></h2>
-                    ${patientTest.chercherParAssuranceMaladie(username).prenom} ${patientTest.chercherParAssuranceMaladie(username).nom}
+                    [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]
                 </td>
                 <td>
                     <h2><a href="xyz" class="services">Numéro d'assurance maladie</a></h2>
-                    ${patientTest.chercherParAssuranceMaladie(username).numeroAssuranceMaladie}
+                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).numero_assurance_maladie}
                     
                 </td>
             </tr>
             <tr id="serviceRow">
                 <td>
                     <h2><a href="xyz" class="services">Date de naissance</a></h2>
-                    ${patientTest.chercherParAssuranceMaladie(username).dateNaissance}
+                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).date_naissance}
                 </td>
                 <td>
                     <h2><a href="xyz" class="services">Numéro séquentiel</a></h2>
-                    ${patientTest.chercherParAssuranceMaladie(username).numeroSequentiel}
+                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).num_seq_numero_assurance_maladie}
                 </td>
             </tr>
             <tr id="serviceRow">
                 <td>
                     <h2><a href="xyz" class="services">Sexe</a></h2>
-                    ${patientTest.chercherParAssuranceMaladie(username).sexe}
+                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).sexe}
                 </td>
             </tr>
             <tr id="serviceRow">
@@ -66,8 +61,7 @@
 
     <button id="souF" type="submit">Soumettre formulaire</button>
     
-</body> 
-${requestScope.reeee}
+</body>
 
 <span th:insert="pied:: pied_de_page"></span>
 

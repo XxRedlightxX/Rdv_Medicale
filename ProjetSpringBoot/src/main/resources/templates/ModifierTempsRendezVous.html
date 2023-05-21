@@ -1,18 +1,4 @@
-<%@page import="com.medic.service.PatientService"%>
-<%@page import="com.medic.entities.DispoMedecin"%>
-<%@page import="com.medic.service.DispoMedecinService"%>
-<%@page import="com.medic.entities.RendezVous"%>
-<%@page import="com.medic.service.RendezVousService"%>
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.time.temporal.TemporalAdjusters"%>
-<%@page import="java.time.DayOfWeek"%>
-<%@page import="java.time.LocalDate"%>
-<%@page import="com.medic.service.CliniqueService"%>
-<%@page import="com.medic.entities.Medecin"%>
-<%@page import="com.medic.entities.Patient"%>
-<%@page import="com.medic.entities.Clinique"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
 <html lang="en">
@@ -64,24 +50,18 @@
     </head>
 
     <span th:insert="EnTete:: en_tete"></span>
-    <%
-        LocalDate date = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
-        pageContext.setAttribute("jourSemaine", date);
 
-    %>
     <div >
-        <jsp:useBean id="daoMedecin" class="com.medic.service.MedecinService"/>
-        <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>   
-        <c:set var="medecinRv" value="${daoMedecin.chercherMedecinParId(requestScope.unRendezVous.idMedecinRv).numeroProfessionel}"/>  
 
-        <h2 >Prendre un rendez-vous a un autre moment <form action="rendezVousController" style="display:inline;float:right;margin-right: 49%">
-                            <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
-                            <input type="hidden" name="idPatient" value="${unRendezVous.idPatientRv}">
-                            <input type="hidden" name="idMedecin" value="${unRendezVous.idMedecinRv}">
-                            <input type="hidden" name="raisonConsult" value="${unRendezVous.raisonConsult}">
-                            <input type="hidden" name="descriptionConsult" value="${unRendezVous.descriptionConsult}">
-                            <input type="hidden" name="dateRv" value="${unRendezVous.dateRv}">
-                            <input type="hidden" name="heureRv" value="${unRendezVous.heureRv}">
+
+        <h2 >Prendre un rendez-vous a un autre moment <form th:action="@{/rendezVous/page/modifier}" style="display:inline;float:right;margin-right: 49%" th:object="${unRendezVousModifier}">
+                            <input type="hidden" th:name="id_rendez_vous" th:value="${unRendezVousModifier.id_rendez_vous}">
+                            <input type="hidden" th:name="patient_rv" th:value="${unRendezVousModifier.patient_rv.id_patient}">
+                            <input type="hidden" th:name="medecin_rv" th:value="${unRendezVousModifier.medecin_rv.id_medecin}">
+                            <input type="hidden" th:name="raison_consult" th:value="${unRendezVousModifier.raison_consult}">
+                            <input type="hidden" th:name="description_consult" th:value="${unRendezVousModifier.description_consult}">
+                            <input type="hidden" th:name="date_rv" th:value="${unRendezVousModifier.date_rv}">
+                            <input type="hidden" th:name="heure_rv" th:value="${unRendezVousModifier.heure_rv}">
                             <input type="hidden" name="etape1Rv" value="modifier2">
                             <input style="all:revert" type="submit" value="Annuler le changement">
                         </form> </h2>
@@ -109,54 +89,44 @@
                     <th>${jourSemaine.plusDays(5)}</th>
                     <th>${jourSemaine.plusDays(6)}</th>
                 </tr>
-                <% for (int i = 6; i <= 20; i++) {%>
+                <span th:each="i: ${#numbers.sequence(6, 20)}" >
                 <tr>
-                    <td><%=i%>:00</td>
-                    <% for (int j = 0; j <= 6; j++) {%>
-                    <td><%
-                        PatientService patientDao = new PatientService();
-                        int idMedecinFamille = Integer.valueOf("" + pageContext.getAttribute("medecinRv"));
+                    <td>[[${i}]]:00</td>
+                    <span th:each="j: ${#numbers.sequence(0, 6)}" >
+                    <td>
+                        <span th:with="idMedecinFamille=${medecinRv.id_medecin}">
 
-                        RendezVousService rendezVousDao = new RendezVousService();
-                        RendezVous unRendezVous = null;
-                        unRendezVous = rendezVousDao.verifierRendezVousPris(idMedecinFamille, date.plusDays(j).toString(), String.valueOf(i));
+                        <span th:with="unRendezVous=${rendezVousService.verifierExistenceRendezVous(medecinRv,jourSemaine.plusDays(j).toString(),i.toString())}">
+                        <span th:with="uneDispo=${dispomedecinService.verifierExistenceDispo(medecinRv.id_medecin,jourSemaine.plusDays(j).toString())}">
 
-                        DispoMedecinService dispoMedecinDao = new DispoMedecinService();
-                        DispoMedecin uneDispo = null;
-                        uneDispo = dispoMedecinDao.verifierExistanceDispoMedecin(idMedecinFamille, date.plusDays(j).toString());;
-                        boolean heureDansDispo = false;
-
-                        if (uneDispo != null) {
-                            if ((i >= Integer.parseInt(uneDispo.getHeureDispoDebut())) && (i <= Integer.parseInt(uneDispo.getHeureDispoFin()))) {
-                                heureDansDispo = true;
-                            } else {
-                                heureDansDispo = false;
-                            }
-                        }
-                        if (unRendezVous != null) {%>
-                        Déja réservé<%
-                        } else if (heureDansDispo == true) {%>
-                        <form action="rendezVousController" style="display: block;margin-left: auto;margin-right: auto;width: 65%;">
-                            <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
-                            <input type="hidden" name="idPatient" value="${unRendezVous.idPatientRv}">
-                            <input type="hidden" name="idMedecin" value="${unRendezVous.idMedecinRv}">
-                            <input type="hidden" name="raisonConsult" value="${unRendezVous.raisonConsult}">
-                            <input type="hidden" name="descriptionConsult" value="${unRendezVous.descriptionConsult}">
-                            <input type="hidden" name="dateRv" value="<%=date.plusDays(j).toString()%>">
-                            <input type="hidden" name="heureRv" value="<%=i%>">
-                            <input type="hidden" name="etape1Rv" value="modifier2">
-                            <input type="submit" value="Disponible">
-                        </form> 
-                        <%} else {%><%}
-                        %>
+                        <span th:with="heureDansDispo=${false}">
+                            <span th:if="${uneDispo != null}">
+                            <span th:if="${i >= uneDispo.convertirHeure_dispo_debut() && i <= uneDispo.convertirHeure_dispo_fin() && unRendezVous == null}">
+                                <form th:action="@{/rendezVous/page/modifierDateHeure}"  th:object="${unRendezVousModifier}" style="display: block;margin:auto;width: 80%;" method="post">
+                                    <input type="hidden" th:value="${unRendezVousModifier.id_rendez_vous}" th:name="id_rendez_vous">
+                                    <input type="hidden" th:value="${unRendezVousModifier.patient_rv.id_patient}" th:name="patient_rv">
+                                    <input type="hidden" th:value="${unRendezVousModifier.medecin_rv.id_medecin}" th:name="medecin_rv">
+                                    <input type="hidden" th:value="${jourSemaine.plusDays(j).toString()}" th:name="date_rv">
+                                    <input type="hidden" th:value="${i}" th:name="heure_rv">
+                                    <input type="hidden" th:value="${unRendezVousModifier.raison_consult}" th:name="raison_consult">
+                                    <input type="hidden" th:value="${unRendezVousModifier.description_consult}" th:name="description_consult">
+                                    <input type="submit" value="Disponible">
+                                </form>
+                            </span>
+                                <span th:if="${unRendezVous != null}">
+                                Déja réservé
+                            </span>
+                            </span>
+                        </span>
+                        </span>
+                        </span>
                     </td>
-                    <%}%>
+                    </span>
                 </tr>
-                <%}%>
+                </span>
 
             </table>
         </div>
-
     </body>
 
     <span th:insert="pied:: pied_de_page"></span>

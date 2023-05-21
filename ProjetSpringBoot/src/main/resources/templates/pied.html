@@ -7,9 +7,9 @@
         
         <footer id="footer">
             <div class="container">
-                <c:if test = "${not empty sessionScope.typeCompte}">
+                <span th:if="${session.typeCompte !=null}">
                 <h3> <a th:href="@{/deconnexion}">Déconnexion</a></h3>
-                </c:if>
+                </span>
                 <h3><a href="xyz">Chat 24/24</a></h3>
                 <h3><a href="xyz">Langue Fr/En</a></h3>
 

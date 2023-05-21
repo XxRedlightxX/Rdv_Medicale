@@ -2,11 +2,9 @@ package com.medical.controller;
 
 import com.medical.entities.Medecin;
 import com.medical.entities.RendezVous;
-import com.medical.service.DispoMedecinService;
-import com.medical.service.MedecinService;
-import com.medical.service.PatientService;
-import com.medical.service.RendezVousService;
+import com.medical.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,23 +32,51 @@ public class ChoixMedecinRendezVousController {
     @Autowired
     DispoMedecinService dispoMedecinService;
 
-    @GetMapping("/rendezVous/choixMedecin/filtrerSpecialite/{nomSpecialite}")
-    public String filtrerParSpecialite(@PathVariable(name = "nomSpecialite") String nomSpecialite, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
+    @Autowired
+    ServicesCliniqueService servicesCliniqueService;
+
+    @Autowired
+    CliniqueService cliniqueService;
+
+    @GetMapping("/rendezVous/choixMedecin/filtrerSpecialite")
+    public String filtrerParSpecialite(@Param("nomSpecialite") String nomSpecialite, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
         byte[] bytes = nomSpecialite.getBytes(StandardCharsets.ISO_8859_1);
         nomSpecialite = new String(bytes, StandardCharsets.UTF_8);
         model.addAttribute("listeMedecinRecherche", medecinService.chercherParSpecialite(nomSpecialite));
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("ServicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("CliniqueService",cliniqueService);
         return "RechercherMedecinRv";
     }
 
-    @GetMapping("/rendezVous/choixMedecin/filterGMF/{medecinGMF}")
-    public String filtrerParGMF(@PathVariable(name = "medecinGMF") String medecinGMF, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
+    @GetMapping("/rendezVous/choixMedecin/filterGMF")
+    public String filtrerParGMF(@Param("medecinGMF") String medecinGMF, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
         model.addAttribute("listeMedecinRecherche", medecinService.chercherNomClinique(medecinGMF));
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("ServicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("CliniqueService",cliniqueService);
         return "RechercherMedecinRv";
     }
 
     @GetMapping("/rendezVous/choixMedecin/afficherTousLesMedecins")
     public String afficherTousLesMedecins(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
         model.addAttribute("listeMedecinRecherche", medecinService.afficherLesMedecins());
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("ServicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("CliniqueService",cliniqueService);
+        return "RechercherMedecinRv";
+    }
+
+    @GetMapping("/rendezVous/choixMedecin/filterClinique")
+    public String filtrerParClinique(@Param("nomClinique") String nomClinique, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
+        model.addAttribute("listeMedecinRecherche", medecinService.chercherNomClinique(nomClinique));
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("ServicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("CliniqueService",cliniqueService);
         return "RechercherMedecinRv";
     }
 

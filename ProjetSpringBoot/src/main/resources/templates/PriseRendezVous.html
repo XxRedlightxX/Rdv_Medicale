@@ -97,15 +97,12 @@
                             <span th:if="${uneDispo != null}">
                             <span th:if="${i >= uneDispo.convertirHeure_dispo_debut() && i <= uneDispo.convertirHeure_dispo_fin() && unRendezVous == null}">
                                 <form th:action="@{/rendezVous/page/ajouter}"  th:object="${rendezVous}" style="display: block;margin:auto;width: 80%;" method="post">
-                                    <input type="hidden" th:field="*{patient_rv}">
-                                    <input type="hidden" th:field="*{medecin_rv}">
-                                    <input type="hidden" value="1" th:field="*{id_rendez_vous}">
-                                    <input type="hidden" th:value="${i}" th:name="date_rv">
-                                    <input type="hidden" th:field="*{heure_rv}">
-
-                                    <input type="hidden" th:value="${i}" th:name="date_rv">
+                                    <input type="hidden" th:value="${PatientService.chercherPatientParAssuranceMaladie(session.username).id_patient}" th:name="patient_rv">
+                                    <input type="hidden" th:value="${medecinRv.id_medecin}" th:name="medecin_rv">
+                                    <input type="hidden" th:value="${jourSemaine.plusDays(j).toString()}" th:name="date_rv">
+                                    <input type="hidden" th:value="${i}" th:name="heure_rv">
                                     <input type="submit" value="Disponible">
-                                </form>
+                                </form>t
                             </span>
                                 <span th:if="${unRendezVous != null}">
                                 Déja réservé

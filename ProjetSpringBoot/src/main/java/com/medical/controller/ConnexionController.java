@@ -51,6 +51,7 @@ public class ConnexionController {
                     response.addCookie(monCookie);
                     response.addCookie(passwordCookie);
             }
+            model.addAttribute("PatientService",patientService);
             return "Patient";
         } else {
             if (!username.trim().equals("")) {

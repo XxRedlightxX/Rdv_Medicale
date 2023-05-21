@@ -1,12 +1,6 @@
-<%-- 
-    Document   : CliniqueInfo
-    Created on : 2023-04-07, 17:46:38
-    Author     : User
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,41 +17,34 @@
     </style>
     <span th:insert="EnTete:: en_tete"></span>
 
-
-
-
     <body>
-        <jsp:useBean id="test" class="com.medic.service.MedecinService"/>
-        <jsp:useBean id="daoPatient" class="com.medic.service.PatientService"/>
-        <jsp:useBean id="test2" class="com.medic.service.ServicesCliniqueService"/>
-        <jsp:useBean id="test3" class="com.medic.service.CliniqueService"/>
         <div style="font-size: 14px;float: left">
             <div>
                 <h4>Rendez-vous avec un médecin du même GMF</h4>
-                <form action="choixMedecinRendezVousController" method="get">   
+                <form th:action="@{/rendezVous/choixMedecin/filterGMF}" method="get">
                     <input type="hidden" name="typeRecherche" value="filtrerGMF">
-                    <input type="hidden" name="medecinGMF" value="${test.chercherMedecinParId(daoPatient.chercherParAssuranceMaladie(sessionScope.username).idMedecinFamille).idCliniqueEmploi}">   
+                    <input type="hidden" th:name="medecinGMF" th:value="${PatientService.chercherPatientParAssuranceMaladie(session.username).medecin.clinique.nom}">
                     <input type="submit"  value="Afficher les médecins" />
                 </form>
             </div>
 
             <div>
                 <h4 >Filter par spécialité du médecin</h4>
-                <form action="choixMedecinRendezVousController" method="get">   
-                    <input type="hidden" name="typeRecherche" value="filtrerSpecialite">
-                    <c:forEach var="unService" items="${test2.afficherServicesClinique()}" >
-                        <input type="radio" name="nomSpecialite" value="${unService.nom}"/> <label>${unService.nom}</label> <br>
-                    </c:forEach><br>
+                <form th:action="@{/rendezVous/choixMedecin/filtrerSpecialite}" method="get">
+
+                    <span th:each="unService:${ServicesCliniqueService.afficherServicesCliniques()}">
+                        <input type="radio" th:name="nomSpecialite" th:value="${unService.nom}"/> <label>[[${unService.nom}]]</label> <br>
+                        </span><br>
                     <input type="submit"  value="Filtrer" />
                 </form>
             </div>
             <div >
                 <h4 >Filter par cliniques</h4>
-                <form action="choixMedecinRendezVousController" method="get">   
+                <form th:action="@{/rendezVous/choixMedecin/filterClinique}" method="get">
                     <input type="hidden" name="typeRecherche" value="filtrerClinique">
-                    <c:forEach var="uneClinique" items="${test3.afficherLesCliniques()}" >
-                        <input type="radio" name="nomClinique" value="${uneClinique.nom}"/> <label>${uneClinique.nom}</label> <br>
-                    </c:forEach><br>
+                    <span th:each="uneClinique:${CliniqueService.afficherLesCliniques()}">
+                        <input type="radio" th:name="nomClinique" th:value="${uneClinique.nom}"/> <label>[[${uneClinique.nom}]]</label> <br>
+                    </span><br>
                     <input type="submit"  value="Filtrer" />
                 </form>
             </div>
@@ -74,10 +61,9 @@
                 </form>
             </div>
         </div>
-        <jsp:useBean id="rechercheTest" class="com.medic.service.CliniqueService"/>
-        <c:choose>
-            <c:when test = "${not empty requestScope.listeMedecinRecherche}">    
-                <c:forEach var="medecinRecherche" items="${listeMedecinRecherche}">
+
+            <span th:if="${listeMedecinRecherche != null}">
+                <span th:each="medecinRecherche : ${listeMedecinRecherche}">
                     <div>
                         <table style="border: 1px solid black;border-radius: 10px;width:35%;background-color: white;float:left;margin: 30px">
 
@@ -85,36 +71,32 @@
                             <td rowspan="2"><table>
                                     <tr>
                                         <th>Nom :</th>
-                                        <td>${medecinRecherche.nom}</td>
+                                        <td>[[${medecinRecherche.nom}]]</td>
 
                                     </tr>
                                     <tr>
                                         <th>Prenom :</th>
-                                        <td>${medecinRecherche.prenom}</td>
+                                        <td>[[${medecinRecherche.prenom}]]</td>
                                         <th>Spécialitée :</th>
-                                        <td>${medecinRecherche.specialite}</td>
+                                        <td>[[${medecinRecherche.specialite.nom}]]</td>
                                     </tr>
                                     <tr>
                                         <th>Facturation :</br></th>
-                                        <td>${medecinRecherche.facturation} $</td>
+                                        <td>[[${medecinRecherche.facturation}]] $</td>
                                         <th>Coordonnées :</th>
-                                        <td>${medecinRecherche.coordonnees}</td>
+                                        <td>[[${medecinRecherche.coordonnees_medecin}]]</td>
                                     </tr>
                                     <tr>
                                         <th style="width:150px" >Clinique où médecin est employé :</th>
-
-
-
-                                        <c:if test = "${medecinRecherche.idCliniqueEmploi != 0}">
-                                            <td>${rechercheTest.chercherCliniqueParId(medecinRecherche.idCliniqueEmploi).nom}</td>
-                                        </c:if>
-
-                                        <c:if test = "${medecinRecherche.idCliniqueEmploi == 0}">
+                                        <span th:if="${medecinRecherche.clinique.id_clinique != 0}">
+                                            <td>${medecinRecherche.clinique.nom}</td>
+                                        </span>
+                                        <span th:if="${medecinRecherche.clinique.id_clinique == 0}">
                                             <td>Aucun</td>
-                                        </c:if>
+                                        </span>
                                     </tr>
                                     <tr><td colspan="3" style="text-align: center;">
-                                            <form action="choixMedecinRendezVousController" method="get">
+                                            <form th:action="@{'/rendezVous/choixMedecin/prendeRendezVous/'+${medecinRecherche}}" method="get">
                                                 <input type="hidden" name="typeRecherche" value="prendreRendezVous">
                                                 <input type="hidden" name="medecinChoisi" value="${medecinRecherche.numeroProfessionel}">
                                                 <input type="submit"  value="Prendre rendez-vous" />
@@ -124,12 +106,12 @@
                                 </table>
                         </table>
                     </div>
-                </c:forEach>
-            </c:when>
-            <c:otherwise>    
+                    </span>
+                </span>
+            <span th:if="${listeMedecinRecherche == null}">
                 <h1 style="text-align: center">Aucun résultat de recherche<h1>
-            </c:otherwise>
-        </c:choose>
+            </span>
+
     </body>
     <span th:insert="pied:: pied_de_page"></span>
 </html>
