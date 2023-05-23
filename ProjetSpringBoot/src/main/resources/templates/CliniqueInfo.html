@@ -32,7 +32,7 @@
         
          <div class="droite">
                 <h4>Filter par services</h4>
-                <form th:action="@{/clinique/rechercher}" method="get">
+                <form th:action="@{/clinique/rechercher}"  method="get">
                     <input type="radio" name="typeService" value="Admin" th:value="${nom}"/> <label>Médecine général </label> <br>
                     <input type="radio" name="typeService" value="Vendeur" th:value="${nom}"/> <label>Cardiologie</label><br>
                     <input type="radio" name="typeService" value="Assistant" th:value="${nom}"/> <label>Dermatologie</label> <br><!-- comment -->
@@ -62,42 +62,24 @@
                 
             </tr>
             <span >
-                <tr>
-                            
-                            
-                            <td> </td>
-                            
-                            <td> </td>
-
-                    <td> </td>
-                                        <td> </td>
-                                            
-
-                                </span>
-
-                              
-                        </tr>
-            </span>
-             <span >
-
-                        <tr>
-                            
-                            
+                <tr th:each="user : ${ListeClinique}">
+                    <td>[[${user.nom}]]</td>
+                    <td>[[${user.coordonnees}]]</td>
+                    <td>[[${user.services}]]</td>
 
                             
-                            <td>  </td>
-                                            
 
 
                               
-                        </tr>
+                </tr>
+
+
 
                         
 
-             </span>
+
                         
-                        
-                        </table>
+            </table>
          </div>
     </body>
     <span th:insert="pied:: pied_de_page"></span>
