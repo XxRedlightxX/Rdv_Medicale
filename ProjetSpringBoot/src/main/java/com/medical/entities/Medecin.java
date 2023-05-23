@@ -24,7 +24,7 @@ public class Medecin {
     @Column (nullable = false)
     private String coordonnees_medecin;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
     private Clinique clinique;
 
     public Medecin() {

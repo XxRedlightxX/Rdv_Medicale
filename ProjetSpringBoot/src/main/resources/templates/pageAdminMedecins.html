@@ -30,13 +30,13 @@
     <span th:insert="EnTete:: en_tete"></span>
     <span th:if="${message != null}">
         <div id=ls>
-            <h1 id="etatMedecin">${requestScope.message}</h1>
+            <h1 id="etatMedecin">[[${message}]]</h1>
         </div>
     </span>
 
     <body id="body">
         <div></br>
-            <form th:action="@{/administrateur/medecin/envoiPageAjouter}" method="get">
+            <form th:action="@{/administrateur/medecin/envoiPageAjouter}" method="post">
                 <input type="hidden" name="gestionAction" value="ajouter">
                 <input type="hidden" name="idMedecin" value="00">
                 <input type="submit" value="Ajouter un Médecin">
@@ -50,25 +50,25 @@
                         <span th:each="unMedecin : ${session.listeMedecins}">
                         <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
                             <tr>
-                                <td rowspan="2"><img th:src="@{/images/clinique_icon.png}" alt="Trulli" width="125" height="125"></td>
+                                <td rowspan="2"><img th:src="@{/images/med.png}" alt="Trulli" width="125" height="125"></td>
                                 <td rowspan="2"><table>
                                         <tr>
                                             <th>Nom:</th>
                                             <td>[[${unMedecin.nom}]]</td>
                                             <th>Numero de professionel:</th>
-                                            <td>[[${unMedecin.numeroProfessionel}]]</td>
+                                            <td>[[${unMedecin.id_medecin}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Prenom:</th>
                                             <td>[[${unMedecin.prenom}]]</td>
                                             <th>Spécialitée:</th>
-                                            <td>[[${unMedecin.specialite}]]</td>
+                                            <td>[[${unMedecin.getspecialite().nom}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Facturation:</br></th>
                                             <td>[[${unMedecin.facturation}]] $</td>
                                             <th>Coordonnées:</th>
-                                            <td>[[${unMedecin.coordonnees}]]</td>
+                                            <td>[[${unMedecin.coordonnees_medecin}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Clinique où médecin est employé:</th>

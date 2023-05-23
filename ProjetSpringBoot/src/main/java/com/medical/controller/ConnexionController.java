@@ -63,7 +63,10 @@ public class ConnexionController {
 
     @PostMapping("/connexion/medecin")
     public String connexionMedecin(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam(value = "sauvegarde",required = false) String sauvegarde, Model model, HttpServletRequest request,  RedirectAttributes redirectAttributes, HttpServletResponse response){
+        System.out.println(username);
+        System.out.println(password);
         Medecin medecin = medecinService.verifierExistenceMedecin(username,password);
+
         DispoMedecin dispoMedecin = new DispoMedecin();
         if(medecin != null){
             HttpSession session = request.getSession(true);
@@ -81,6 +84,7 @@ public class ConnexionController {
                     response.addCookie(passwordCookie);
             }
             model.addAttribute("dispoMedecin",dispoMedecin);
+            model.addAttribute("MedecinService",medecinService);
             return "Medecin";
         } else {
             if (!username.trim().equals("")) {
@@ -111,6 +115,7 @@ public class ConnexionController {
             session.setAttribute("listePatients", patientService.afficherLesPatients());
             session.setAttribute("listeMedecins", medecinService.afficherLesMedecins());
             session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
+            model.addAttribute("medcinService",medecinService);
 
             return "pageAdminPatients";
         } else {

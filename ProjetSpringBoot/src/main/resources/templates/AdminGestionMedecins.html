@@ -21,9 +21,10 @@
             }
         </style>
     </head>
-    <span th:insert="EnTete:: en_tete"></span>
     <body id="body">
-    <div th:switch="${typeAction}">
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <div th:switch="${typeAction.toString()}">
             <span th:case="'ajouter'">
                 <div id=ls>
                     <h1 id="etatMedecin">Ajout d'un nouveau médecin</h1>
@@ -31,25 +32,24 @@
                 </div> 
                 </br>
                 <div id="formuInscr">
-                    <form class="login" th:action="@{/administrateur/medecin/ajouterMedecin}" method="get" th:object="${medecin}">
-                        <input type="hidden" name="ajouterMedecin">
+                    <form class="login" th:action="@{/administrateur/medecin/ajouterMedecin}" method="post" th:object="${medecin}">
 
                         <label for="nom">Nom : </label>
-                        <input type="text" th:field="*{nom}" name="nom" id="nom"><br> <br>
+                        <input type="text" th:field="*{nom}" id="nom"><br> <br>
 
                         <label for="prenom">Prenom : </label>
                         <input type="text" name="prenom" id="prenom" th:field="*{prenom}"><br> <br>
 
-
-                        <select id="specialite" name="specialite" th:field="*{specialite.nom}">
+                        <label for="specialite">Spécialité : </label>
+                        <select id="specialite" th:name="specialite">
                             <span th:each="unServiceClinique : ${servicesCliniqueService.afficherServicesCliniques()}">
-                                <option value="${unServiceClinique.nom}" >
+                                <option th:value="${unServiceClinique.id_service}" >
                                     [[${unServiceClinique.nom}]]</option>
                                 </span>
                         </select> <br> <br>
 
                         <label for="numeroProfessionel">Numéro de professionel : </label>
-                        <input type="text" name="numeroProfessionel" id="numeroProfessionel" th:field="*{id_medecin}"><br> <br>
+                        <input type="text" name="numeroProfessionel"  th:field="*{id_medecin}"><br> <br>
 
                         <label for="facturation">Facturation : </label>
                         <input type="text" name="facturation" id="facturation" th:field="*{facturation}"><br> <br>
@@ -61,10 +61,10 @@
                         <input type="password" name="password" id="password" th:field="*{password}"> <br><br>
 
                         <label for="password">Clinique : </label>
-                        <select id="idClinique" name="idClinique" th:field="*{clinique.id_clinique}">
-                            <option value = "0">Aucun</option>
+                        <select name="idClinique" th:name="clinique">
+                            <option th:value= "null">Aucun</option>
                             <span th:each="uneClinique : ${cliniqueService.afficherLesCliniques()}">
-                                <option value="${uneClinique}">
+                                <option th:value="${uneClinique.id_clinique}">
                                     [[${uneClinique.nom}]]</option>
                             </span>
                         </select> <br><br>
@@ -76,7 +76,7 @@
 
                     </form>
                     <br>
-                    <form style="display:inline;" action="pageAdminMedecins.jsp" method="post">
+                    <form style="display:inline;" th:action="@{/enTete/admin/pageMedecin}" method="get">
                         <input style="width:100px;" type="submit" value="Annuler">
                     </form>
                 </div>
@@ -91,10 +91,10 @@
                 <span th:if="${unMedecin != null}">
                     </br></br>
                     <span id="formuInscr">
-                        <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/medecin/modifierMedecin/'+${unMedecin.id_medecin}}" method="get" th:object="${medecin}">
+                        <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/medecin/modifierMedecin/'+${unMedecin.id_medecin}}" method="post" th:object="${medecin}">
 
 
-                            <input type="hidden" name="modifierMedecin" th:value="${unMedecin.id_medecin}" th:field="*{id_medecin}">
+                            <input type="hidden" th:name="id_medecin" th:value="${unMedecin.id_medecin}" >
                             <table style="background-color:white;margin-left:auto;margin-right:auto;">
 
 
@@ -107,24 +107,22 @@
                                 <tr>
                                     <td><label for="nom">Nom : </label></td>
                                     <td>[[${unMedecin.nom}]]</td>
-                                    <td><input type="text" name="nom" id="nom" th:text="${unMedecin.nom}" th:field="*{nom}"></td>
+                                    <td><input type="text" th:name="nom"   th:value="${unMedecin.nom}"></td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="prenom">Prenom : </label></td>
                                     <td>[[${unMedecin.prenom}]]</td>
-                                    <td><input type="text" name="prenom" id="prenom" th:text="${unMedecin.prenom}" th:field="*{prenom}">
+                                    <td><input type="text" th:name="prenom"   th:value="${unMedecin.prenom}">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label for="specialite">Specialite : </label></td>
-                                    <td>[[${unMedecin.specialite.nom}]]</td>
+                                    <td><label >Specialite : </label></td>
+                                    <td>[[${unMedecin.getspecialite().nom}]]</td>
                                     <td>
-                                        <select id="specialite" name="specialite" th:field="*{specialite}">
+                                        <select th:name="specialite">
                                             <span th:each="uneSpecialite : ${servicesCliniqueService.afficherServicesCliniques()}">
-                                                <option value="${uneSpecialite.nom}" <span th:if="${uneSpecialite.nom == unMedecin.specialite.nom}">
-                                                            selected="selected"
-                                                        </span>>
+                                                <option th:value="${uneSpecialite.id_service}" th:selected="${uneSpecialite.nom == unMedecin.getspecialite().nom}">
                                                     [[${uneSpecialite.nom}]]</option>
                                             </span>
                                         </select> <br> <br>
@@ -141,43 +139,38 @@
                                 <tr>
                                     <td><label for="facturation">Facturation : </label></td>
                                     <td>[[${unMedecin.facturation}]]</td>
-                                    <td><input type="text" name="facturation" id="facturation" value="${unMedecin.facturation}" th:field="*{facturation}">
+                                    <td><input type="text" th:name="facturation"   th:value="${unMedecin.facturation}">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="coordonnees">Coordonnées : </label></td>
-                                    <td>[[${unMedecin.coordonnees}]]</td>
-                                    <td><input type="text" name="coordonnees" id="coordonnees" value="${unMedecin.coordonnees}" th:field="*{coordonnees_medecin}">
+                                    <td>[[${unMedecin.coordonnees_medecin}]]</td>
+                                    <td><input type="text" th:name="coordonnees_medecin"   th:value="${unMedecin.coordonnees_medecin}">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="password">Mot de passe:</label></td>
-                                    <td>[[${unMedecin.motDePasse}]]</td>
-                                    <td><input type="text" name="password" id="password" value="${unMedecin.motDePasse}" th:field="*{password}">
+                                    <td>[[${unMedecin.password}]]</td>
+                                    <td><input type="text" th:name="password"   th:value="${unMedecin.password}">
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <td><label for="idClinique">Clinique où médecin<br> est employé : </label></td>
+                                    <td><label >Clinique où médecin<br> est employé : </label></td>
                                             <span th:if="${unMedecin.clinique.id_clinique != 0}">
-                                            <td>[[${cliniqueService.chercherCliniqueParId(unMedecin.idCliniqueEmploi).nom}]]</td>
+                                            <td>[[${unMedecin.clinique.nom}]]</td>
                                             </span>
                                     <span th:if="${unMedecin.clinique.id_clinique == 0}">
                                         <td>Aucun</td>
                                     </span>
 
-                                    <td><select id="idClinique" name="idClinique" th:field="*{clinique}">
-                                            <option value = "0"
-                                                    <span th:if="${unMedecin.clinique.id_clinique == 0}">
-                                                        selected="selected" 
-                                                    </span>>Aucun</option>
+                                    <td><select th:name="clinique">
+                                            <option th:value="null" th:selected="${unMedecin.clinique.id_clinique ==null}">
+                                                    Aucun</option>
                                             <span th:each="uneClinique : ${cliniqueService.afficherLesCliniques()}">
-                                                <option value="${uneClinique}"
-                                                        <span th:if="${uneClinique.id == unMedecin.clinique.id_clinique}">
-                                                            selected="selected"
-                                                        </span>>[[${uneClinique.nom}]]</option>
+                                                <option th:value="${uneClinique.id_clinique}" th:selected="${unMedecin.clinique.id_clinique == uneClinique.id_clinique}">[[${uneClinique.nom}]]</option>
                                             </span>
                                         </select>
                                     </td>
@@ -191,14 +184,13 @@
                             <input type="submit" style="display:inline;"  class="btn btn-primary btn-lg" value="Sauvegarder"  id="submits">
                         </form>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <form style="display:inline;" action="pageAdminMedecins.jsp" method="post">
+                        <form style="display:inline;" th:action="@{/enTete/admin/pageMedecin}" method="get">
                             <input style="width:100px;" type="submit" value="Annuler">
                         </form>
                     </span>
-            </span>>
-
-
-                <span th:case="'supprimer'">
+            </span>
+            </span>
+        <span th:case="'supprimer'">
                     <style>
                         th {
                             text-align: left;
@@ -239,18 +231,18 @@
                                                 <th>Prenom:</th>
                                                 <td>[[${unMedecin.prenom}]]</td>
                                                 <th>Spécialitée:</th>
-                                                <td>[[${unMedecin.specialite.nom}]]</td>
+                                                <td>[[${unMedecin.getspecialite().nom}]]</td>
                                             </tr>
                                             <tr>
                                                 <th>Facturation:</br></th>
                                                 <td>[[${unMedecin.facturation}]] $</td>
                                                 <th>Coordonnées:</th>
-                                                <td>[[${unMedecin.coordonnees}]]</td>
+                                                <td>[[${unMedecin.coordonnees_medecin}]]</td>
                                             </tr>
                                             <tr>
                                                 <th>Clinique où médecin est employé:</th>
                                                 <span th:if="${unMedecin.clinique.id_clinique != 0}">
-                                                    <td>[[${unMedecin.clinique.id_clinique}]]</td>
+                                                    <td>[[${unMedecin.clinique.nom}]]</td>
                                                 </span>
 
                                                 <span th:if="${unMedecin.clinique.id_clinique == 0}">
@@ -270,17 +262,18 @@
                             <input style="width:100px;" type="submit" value="Supprimer">
                         </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        <form style="display:inline;" action="pageAdminMedecins.jsp" method="post">
+                        <form style="display:inline;" th:action="@{/enTete/admin/pageMedecin}" method="get">
                             <input style="width:100px;" type="submit" value="Annuler">
                         </form>
                     </span>
                 </span>
-            </span>
+
     </div>
-    </body>
+
 
 
     <span th:insert="pied:: pied_de_page"></span>
+    </body>
     <script src="javaScript/formValidation.js"></script>
 
 </html>

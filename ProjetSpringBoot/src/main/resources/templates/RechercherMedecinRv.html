@@ -21,7 +21,7 @@
         <div style="font-size: 14px;float: left">
             <div>
                 <h4>Rendez-vous avec un médecin du même GMF</h4>
-                <form th:action="@{/rendezVous/choixMedecin/filterGMF}" method="get">
+                <form th:action="@{/rendezVous/choixMedecin/filterGMF}" method="post">
                     <input type="hidden" name="typeRecherche" value="filtrerGMF">
                     <input type="hidden" th:name="medecinGMF" th:value="${PatientService.chercherPatientParAssuranceMaladie(session.username).medecin.clinique.nom}">
                     <input type="submit"  value="Afficher les médecins" />
@@ -30,7 +30,7 @@
 
             <div>
                 <h4 >Filter par spécialité du médecin</h4>
-                <form th:action="@{/rendezVous/choixMedecin/filtrerSpecialite}" method="get">
+                <form th:action="@{/rendezVous/choixMedecin/filtrerSpecialite}" method="post">
 
                     <span th:each="unService:${ServicesCliniqueService.afficherServicesCliniques()}">
                         <input type="radio" th:name="nomSpecialite" th:value="${unService.nom}"/> <label>[[${unService.nom}]]</label> <br>
@@ -40,7 +40,7 @@
             </div>
             <div >
                 <h4 >Filter par cliniques</h4>
-                <form th:action="@{/rendezVous/choixMedecin/filterClinique}" method="get">
+                <form th:action="@{/rendezVous/choixMedecin/filterClinique}" method="post">
                     <input type="hidden" name="typeRecherche" value="filtrerClinique">
                     <span th:each="uneClinique:${CliniqueService.afficherLesCliniques()}">
                         <input type="radio" th:name="nomClinique" th:value="${uneClinique.nom}"/> <label>[[${uneClinique.nom}]]</label> <br>
@@ -50,7 +50,7 @@
             </div>
             <div>
                 <h4 >Filtrer par prix</h4>
-                <form action="choixMedecinRendezVousController" method="get">
+                <form action="choixMedecinRendezVousController" method="post">
                     <input type="hidden" name="typeRecherche" value="filtrerPrix">
                     <input type="radio" name="prixRecherche" value="0-25"/> <label>0-25$</label> <br>
                     <input type="radio" name="prixRecherche" value="25-50"/> <label>25-50$</label> <br>
@@ -96,7 +96,7 @@
                                         </span>
                                     </tr>
                                     <tr><td colspan="3" style="text-align: center;">
-                                            <form th:action="@{'/rendezVous/choixMedecin/prendeRendezVous/'+${medecinRecherche}}" method="get">
+                                            <form th:action="@{'/rendezVous/choixMedecin/prendeRendezVous/'+${medecinRecherche}}" method="post">
                                                 <input type="hidden" name="typeRecherche" value="prendreRendezVous">
                                                 <input type="hidden" name="medecinChoisi" value="${medecinRecherche.numeroProfessionel}">
                                                 <input type="submit"  value="Prendre rendez-vous" />

@@ -43,7 +43,7 @@ public class MedecinService {
     }
 
     public Medecin verifierExistenceMedecin(String username, String password){
-        Medecin unMedecin = repo.verifierExistenceMedecin(username,password);
+        Medecin unMedecin = repo.verifierExistenceMedecin(Integer.parseInt(username),password);
         return unMedecin;
     }
 

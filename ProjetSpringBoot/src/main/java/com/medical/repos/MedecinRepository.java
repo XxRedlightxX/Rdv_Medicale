@@ -29,7 +29,7 @@ public interface MedecinRepository extends CrudRepository<Medecin, Integer> {
     public List<Medecin> findByClinique(String nomClinique);
 
     @Query("SELECT m FROM Medecin m WHERE m.id_medecin = ?1 and m.password = ?2")
-    public Medecin verifierExistenceMedecin(String id_medecin, String password);
+    public Medecin verifierExistenceMedecin(Integer id_medecin, String password);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Medecin m  SET m.nom = ?2,m.prenom = ?3, m.specialite = ?4,m.id_medecin = ?1,m.facturation= ?5, m.coordonnees_medecin = ?6,m.password = ?7 ,m.clinique = ?8 WHERE m.id_medecin = ?1 ")

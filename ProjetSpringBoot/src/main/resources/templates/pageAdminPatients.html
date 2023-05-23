@@ -30,13 +30,13 @@
     <span th:insert="EnTete:: en_tete"></span>
     <span th:if="${message != null}">
         <div id=ls>
-            <h1 id="etatMedecin">${requestScope.message}</h1>
+            <h1 id="etatMedecin">[[${message}]]</h1>
         </div>
     </span>
 
     <body id="body">
         <div></br>
-            <form th:action="@{/administrateur/patient/envoiPageAjouter}" method="get">
+            <form th:action="@{/administrateur/patient/envoiPageAjouter}" method="post">
                 <input type="hidden" name="gestionAction" value="ajouter">
                 <input type="hidden" name="idPatient" value="00">
                 <input type="submit" value="Ajouter un Patient">
@@ -56,17 +56,17 @@
                                             <th>Nom:</th>
                                             <td>[[${unPatient.nom}]]</td>
                                             <th>Numero d'assurance maladie:</th>
-                                            <td>[[${unPatient.numeroAssuranceMaladie}]]</td>
+                                            <td>[[${unPatient.numero_assurance_maladie}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Prenom:</th>
                                             <td>[[${unPatient.prenom}]]</td>
                                             <th>Numéro séquentiel:</th>
-                                            <td>[[${unPatient.numeroSequentiel}]]</td>
+                                            <td>[[${unPatient.getnum_seq_numero_assurance_maladie()}]]</td>
                                         </tr>
                                         <tr>
                                             <th>Date de naissance:</br></th>
-                                            <td>[[${unPatient.dateNaissance}]]</td>
+                                            <td>[[${unPatient.date_naissance}]]</td>
                                             <th>Sexe:</th>
                                             <td>[[${unPatient.sexe}]]</td>
                                         </tr>

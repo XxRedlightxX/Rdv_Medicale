@@ -12,11 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/PatientControlleur.java</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/CliniqueInfo.jsp</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/EnTete.jsp</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/web/PriseRendezVous.jsp</file>
-            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/CliniqueController.java</file>
+            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/RendezVousController.java</file>
+            <file>file:/C:/Users/hundl/OneDrive/Bureau/projet%20web/priserendezvousmedicalhundleyjean-gabrielvictorrabbi/Projet%20Netbeans/src/java/com/medic/controller/AdministrateurController.java</file>
         </group>
     </open-files>
 </project-private>

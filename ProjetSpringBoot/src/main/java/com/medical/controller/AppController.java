@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -42,6 +43,7 @@ public class AppController {
 
 
 
+
     @GetMapping("/")
     public String pageAccueil(){
         return "Accueil";
@@ -71,7 +73,9 @@ public class AppController {
     }
 
     @GetMapping("/enTete/patient/accueil")
-    public String pageAccueilPatient(){ return "Patient";
+    public String pageAccueilPatient(Model model){
+        model.addAttribute("PatientService",patientService);
+        return "Patient";
     }
     @GetMapping("/enTete/patient/rendezVous")
     public String pageRendezVousPatient(Model model){
@@ -100,7 +104,7 @@ public class AppController {
         if (medecinChoisi != null){
             medecinRv = medecinChoisi;
         } else {
-            medecinRv = medecinService.chercherMedecinParId(100);
+            medecinRv = medecinService.chercherMedecinParId(patientService.chercherPatientParAssuranceMaladie(unNom).getMedecin().getId_medecin());
         }
         model.addAttribute("medecinRv",medecinRv);
         return "PriseRendezVous";
@@ -127,25 +131,41 @@ public class AppController {
     public String pageRechereCliniquePatient(){ return "CliniqueInfo";
     }
     @GetMapping("/enTete/medecin/Accueil")
-    public String pageAccueilMedecin(){ return "Medecin";
+    public String pageAccueilMedecin(Model model){
+        model.addAttribute("MedecinService",medecinService);
+        return "Medecin";
     }
     @GetMapping("/enTete/medecin/rechercheClinique")
     public String pageRechereCliniqueMedecin(){ return "CliniqueInfo";
     }
 
     @GetMapping("/enTete/admin/pagePatients")
-    public String pagePatientAdmin(Model model){
+    public String pagePatientAdmin(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession(true);
+        session.setAttribute("listePatients", patientService.afficherLesPatients());
+        session.setAttribute("listeMedecins", medecinService.afficherLesMedecins());
+        session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
+        model.addAttribute("medcinService",medecinService);
         model.addAttribute("medcinService",medecinService);
         return "pageAdminPatients";
     }
     @GetMapping("/enTete/admin/pageMedecin")
-    public String pageMedecinAdmin(Model model){
+    public String pageMedecinAdmin(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession(true);
+        session.setAttribute("listePatients", patientService.afficherLesPatients());
+        session.setAttribute("listeMedecins", medecinService.afficherLesMedecins());
+        session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
         model.addAttribute("cliniqueService",cliniqueService);
         return "pageAdminMedecins";
     }
 
     @GetMapping("/enTete/admin/pageClinique")
-    public String pageCliniqueAdmin(){ return "pageAdminCliniques";
+    public String pageCliniqueAdmin(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession(true);
+        session.setAttribute("listePatients", patientService.afficherLesPatients());
+        session.setAttribute("listeMedecins", medecinService.afficherLesMedecins());
+        session.setAttribute("listeCliniques", cliniqueService.afficherLesCliniques());
+        return "pageAdminCliniques";
     }
 
     @GetMapping("/enTete/admin/rechercheClinique")

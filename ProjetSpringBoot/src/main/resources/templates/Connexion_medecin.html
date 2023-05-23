@@ -35,7 +35,7 @@
     <body id="body">
         </br></br>
         <span th:if="${message != null}">
-        <center><b><font color=red>[[${requestScope.message}]]</font></b></center>
+        <center><b><font color=red>[[${message}]]</font></b></center>
         </span>
                 <div id="formuInscr" style="display:none">
                     <form id="signupForm"  class="login" action="inscriptionController" method="post" th:object="${medecin}">

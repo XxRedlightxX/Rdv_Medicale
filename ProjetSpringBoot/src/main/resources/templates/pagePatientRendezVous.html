@@ -32,14 +32,15 @@
         </style>
 
     </head>
-
+    <body id="body">
     <span th:insert="EnTete:: en_tete"></span>
 
     <h2 style="text-align:center;color: black;">Rendez-vous pour [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</h2>
     <div style="height:65vh;overflow:auto;">
-        <body id="body">
+
             </br>
             <br>
+            <span th:if="${RendezVousService.chercherRendezVousParIdPatient(PatientService.chercherPatientParAssuranceMaladie(session.username)).size() != 0}">
             <span th:each="unRendezvous:${RendezVousService.chercherRendezVousParIdPatient(PatientService.chercherPatientParAssuranceMaladie(session.username).id_patient)}">
                 <table style="border-radius: 10px;margin-left:35%">
                     <td style="width:70vh;background-color: white;"><table style="margin-left: auto;margin-right: auto;width: 100%;">
@@ -50,7 +51,7 @@
                             </tr>
                             <tr>
                                 <th>Date du rendez-vous</th>
-                                <td>[[${unRendezVous.date_rv}]]</td>
+                                <td>[[${unRendezvous.date_rv}]]</td>
                             </tr>
                             <tr>
                                 <th>Clinique</th>
@@ -62,7 +63,7 @@
                             </tr>
                             <tr>
                                 <th>Heure :</th>
-                                <td>[[${unRendezVous.heure_rv}]]:00</td>
+                                <td>[[${unRendezvous.heure_rv}]]:00</td>
                             </tr>
                             <tr>
                                 <th>Raison de la Consultation :</th>
@@ -80,18 +81,20 @@
                             <input type="submit" value="Modifier le rendez-vous">
                         </form> <br><br>
 
-                        <form th:action="@{'/rendezVous/page/supprimer/'+${unRendezvous.id_rendez_vous}}" method="post">
-                            <input type="hidden" name="etape1Rv" value="supprimer">
-                            <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
+                        <form th:action="@{'/rendezVous/page/supprimer/'+${unRendezvous.id_rendez_vous}}" method="get">
                             <input type="submit" value="Annuler le rendez-vous">
                         </form> </td>
 
                 </table>
                 <br><br>
             </span>
-        </body>
-        <div>
+            </span>
+            <span th:if="${RendezVousService.chercherRendezVousParIdPatient(PatientService.chercherPatientParAssuranceMaladie(session.username)).size() == 0}">
+                <h2 style="text-align:center;color: black;">Vous n'avez aucun rendez-vous</h2>
+            </span>
+
+    </div>
 
             <span th:insert="pied:: pied_de_page"></span>
-
+        </body>
 </html>

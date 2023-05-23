@@ -1,14 +1,12 @@
 package com.medical.controller;
 
-import com.medical.entities.Clinique;
-import com.medical.entities.Medecin;
-import com.medical.entities.Patient;
-import com.medical.entities.ServicesClinique;
+import com.medical.entities.*;
 import com.medical.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,7 +30,7 @@ public class AdministrateurController {
     ServicesCliniqueService servicesCliniqueService;
 
     // Envoyer vers les pages
-    @GetMapping("/administrateur/patient/envoiPageAjouter")
+    @PostMapping("/administrateur/patient/envoiPageAjouter")
     public String afficherPageAjouterPatient(Model model){
         Patient patient = new Patient();
         model.addAttribute("medecinService",medecinService);
@@ -41,7 +39,7 @@ public class AdministrateurController {
         return "AdminGestionPatients";
     }
 
-    @GetMapping("/administrateur/patient/envoiPageModifier/{id}")
+    @PostMapping("/administrateur/patient/envoiPageModifier/{id}")
     public String afficherPageModifierPatient(@PathVariable(name = "id") Integer id,Model model){
         Patient patient = new Patient();
         model.addAttribute("medecinService",medecinService);
@@ -52,7 +50,7 @@ public class AdministrateurController {
         return "AdminGestionPatients";
     }
 
-    @GetMapping("/administrateur/patient/envoiPageSupprimer/{id}")
+    @PostMapping("/administrateur/patient/envoiPageSupprimer/{id}")
     public String afficherPageSupprimerPatient(@PathVariable(name = "id") Integer id,Model model){
         Patient patient = new Patient();
         model.addAttribute("patient",patient);
@@ -63,7 +61,7 @@ public class AdministrateurController {
         return "AdminGestionPatients";
     }
 
-    @GetMapping("/administrateur/medecin/envoiPageAjouter")
+    @PostMapping("/administrateur/medecin/envoiPageAjouter")
     public String afficherPageAjouterMedecin(Model model){
         Medecin medecin = new Medecin();
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
@@ -74,7 +72,7 @@ public class AdministrateurController {
         return "AdminGestionMedecins";
     }
 
-    @GetMapping("/administrateur/medecin/envoiPageModifier/{id}")
+    @PostMapping("/administrateur/medecin/envoiPageModifier/{id}")
     public String afficherPageModifierMedecin(@PathVariable(name = "id") Integer id,Model model){
         Medecin medecin = new Medecin();
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
@@ -87,7 +85,7 @@ public class AdministrateurController {
         return "AdminGestionMedecins";
     }
 
-    @GetMapping("/administrateur/medecin/envoiPageSupprimer/{id}")
+    @PostMapping("/administrateur/medecin/envoiPageSupprimer/{id}")
     public String afficherPageSupprimerMedecin(@PathVariable(name = "id") Integer id,Model model){
         Medecin medecin = new Medecin();
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
@@ -100,7 +98,7 @@ public class AdministrateurController {
         return "AdminGestionMedecins";
     }
 
-    @GetMapping("/administrateur/clinique/envoiPageAjouter")
+    @PostMapping("/administrateur/clinique/envoiPageAjouter")
     public String afficherPageAjouterClinique(Model model){
         Clinique clinique = new Clinique();
         model.addAttribute("clinique",clinique);
@@ -108,7 +106,7 @@ public class AdministrateurController {
         return "AdminGestionCliniques";
     }
 
-    @GetMapping("/administrateur/clinique/envoiPageModifier/{id}")
+    @PostMapping("/administrateur/clinique/envoiPageModifier/{id}")
     public String afficherPageModifierClinique(@PathVariable(name = "id") Integer id,Model model){
         Clinique clinique = new Clinique();
         model.addAttribute("clinique",clinique);
@@ -118,7 +116,7 @@ public class AdministrateurController {
         return "AdminGestionCliniques";
     }
 
-    @GetMapping("/administrateur/clinique/envoiPageSupprimer/{id}")
+    @PostMapping("/administrateur/clinique/envoiPageSupprimer/{id}")
     public String afficherPageSupprimerClinique(@PathVariable(name = "id") Integer id,Model model){
         Clinique clinique = new Clinique();
         model.addAttribute("clinique",clinique);
@@ -129,8 +127,9 @@ public class AdministrateurController {
     }
 
     // Faire les actions sur la base de données
-    @GetMapping("/administrateur/patient/ajouterPatient")
+    @PostMapping("/administrateur/patient/ajouterPatient")
     public String ajouterPatient(HttpServletRequest request,RedirectAttributes redirectAttributes,Patient patient,Model model){
+        System.out.println(patient);
         String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été ajouté";
         patientService.ajouterPatient(patient);
         redirectAttributes.addFlashAttribute("message",message);
@@ -140,7 +139,7 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pagePatients";
     }
 
-    @GetMapping("/administrateur/patient/modifierPatient/{id}")
+    @PostMapping("/administrateur/patient/modifierPatient/{id}")
     public String modifierPatient(Patient patient,HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable(name = "id") Integer id, Model model){
         String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été modifié";
         redirectAttributes.addFlashAttribute("message",message);
@@ -152,7 +151,7 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pagePatients";
     }
 
-    @GetMapping("/administrateur/patient/supprimerPatient/{id}")
+    @PostMapping("/administrateur/patient/supprimerPatient/{id}")
     public String supprimerPatient(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable(name = "id") Integer id, Model model){
         Patient unPatient = patientService.chercherPatientParId(id);
         String unNom = unPatient.getNom();
@@ -167,7 +166,7 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pagePatients";
     }
 
-    @GetMapping("/administrateur/medecin/ajouterMedecin")
+    @PostMapping("/administrateur/medecin/ajouterMedecin")
     public String ajouterMedecin(HttpServletRequest request,RedirectAttributes redirectAttributes,Medecin medecin,Model model){
         String message = "Le medecin " + medecin.getNom() + " " + medecin.getPrenom() + " à été ajouté";
         medecinService.ajouterMedecin(medecin);
@@ -177,8 +176,9 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pageMedecin";
     }
 
-    @GetMapping("/administrateur/medecin/modifierMedecin/{id}")
-    public String modifierMedecin(Medecin medecin,HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable(name = "id") Integer id, Model model){
+    @PostMapping("/administrateur/medecin/modifierMedecin/{id}")
+    public String modifierMedecin(@ModelAttribute("medecin") Medecin medecin, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
+        System.out.println(medecin);
         String message = "Le médecin " + medecin.getNom() + " " + medecin.getPrenom() + " à été modifié";
         redirectAttributes.addFlashAttribute("message",message);
         medecinService.modifierMedecin(medecin);
@@ -189,7 +189,7 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pageMedecin";
     }
 
-    @GetMapping("/administrateur/medecin/supprimerMedecin/{id}")
+    @PostMapping("/administrateur/medecin/supprimerMedecin/{id}")
     public String supprimerMedecin(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable(name = "id") Integer id, Model model){
         Medecin unMedecin = medecinService.chercherMedecinParId(id);
         String unNom = unMedecin.getNom();
@@ -204,7 +204,7 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pageMedecin";
     }
 
-    @GetMapping("/administrateur/clinique/ajouterClinique")
+    @PostMapping("/administrateur/clinique/ajouterClinique")
     public String ajouterClinique(HttpServletRequest request,RedirectAttributes redirectAttributes,Clinique clinique,Model model){
         String message = "Le clinique " + clinique.getNom() +" à été ajouté";
         cliniqueService.ajouterClinique(clinique);
@@ -214,9 +214,9 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pageClinique";
     }
 
-    @GetMapping("/administrateur/clinique/modifierClinique/{id}")
+    @PostMapping("/administrateur/clinique/modifierClinique/{id}")
     public String modifierClinique(Clinique clinique,HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable(name = "id") Integer id, Model model){
-        String message = "Le médecin " + clinique.getNom() + " à été modifié";
+        String message = "La clinique " + clinique.getNom() + " à été modifié";
         redirectAttributes.addFlashAttribute("message",message);
         cliniqueService.modifierClinique(clinique);
         HttpSession session = request.getSession(true);
@@ -226,7 +226,7 @@ public class AdministrateurController {
         return "redirect:/enTete/admin/pageClinique";
     }
 
-    @GetMapping("/administrateur/clinique/supprimerClinique/{id}")
+    @PostMapping("/administrateur/clinique/supprimerClinique/{id}")
     public String supprimerClinique(HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable(name = "id") Integer id, Model model){
         Clinique unClinique = cliniqueService.chercherCliniqueParId(id);
         String unNom = unClinique.getNom();

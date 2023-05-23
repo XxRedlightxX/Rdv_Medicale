@@ -21,13 +21,13 @@
             }
         </style>
     </head>
+    <body id="body">
     <span th:insert="EnTete:: en_tete"></span>
 
-    <body id="body">
 
-    </style>
 
-    <div th:switch="${typeAction}">
+
+    <div th:switch="${typeAction.toString()}">
         <span th:case="'ajouter'">
             <div id=ls>
                 <h1 id="etatPatient">Confirmation du rendez-vous</h1>
@@ -39,9 +39,9 @@
                     Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
                     Date du rendez-vous : [[${unRendezVous.date_rv}]] </br></br>
                     Heure : [[${unRendezVous.heure_rv}]]:00</br></br>
-                    <form th:action="@{/rendezVous/action/ajouter}" th:object="${rendezVous}">
-                        <input type="hidden" th:value="${unRendezVous.patient_rv.id_patient}" th:name="id_patient">
-                        <input type="hidden" th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="id_medecin">
+                    <form th:action="@{/rendezVous/action/ajouter}" th:object="${rendezVous}" method="get">
+                        <input type="hidden" th:value="${unRendezVous.patient_rv.id_patient}" th:name="patient_rv">
+                        <input type="hidden" th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="medecin_rv">
                         <input type="hidden" th:value="${unRendezVous.date_rv}" th:name="date_rv">
                         <input type="hidden" th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
@@ -54,7 +54,7 @@
                             <option value="Suivi d’un enfant 0 à 5 ans">Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
-                        <textarea style="width:25vh;height:15vh;" id="descriptionConsult" name="descriptionConsult" placeholder="Description de la raison.." style="height:200px" th:field="*{description_consult}"></textarea>
+                        <textarea style="width:25vh;height:15vh;" id="descriptionConsult" name="descriptionConsult" placeholder="Description de la raison.." th:field="*{description_consult}"></textarea>
 
                 </div>
                 </br>
@@ -65,7 +65,7 @@
                 <input style="width:100px;" type="submit" value="Réserver">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="post">
+                <form style="display:inline;" th:action="@{/enTete/patient/priseRendezVous}" method="get">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
             </div>
@@ -75,7 +75,7 @@
                 <h1 id="etatPatient">Modification du rendez-vous</h1>
 
             </div> <br>
-            <div>
+            <div >
                 <div style="text-align:left;margin-left: auto;margin-right: auto;width: 15%;">
                     Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
                     Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
@@ -97,17 +97,18 @@
                         <input type="hidden" th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
                         <select name="raisonConsult" th:field="*{raison_consult}">
-                            <option value="Urgence mineure"<span th:if="${unRendezVous.raison_consult == 'Urgence mineure'}">selected="selected"</span>>Urgence mineure</option>
-                            <option value="Consultation propriétaire" <span th:if="${unRendezVous.raison_consult == 'Consultation propriétaire'}">selected="selected"</span>>Consultation propriétaire</option>
-                            <option value="Suivi périodique ou préventif" <span th:if="${unRendezVous.raison_consult == 'Suivi périodique ou préventif'}">selected="selected"</span>>Suivi périodique ou préventif</option>
-                            <option value="Suivi régulier" <span th:if="${unRendezVous.raison_consult == 'Suivi régulier'}">selected="selected"</span>>Suivi régulier</option>
-                            <option value="Suivi de grossesse" <span th:if="${unRendezVous.raison_consult == 'Suivi de grossesse'}">selected="selected"</span>>Suivi de grossesse</option>
-                            <option value="Suivi d’un enfant 0 à 5 ans" <span th:if="${unRendezVous.raison_consult == 'Suivi d’un enfant 0 à 5 ans'}">selected="selected"</span>>Suivi d’un enfant 0 à 5 ans</option>
+                            <option value="Urgence mineure"th:selected="${unRendezVous.raison_consult == 'Urgence mineure'}">Urgence mineure</option>
+                            <option value="Consultation propriétaire" th:selected="${unRendezVous.raison_consult == 'Consultation propriétaire'}">Consultation propriétaire</option>
+                            <option value="Suivi périodique ou préventif"th:selected="${unRendezVous.raison_consult == 'Suivi périodique ou préventif'}">Suivi périodique ou préventif</option>
+                            <option value="Suivi régulier"th:selected="${unRendezVous.raison_consult == 'Suivi régulier'}">Suivi régulier</option>
+                            <option value="Suivi de grossesse"th:selected="${unRendezVous.raison_consult == 'Suivi de grossesse'}">Suivi de grossesse</option>
+                            <option value="Suivi d’un enfant 0 à 5 ans" th:selected="${unRendezVous.raison_consult == 'Suivi d’un enfant 0 à 5 ans'}">Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
-                        <textarea style="width:30vh;height:10vh;" id="descriptionConsult" name="descriptionConsult" th:field="*{description_consult}" style="height:200px">${requestScope.unRendezVous.descriptionConsult}</textarea>
+
 
                 </div>
+
                 </br>
                 <h2 style="text-align:center"> Voulez vous modifier ce rendez-vous ?</h2></br>
 
@@ -116,7 +117,7 @@
                 <input style="width:100px;" type="submit" value="Sauvegarder">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="post">
+                <form style="display:inline;" th:action="@{/enTete/patient/priseRendezVous}" method="get">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
             </div>
@@ -132,58 +133,57 @@
                         <tr>
                         <tr>
                             <th>Nom du Médecin :</th>
-                            <td>Dr. ${unRendezVous.medecin_rv.prenom} ${unRendezVous.medecin_rv.nom}</td>
+                            <td>Dr. [[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</td>
                         </tr>
                         <tr>
                             <th>Date du rendez-vous</th>
-                            <td>${unRendezVous.date_rv}</td>
+                            <td>[[${unRendezVous.date_rv}]]</td>
                         </tr>
                         <tr>
                             <th>Clinique</th>
-                            <td>${unRendezVous.medecin_rv.clinique.nom}</td>
+                            <td>[[${unRendezVous.medecin_rv.clinique.nom}]]</td>
                         </tr>
                         <tr>
                             <th>Adresse</th>
-                            <td>${unRendezVous.medecin_rv.clinique.coordonnees}</td>
+                            <td>[[${unRendezVous.medecin_rv.clinique.coordonnees}]]</td>
                         </tr>
                         <tr>
                             <th>Heure :</th>
-                            <td>${unRendezVous.heure_rv}:00</td>
+                            <td>[[${unRendezVous.heure_rv}]]:00</td>
                         </tr>
                         <tr>
                             <th>Raison de la Consultation :</th>
-                            <td>${unRendezVous.raison_consult}</td>
+                            <td>[[${unRendezVous.raison_consult}]]</td>
 
                         </tr>
                         <tr>
                             <th>Description de la consultation :</th>
-                            <td>${unRendezVous.description_consult}</td>
+                            <td>[[${unRendezVous.description_consult}]]</td>
                         </tr>
                     </table>
                 </div>
                 </br>
 
                 <h2 style="text-align:center"> Voulez vous supprimer ce rendez-vous ?</h2></br>
-                <form th:action="@{'/rendezVous/page/supprimer/'+${unRendezVous.id_rendez_vous}}" method="post">
+                <form th:action="@{'/rendezVous/action/supprimer/'+${unRendezVous.id_rendez_vous}}" method="post">
                     <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
                     <input type="hidden" name="actionRv" value="supprimer">
                     <input style="width:100px;" type="submit" value="Supprimer">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="post">
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="get">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
-            </div>    
-
-    </span>
+            </span>
         </span>
     </div>
 
-</body>
+
 
 
 <span th:insert="pied:: pied_de_page"></span>
-
+    </body>
 <script src="javaScript/formValidation.js"></script>
+
 
 </html>

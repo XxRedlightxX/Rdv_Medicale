@@ -28,24 +28,24 @@
                 </td>
                 <td>
                     <h2><a href="xyz" class="services">Numéro d'assurance maladie</a></h2>
-                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).numero_assurance_maladie}
+                    [[${PatientService.chercherPatientParAssuranceMaladie(session.username).numero_assurance_maladie}]]
                     
                 </td>
             </tr>
             <tr id="serviceRow">
                 <td>
                     <h2><a href="xyz" class="services">Date de naissance</a></h2>
-                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).date_naissance}
+                    [[${PatientService.chercherPatientParAssuranceMaladie(session.username).date_naissance}]]
                 </td>
                 <td>
                     <h2><a href="xyz" class="services">Numéro séquentiel</a></h2>
-                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).num_seq_numero_assurance_maladie}
+                    [[${PatientService.chercherPatientParAssuranceMaladie(session.username).getnum_seq_numero_assurance_maladie()}]]
                 </td>
             </tr>
             <tr id="serviceRow">
                 <td>
                     <h2><a href="xyz" class="services">Sexe</a></h2>
-                    ${PatientService.chercherPatientParAssuranceMaladie(session.username).sexe}
+                    [[${PatientService.chercherPatientParAssuranceMaladie(session.username).sexe}]]
                 </td>
             </tr>
             <tr id="serviceRow">

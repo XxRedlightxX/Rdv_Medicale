@@ -33,7 +33,7 @@
                 </div> 
                 </br>
                 <div id="formuInscr">
-                    <form  th:action="@{/administrateur/clinique/ajouterClinique}" method="get" th:object="${clinique}">
+                    <form  th:action="@{/administrateur/clinique/ajouterClinique}" method="post" th:object="${clinique}">
                         <input type="hidden" name="ajouterClinique">
 
                         <label for="nom">Nom de la clinique : </label>
@@ -45,7 +45,7 @@
                         <input type="submit"  class="btn btn-primary btn-lg" value="Ajouter la clinique"  id="submits">
                     </form>
                     <br>
-                    <form style="display:inline;" action="pageAdminCliniques.html" method="post">
+                    <form style="display:inline;" th:action="@{/enTete/admin/pageClinique}" method="get">
                         <input style="width:100px;" type="submit" value="Annuler">
                     </form>
                 </div>
@@ -59,8 +59,8 @@
                 <span th:if="${uneClinique != null}">
                     </br></br>
                     <div id="formuInscr">
-                        <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/clinique/modifierClinique/'+ ${uneClinique.getId_clinique()}}" method="get" th:object="${clinique}">
-                            <input type="hidden" name="modifierClinique" value="${uneClinique.id}" th:field="*{id_clinique}">
+                        <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/clinique/modifierClinique/'+ ${uneClinique.getId_clinique()}}" method="post" th:object="${clinique}">
+                            <input type="hidden" th:name="id_clinique" th:value="${uneClinique.id_clinique}">
                             <table style="background-color:white;margin-left:auto;margin-right:auto;">
 
                                 <tr>
@@ -71,13 +71,13 @@
                                 <tr>
                                     <td><label for="nom">Nom : </label></td>
                                     <td>[[${uneClinique.nom}]]</td>
-                                    <td><input type="text" name="nom" id="nom" value="${uneClinique.nom}" th:field="*{nom}"></td>
+                                    <td><input type="text" th:name="nom"   th:value="${uneClinique.nom}"></td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="coordonnees">Coordonnées : </label></td>
                                     <td>[[${uneClinique.coordonnees}]]</td>
-                                    <td><input type="text" name="coordonnees" id="coordonnees" value="${uneClinique.coordonnees}" th:field="*{coordonnees}">
+                                    <td><input type="text" th:name="coordonnees"   th:value="${uneClinique.coordonnees}">
                                     </td>
                                 </tr>
 
@@ -90,7 +90,7 @@
                             <input type="submit" style="display:inline;"  class="btn btn-primary btn-lg" value="Sauvegarder"  id="submits">
                         </form>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <form style="display:inline;" action="pageAdminCliniques.jsp" method="post">
+                        <form style="display:inline;" th:action="@{/enTete/admin/pageClinique}" method="get">
                             <input style="width:100px;" type="submit" value="Annuler">
                         </form>
 
@@ -151,7 +151,7 @@
                             <input style="width:100px;" type="submit" value="Supprimer">
                         </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        <form style="display:inline;" action="pageAdminCliniques.jsp" method="post">
+                        <form style="display:inline;" th:action="@{/enTete/admin/pageClinique}" method="get">
                             <input style="width:100px;" type="submit" value="Annuler">
                         </form>
 

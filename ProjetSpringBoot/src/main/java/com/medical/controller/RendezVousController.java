@@ -5,9 +5,7 @@ import com.medical.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,7 +60,7 @@ public class RendezVousController {
         return "PatientGestionRendezVous";
     }
 
-    @GetMapping("/rendezVous/page/modifierDateHeure")
+    @PostMapping("/rendezVous/page/modifierDateHeure")
     public String sauvegarderChangementsRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@ModelAttribute("unRendezVousModifier") RendezVous rendezVous){
         model.addAttribute("unRendezVous",rendezVous);
         model.addAttribute("typeAction","modifier");
@@ -71,25 +69,39 @@ public class RendezVousController {
 
     @GetMapping("/rendezVous/action/ajouter")
     public String ajouterRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@ModelAttribute("rendezVous") RendezVous rendezVous){
+        System.out.println(rendezVous);
         rendezVousService.ajouterRendezVous(rendezVous);
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("RendezVousService",rendezVousService);
+        model.addAttribute("CliniqueService",cliniqueService);
         return "pagePatientRendezVous";
     }
 
-    @GetMapping("/rendezVous/action/modifier")
+    @PostMapping("/rendezVous/action/modifier")
     public String modifierRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@ModelAttribute("rendezVous") RendezVous rendezVous){
         rendezVousService.modifierRendezVous(rendezVous);
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("RendezVousService",rendezVousService);
+        model.addAttribute("CliniqueService",cliniqueService);
         return "pagePatientRendezVous";
     }
 
-    @GetMapping("/rendezVous/action/supprimer/{id}")
+    @PostMapping("/rendezVous/action/supprimer/{id}")
     public String supprimerRendezVous(@PathVariable(name = "id") Integer id,HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model, RendezVous rendezVous){
-        rendezVousService.supprimerRendezVous(rendezVousService.chercherRendezVousParId(id).getId_rendez_vous());
+        System.out.println(id);
+        rendezVousService.supprimerRendezVous(id);
         String message = "Le rendez-vous à été annulé";
         model.addAttribute("message", message);
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("RendezVousService",rendezVousService);
+        model.addAttribute("CliniqueService",cliniqueService);
         return "pagePatientRendezVous";
     }
 
-    @GetMapping("/rendezVous/action/changerTemps")
+    @PostMapping("/rendezVous/action/changerTemps")
     public String changerTempsRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model, @ModelAttribute("rendezVous") RendezVous rendezVous){
         model.addAttribute("unRendezVousModifier", rendezVous);
         return "ModifierTempsRendezVous";

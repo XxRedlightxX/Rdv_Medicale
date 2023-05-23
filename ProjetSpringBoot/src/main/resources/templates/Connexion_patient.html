@@ -37,7 +37,7 @@
         <center><b><font color=red>[[${message}]]</font><b></center>
         </span>
                 <div id="formuInscr" style="display:none">
-                    <form id="signupForm" class="login" action="inscriptionController" method="get" th:object="${patient}">
+                    <form id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}">
                         <input type="hidden" name="typeCompte" value="patient" >
 
                         <label for="nom">Nom : </label>
@@ -73,7 +73,7 @@
                         <select id="idMedecinFamille" name="idMedecinFamille" th:field="*{medecin}">
                             <option value = "0">Aucun</option>
                             <span th:each="unMedecin:${medecinService.afficherLesMedecins()}">
-                                <option value="${unMedecin.numeroProfessionel}">
+                                <option value="${unMedecin.id_medecin}">
                                     Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
                             </span>
                         </select> <br><br>

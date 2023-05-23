@@ -30,13 +30,13 @@
     <span th:insert="EnTete:: en_tete"></span>
     <span th:if="${message != null}">
         <div id=ls>
-            <h1 id="etatClinique">${requestScope.message}</h1>
+            <h1 id="etatClinique">[[${message}]]</h1>
         </div>
     </span>
 
     <body id="body">
         <div></br>
-            <form th:action="@{/administrateur/clinique/envoiPageAjouter}" method="get">
+            <form th:action="@{/administrateur/clinique/envoiPageAjouter}" method="post">
                 <input type="hidden" name="gestionAction" value="ajouter">
                 <input type="hidden" name="idClinique" value="00">
                 <input type="submit" value="Ajouter une clinique">

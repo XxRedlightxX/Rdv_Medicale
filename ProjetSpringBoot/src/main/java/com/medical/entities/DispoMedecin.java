@@ -60,11 +60,11 @@ public class DispoMedecin {
         this.heure_dispo_fin = heure_dispo_fin;
     }
 
-    public Medecin getMedecin() {
+    public Medecin getMedecin_dispo() {
         return medecin_dispo;
     }
 
-    public void setMedecin(Medecin medecin_dispo) {
+    public void setMedecin_dispo(Medecin medecin_dispo) {
         this.medecin_dispo = medecin_dispo;
     }
 
