@@ -124,7 +124,8 @@ public class AppController {
     }
 
     @GetMapping("/enTete/patient/rechercheClinique")
-    public String pageRechereCliniquePatient(){ return "CliniqueInfo";
+    public String pageRechereCliniquePatient(Model model){
+        return "CliniqueInfo";
     }
     @GetMapping("/enTete/medecin/Accueil")
     public String pageAccueilMedecin(){ return "Medecin";

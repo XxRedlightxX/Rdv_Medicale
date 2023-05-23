@@ -41,10 +41,8 @@
                     <input type="submit"  value="typeService" />
                 </form>
 
-          <span th:if="${listeClinique1 != null}">
-                 <h2>${requestScope.listeClinique1}</h2> 
-            </span>
-             <span th:if="${listeClinique1 == null}">
+
+             <span >
                  <h2>Liste des utilisateurs</h2>
             </span>
 
@@ -63,70 +61,37 @@
                 
                 
             </tr>
-            <span th:if="${clinique != null}">
+            <span >
                 <tr>
                             
                             
-                            <td>    ${clinique.nom} </td> 
+                            <td> </td>
                             
-                            <td>${clinique.coordonnees} </td>
+                            <td> </td>
 
-                            <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                     <c:forEach var="user2" items="${MedecinService.chercherParClinique(user.id)}" >
-                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>
+                    <td> </td>
+                                        <td> </td>
                                             
-                                     </c:forEach>
-                                        </c:if>
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user3" items="${ServicesCliniqueServices.afficherLesServicesDuneClinique(user.id)}" >
-                                        <td>  ${user3.nom} ${user3.description} </td>
-                                            
-                                     </c:forEach>
-                                        </c:if></td>
-                                         
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user4" items="${MedecinService.afficherLesMedecin()}" >
-                                        <td>  ${user4.nom}  </td>
-                                            
-                                     </c:forEach>
-                                         </c:if>
+
                                 </span>
 
                               
                         </tr>
             </span>
-             <span th:if="${clinique == null}">
-            <c:forEach var="user" items="${requestScope.listeClinique}" >
+             <span >
+
                         <tr>
                             
                             
-                            <td>    ${user.nom} </td> 
+
                             
-                            <td>${user.coordonnees} </td>
-                            
-                            <td> <c:if test = "${unPatient.idMedecinFamille != 0}">
-                                     <c:forEach var="user2" items="${MedecinService.chercherParClinique(user.id)}" >
-                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>
+                            <td>  </td>
                                             
-                                     </c:forEach>
-                                        </c:if>
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user3" items="${ServicesCliniqueServices.afficherLesServicesDuneClinique(user.id)}" >
-                                        <td>  ${user3.nom} ${user3.description} </td>
-                                            
-                                     </c:forEach>
-                                        </c:if></td>
-                                         
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user4" items="${MedecinService.afficherLesMedecin()}" >
-                                        <td>  ${user4.nom}  </td>
-                                            
-                                     </c:forEach>
-                                         </c:if>
+
 
                               
                         </tr>
-            </c:forEach>
+
                         
 
              </span>

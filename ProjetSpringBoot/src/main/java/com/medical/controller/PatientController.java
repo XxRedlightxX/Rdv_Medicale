@@ -1,5 +1,6 @@
 package com.medical.controller;
 
+import com.medical.entities.Patient;
 import com.medical.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class PatientController {
@@ -26,4 +28,7 @@ public class PatientController {
             return "Medecin";
         }
     }
+
+
+
 }

@@ -31,6 +31,9 @@ public class CliniqueController {
     @Autowired
     ServicesCliniqueService servicesCliniqueService;
 
+
+
+
     @GetMapping("/clinique/rechercher")
     public String rechercherClinique(HttpServletRequest request,  RedirectAttributes redirectAttributes, @PathVariable(name = "nom") String nom, Model model){
         List<Clinique> listeClinique;

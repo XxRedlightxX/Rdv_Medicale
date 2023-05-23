@@ -1,6 +1,7 @@
 package com.medical.service;
 
 import com.medical.entities.Medecin;
+import com.medical.entities.Patient;
 import com.medical.repos.MedecinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,35 @@ public class MedecinService {
 
     public void supprimerMedecin(Integer id) {
         repo.deleteById(id);
+    }
+
+    public boolean Num_Assurance_password_Medecin_Unique(String email, String password, Integer id) {
+        //On cherche un utilisateur à partir de son email
+        Medecin userByEmail = repo.verifierExistenceMedecin(email, password);
+
+        if (userByEmail == null) return true;
+
+
+        boolean isCreatingNewUser = false;
+        if (id == null) {
+            isCreatingNewUser = true;
+        }
+        //Si l' id utilisateur n'existe pas mais l' email existe,
+        //on retourne false car pas email unique, on ne peut pas creer un nouveau utilisateur
+        //dans le mode de création utilisateur
+        if (isCreatingNewUser) {
+            //mais l'email existe, on retourne false car pas unique email
+            if (userByEmail != null) return false;
+        } else {
+            //dans le mode d'edition utilisateur
+            //Si l'id existe mais l'id qu'on edite  est différent de celui
+            //de l'utilisateur possedant l'email,
+            //on retourne false, car on ne peut pas creer un nouveau , puisqu email existe
+            if (userByEmail.getId_medecin() != id) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
