@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,11 @@ public class CliniqueController {
     @Autowired
     ServicesCliniqueService servicesCliniqueService;
 
+
+
+
     @GetMapping("/clinique/rechercher")
-    public String rechercherClinique(HttpServletRequest request,  RedirectAttributes redirectAttributes, @PathVariable(name = "nom") String nom, Model model){
+    public String rechercherClinique(HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name = "nom") String nom, Model model){
         List<Clinique> listeClinique;
         model.addAttribute("medecinService",medecinService);
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
@@ -42,12 +46,14 @@ public class CliniqueController {
         model.addAttribute("nom", nom);
         if ( nom != null && !nom.equals("")) {
             listeClinique = cliniqueService.chercherCliniqueParNom(nom);
-            model.addAttribute("clinique", listeClinique);
-            model.addAttribute("listeClinique1", listeClinique);
+            model.addAttribute("ListeClinique", listeClinique);
+            //model.addAttribute("listeClinique1", listeClinique);
+            //model.addAttribute("nom", nom);
             return "CliniqueInfo";
         } else {
             listeClinique = cliniqueService.afficherLesCliniques();
-            model.addAttribute("listeClinique", listeClinique);
+            model.addAttribute("ListeClinique1", listeClinique);
+            //model.addAttribute("nom", nom);
             return "CliniqueInfo";
         }
     }

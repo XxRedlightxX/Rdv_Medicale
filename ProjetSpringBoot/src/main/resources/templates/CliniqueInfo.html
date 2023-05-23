@@ -32,7 +32,7 @@
         
          <div class="droite">
                 <h4>Filter par services</h4>
-                <form th:action="@{/clinique/rechercher}" method="get">
+                <form th:action="@{/clinique/rechercher}"  method="get">
                     <input type="radio" name="typeService" value="Admin" th:value="${nom}"/> <label>Médecine général </label> <br>
                     <input type="radio" name="typeService" value="Vendeur" th:value="${nom}"/> <label>Cardiologie</label><br>
                     <input type="radio" name="typeService" value="Assistant" th:value="${nom}"/> <label>Dermatologie</label> <br><!-- comment -->
@@ -41,10 +41,8 @@
                     <input type="submit"  value="typeService" />
                 </form>
 
-          <span th:if="${listeClinique1 != null}">
-                 <h2>${requestScope.listeClinique1}</h2> 
-            </span>
-             <span th:if="${listeClinique1 == null}">
+
+             <span >
                  <h2>Liste des utilisateurs</h2>
             </span>
 
@@ -63,76 +61,25 @@
                 
                 
             </tr>
-            <span th:if="${clinique != null}">
-                <tr>
-                            
-                            
-                            <td>    ${clinique.nom} </td> 
-                            
-                            <td>${clinique.coordonnees} </td>
+            <span >
+                <tr th:each="user : ${ListeClinique}">
+                    <td>[[${user.nom}]]</td>
+                    <td>[[${user.coordonnees}]]</td>
+                    <td>[[${user.services}]]</td>
 
-                            <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                     <c:forEach var="user2" items="${MedecinService.chercherParClinique(user.id)}" >
-                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>
-                                            
-                                     </c:forEach>
-                                        </c:if>
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user3" items="${ServicesCliniqueServices.afficherLesServicesDuneClinique(user.id)}" >
-                                        <td>  ${user3.nom} ${user3.description} </td>
-                                            
-                                     </c:forEach>
-                                        </c:if></td>
-                                         
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user4" items="${MedecinService.afficherLesMedecin()}" >
-                                        <td>  ${user4.nom}  </td>
-                                            
-                                     </c:forEach>
-                                         </c:if>
-                                </span>
+                            
+
 
                               
-                        </tr>
-            </span>
-             <span th:if="${clinique == null}">
-            <c:forEach var="user" items="${requestScope.listeClinique}" >
-                        <tr>
-                            
-                            
-                            <td>    ${user.nom} </td> 
-                            
-                            <td>${user.coordonnees} </td>
-                            
-                            <td> <c:if test = "${unPatient.idMedecinFamille != 0}">
-                                     <c:forEach var="user2" items="${MedecinService.chercherParClinique(user.id)}" >
-                                        <td>Dr. ${user2.prenom} ${user2.nom} </td>
-                                            
-                                     </c:forEach>
-                                        </c:if>
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user3" items="${ServicesCliniqueServices.afficherLesServicesDuneClinique(user.id)}" >
-                                        <td>  ${user3.nom} ${user3.description} </td>
-                                            
-                                     </c:forEach>
-                                        </c:if></td>
-                                         
-                                        <td><c:if test = "${unPatient.idMedecinFamille != 0}">
-                                             <c:forEach var="user4" items="${MedecinService.afficherLesMedecin()}" >
-                                        <td>  ${user4.nom}  </td>
-                                            
-                                     </c:forEach>
-                                         </c:if>
+                </tr>
 
-                              
-                        </tr>
-            </c:forEach>
+
+
                         
 
-             </span>
+
                         
-                        
-                        </table>
+            </table>
          </div>
     </body>
     <span th:insert="pied:: pied_de_page"></span>

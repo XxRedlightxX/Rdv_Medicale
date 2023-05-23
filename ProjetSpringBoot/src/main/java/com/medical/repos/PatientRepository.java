@@ -7,6 +7,7 @@ import com.medical.entities.ServicesClinique;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,7 +27,12 @@ public interface PatientRepository extends CrudRepository<Patient, Integer> {
     public List<Patient> findBySexe(String sexe);
 
     @Query("SELECT p FROM Patient p WHERE p.numero_assurance_maladie = ?1 and p.password = ?2")
-    public Patient verifierExistencePatient(String username, String password);
+    public Patient verifierExistencePatient(@Param("numero_assurance_maladie")String username, @Param("password") String password);
+
+
+
+
+
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Patient p  SET p.nom = ?2,p.prenom = ?3, p.numero_assurance_maladie = ?4,p.num_seq_numero_assurance_maladie = ?5,p.date_naissance= ?6, p.sexe = ?7,p.password = ?8 ,p.medecin = ?9 WHERE p.id_patient = ?1")
