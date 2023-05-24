@@ -57,4 +57,21 @@ public class CliniqueController {
             return "CliniqueInfo";
         }
     }
+
+    @GetMapping("/clinique/filtre")
+    public String Typeservice(Model model,@RequestParam(name = "typeService") String typeService){
+        System.out.println(typeService);
+        System.out.println("hello u work?");
+        List<Clinique> listCliniqueByService = cliniqueService.chercherParService(typeService);
+
+        for (Clinique clinique : listCliniqueByService) {
+            System.out.println("Nom : " + clinique.getNom());
+            System.out.println("service : " + clinique.getServices());
+
+        }
+        model.addAttribute("ListeClinique",listCliniqueByService);
+        return "CliniqueInfo";
+    }
+
+
 }
