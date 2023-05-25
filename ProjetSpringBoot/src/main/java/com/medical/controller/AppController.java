@@ -86,6 +86,16 @@ public class AppController {
 
         return "pagePatientRendezVous";
     }
+
+    @GetMapping("/enTete/medecin/rendezVous")
+    public String pageRendezVousMedecin(Model model){
+        model.addAttribute("MedecinService",medecinService);
+        model.addAttribute("PatientService",patientService);
+        model.addAttribute("RendezVousService",rendezVousService);
+        model.addAttribute("CliniqueService",cliniqueService);
+
+        return "pageMedecinRendezVous";
+    }
     @GetMapping("/enTete/patient/priseRendezVous")
     public String pagePriseRendezVousPatient(@PathVariable(name = "medecinChoisi",required = false) Medecin medecinChoisi, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
         HttpSession session = request.getSession(true);
@@ -140,6 +150,10 @@ public class AppController {
 
     @GetMapping("/enTete/patient/rechercheClinique")
     public String pageRechereCliniquePatient(Model model){
+        model.addAttribute("medecinService",medecinService);
+        model.addAttribute("servicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("cliniqueService",cliniqueService);
+        model.addAttribute("patientService",patientService);
         return "CliniqueInfo";
     }
     @GetMapping("/enTete/medecin/Accueil")
@@ -148,7 +162,12 @@ public class AppController {
         return "Medecin";
     }
     @GetMapping("/enTete/medecin/rechercheClinique")
-    public String pageRechereCliniqueMedecin(){ return "CliniqueInfo";
+    public String pageRechereCliniqueMedecin(Model model){
+        model.addAttribute("medecinService",medecinService);
+        model.addAttribute("servicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("cliniqueService",cliniqueService);
+        model.addAttribute("patientService",patientService);
+        return "CliniqueInfo";
     }
 
     @GetMapping("/enTete/admin/pagePatients")
@@ -181,7 +200,12 @@ public class AppController {
     }
 
     @GetMapping("/enTete/admin/rechercheClinique")
-    public String pageRechereCliniqueAdministrateur(){ return "CliniqueInfo";
+    public String pageRechereCliniqueAdministrateur(Model model){
+        model.addAttribute("medecinService",medecinService);
+        model.addAttribute("servicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("cliniqueService",cliniqueService);
+        model.addAttribute("patientService",patientService);
+        return "CliniqueInfo";
     }
 
     @GetMapping("/enTete/patient/contact")

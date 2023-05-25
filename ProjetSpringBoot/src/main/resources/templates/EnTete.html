@@ -29,13 +29,13 @@
                             <a th:href="@{/enTete/patient/accueil}">Accueil Patient</a>
                             <a th:href="@{/enTete/patient/rendezVous}">Consulter mes rendez-vous</a>
                             <a th:href="@{/enTete/patient/priseRendezVous}">Prendre un rendez-vous</a>
-                            <a th:href="@{/enTete/patient/contact}">Contacter un médecin</a>
                             <a th:href="@{/enTete/patient/rechercheClinique}">Recherche de cliniques</a>
                         </div>
                     </span>
                     <span th:case="'medecin'">
                         <div class="container" id="menu">
                             <a th:href="@{/enTete/medecin/Accueil}">Accueil Médecin</a>
+                            <a th:href="@{/enTete/medecin/rendezVous}">Voir mes rendez-vous</a>
                             <a th:href="@{/enTete/medecin/rechercheClinique}">Recherche de cliniques</a>
                         </div>
                     </span>

@@ -129,7 +129,6 @@ public class AdministrateurController {
     // Faire les actions sur la base de données
     @PostMapping("/administrateur/patient/ajouterPatient")
     public String ajouterPatient(HttpServletRequest request,RedirectAttributes redirectAttributes,Patient patient,Model model){
-        System.out.println(patient);
         String message = "Le patient " + patient.getNom() + " " + patient.getPrenom() + " à été ajouté";
         patientService.ajouterPatient(patient);
         redirectAttributes.addFlashAttribute("message",message);
@@ -178,7 +177,6 @@ public class AdministrateurController {
 
     @PostMapping("/administrateur/medecin/modifierMedecin/{id}")
     public String modifierMedecin(@ModelAttribute("medecin") Medecin medecin, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
-        System.out.println(medecin);
         String message = "Le médecin " + medecin.getNom() + " " + medecin.getPrenom() + " à été modifié";
         redirectAttributes.addFlashAttribute("message",message);
         medecinService.modifierMedecin(medecin);

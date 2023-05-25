@@ -27,7 +27,7 @@
         <span style="text-align: center;color: red;"><b>[[${message}]]</b></span>
         </span>
                 <div id="formuInscr" style="display:none">
-                    <form lang="es" id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}">
+                    <form lang="es" id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}" onsubmit="return checkUserUnique(this);">
                         <input type="hidden" name="typeCompte" value="patient" >
 
                         <label for="nom">Nom : </label>
@@ -93,6 +93,26 @@
                         </label>
                     </form>
                 </div>
+        <!--Model dialogue
+        <div class="modal fade text-center" id="modalDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalTitle">Avertissement</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <span id="modalBody"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </body>
                 <script>
                     function myFunction(choix) {
                         if (choix === "connection") {
@@ -159,6 +179,51 @@
 
                 </script>
                 <span th:insert="pied:: pied_de_page"></span>
-    </body>
 
+    <script>
+        function checkUserUnique(form) {
+
+            //  alert("Vérifier email");
+            // $("#modalDialog").modal();
+            //   jQuery("#modalDialog").modal();
+            // return false;
+
+            $.ajax({
+
+                type : 'POST',
+                url :  '[[@{/patient/check_id}]]',
+                data: {numassurance:$("#assuranceMaladie").val()},
+
+                success : function(data) {
+                    //   alert("Reponse venant du Serveur " + data);
+
+                    if(data==='OK'){
+                        form.submit();
+                    }else{
+                        alert("Avertissement\n"+"Il y a déjà un patient avec ce numéro d'assurance maladie : "+$("#assuranceMaladie").val())
+                        // alert("Il y a déjà un utilisateur avec le même email : " + $("#email").val());
+                        showModalDialog("Avertissement", "Il y a déjà un patient avec ce numéro d'assurance maladie : " + $("#assuranceMaladie").val())
+                    }
+                }
+            });
+
+            return false;
+        }
+
+        function showModalDialog(title, message) {
+            $("#modalTitle").text(title);
+            $("#modalBody").text(message);
+            $("#modalDialog").modal("show");
+
+        }
+        $(document).ready(function () {
+            $("#buttonCancel").on("click", function () {
+                //L'objet window.location peut être utilisé pour obtenir l'adresse de la page actuelle (URL)
+                // et pour rediriger le navigateur vers une nouvelle page
+                window.location = "[[@{/enTete/connexion/patient}]]";
+            });
+
+
+        });
+    </script>
 </html>

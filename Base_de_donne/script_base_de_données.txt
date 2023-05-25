@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema rendezVousMedical
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `rendezVousMedical` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `rendezVousMedical` DEFAULT CHARACTER SET utf8mb4 ;
 USE `rendezVousMedical` ;
 
 -- -----------------------------------------------------
@@ -173,7 +173,7 @@ INSERT INTO `rendezVousMedical`.`administrateur` (`id_administrateur`, `nom_util
 INSERT INTO `rendezVousMedical`.`administrateur` (`id_administrateur`, `nom_utilisateur`, `password`) VALUES ('2', 'root', 'root');
 
 INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('10', 'Clinique Rosemont', '1234 rue rosemont');
-INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('20', ra'Dr Mathieu et associés', '1255 rue jean-talon');
+INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('20', 'Dr Mathieu et associés', '1255 rue jean-talon');
 INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('30 ', 'Clinique sante vivre', '3512 avenue papineau');
 INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('40 ', 'Clinique du matin', '254 place des lys');
 INSERT INTO `rendezVousMedical`.`clinique` (`id_clinique`, `nom`, `coordonnees`) VALUES ('50', 'Jacques Mercier', '8234 rue Mercier');
@@ -245,5 +245,5 @@ VALUES
 	('5', '3000', '200', '2023-05-27', '12', 'Grippe, rhume, toux, fièvre', 'symptômes grippaux'),
 	('6', '1000', '200', '2023-05-27', '13', 'Grippe, rhume, toux, fièvre', 'symptômes grippaux'),
 	('7', '3000', '200', '2023-05-27', '15', 'Grippe, rhume, toux, fièvre', 'symptômes grippaux'),
-    ('8', '2000', '300', '2023-05-28', '16', 'Dépistage d\'ITSS', 'test d\'infection sexuellement transmissible');
+    ('8', '2000', '300', '2023-05-28', '16', 'Dépistage d\'ITSS', 'test d\'infection sexuellement transmissible'),
 	('9', '1000', '200', '2023-05-27', '18', 'Grippe, rhume, toux, fièvre', 'symptômes grippaux');

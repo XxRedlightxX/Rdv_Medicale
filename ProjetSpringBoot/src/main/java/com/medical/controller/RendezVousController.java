@@ -99,7 +99,6 @@ public class RendezVousController {
 
     @PostMapping("/rendezVous/action/supprimer/{id}")
     public String supprimerRendezVous(@PathVariable(name = "id") Integer id,HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model, RendezVous rendezVous){
-        System.out.println(id);
         rendezVousService.supprimerRendezVous(id);
         String message = "Le rendez-vous à été annulé";
         model.addAttribute("message", message);
@@ -114,7 +113,6 @@ public class RendezVousController {
     public String changerTempsRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@RequestParam("idRendezVous") String idRendezVous,@RequestParam("idPatient") String idPatient,@RequestParam("idMedecin") String idMedecin,@RequestParam("dateRv") String dateRv,@RequestParam("heureRv") String heureRv,@RequestParam("raisonConsult") String raisonConsult, @RequestParam("descriptionConsult") String descriptionConsult) {
         RendezVous rendezVous = new RendezVous(patientService.chercherPatientParId(Integer.parseInt(idPatient)),medecinService.chercherMedecinParId(Integer.parseInt(idMedecin)), dateRv, heureRv, raisonConsult, descriptionConsult);
         rendezVous.setId_rendez_vous(Integer.parseInt(idRendezVous));
-        System.out.println(rendezVous);
         LocalDate date = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
         model.addAttribute("jourSemaine", date);
         model.addAttribute("medecinRv",rendezVous.getMedecin_rv());

@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="fr">
+
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Admin</title>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+            }
+
+            th {
+                width: 50%;
+            }
+
+
+        </style>
+
+    </head>
+    <body id="body">
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <h2 style="text-align:center;color: black;">Rendez-vous du Dr. [[${MedecinService.chercherMedecinParId(session.username).prenom}]] [[${MedecinService.chercherMedecinParId(session.username).nom}]]</h2>
+    <div style="height:65vh;overflow:auto;">
+
+            </br>
+            <br>
+            <span th:if="${RendezVousService.chercherRendezVousParIdMedecin(MedecinService.chercherMedecinParId(session.username)).size() != null}">
+            <span th:each="unRendezvous:${RendezVousService.chercherRendezVousParIdMedecin(MedecinService.chercherMedecinParId(session.username).id_medecin)}">
+                <table style="border-radius: 10px;margin-left:28%">
+                    <td style="width:50vh;background-color: white;"><table style="margin-left: auto;margin-right: auto;width: 100%;">
+                            <tr>
+                            <tr>
+                                <th>Nom du Patient :</th>
+                                <td>[[${unRendezvous.patient_rv.nom}]] [[${unRendezvous.patient_rv.prenom}]]</td>
+                            </tr>
+                            <tr>
+                                <th>Date du rendez-vous</th>
+                                <td>[[${unRendezvous.date_rv}]]</td>
+                            </tr>
+                            <tr>
+                                <th>Clinique</th>
+                                <td>[[${unRendezvous.medecin_rv.clinique.nom}]]</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>[[${unRendezvous.medecin_rv.clinique.coordonnees}]]</td>
+                            </tr>
+                            <tr>
+                                <th>Heure :</th>
+                                <td>[[${unRendezvous.heure_rv}]]:00</td>
+                            </tr>
+                            <tr>
+                                <th>Raison de la Consultation :</th>
+                                <td>[[${unRendezvous.raison_consult}]]</td>
+
+                            </tr>
+                            <tr>
+                                <th>Description de la consultation :</th>
+                                <td>[[${unRendezvous.description_consult}]]</td>
+                            </tr>
+                        </table></td>
+
+                </table>
+                <br><br>
+            </span>
+            </span>
+            <span th:if="${RendezVousService.chercherRendezVousParIdMedecin(MedecinService.chercherMedecinParId(session.username)).size() == 0}">
+                <h2 style="text-align:center;color: black;">Vous n'avez aucun rendez-vous</h2>
+            </span>
+
+    </div>
+
+            <span th:insert="pied:: pied_de_page"></span>
+        </body>
+</html>

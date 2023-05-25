@@ -18,14 +18,15 @@ public class MedicalRestControlleur {
 
 
     @PostMapping("/patient/check_id")
-    public String verifierDoublonIdPatient(@Param("numero_assurance_maladie") String Num_assur, @Param("password") String password, @Param("idpatient") Integer id ) {
-        return patientService.Num_Assurance_passwordUnique(Num_assur,password,id)? "Ok": "Doublon";
+    public String verifierDoublonIdPatient(@Param("numassurance") String numassurance) {
+        return patientService.Num_Assurance_passwordUnique(numassurance)? "OK": "Doublon";
 
     }
 
     @PostMapping("/medecin/check_id")
-    public String verifierDoublonIdMedecin(@Param("id_medecin") String medecin, @Param("password") String password, @Param("idmedcin") Integer id ) {
-        return medecinService.Num_Assurance_password_Medecin_Unique(medecin,password,id)? "Ok": "Doublon";
+    public String verifierDoublonIdMedecin(@Param("numeroProfessionel") String numeroProfessionel) {
+
+        return medecinService.Num_Assurance_password_Medecin_Unique(numeroProfessionel)? "OK": "Doublon";
 
     }
 

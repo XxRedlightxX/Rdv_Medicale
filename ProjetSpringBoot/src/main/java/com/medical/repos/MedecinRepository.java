@@ -29,8 +29,8 @@ public interface MedecinRepository extends CrudRepository<Medecin, Integer> {
     @Query("SELECT m FROM Medecin m JOIN m.clinique s WHERE s.nom LIKE %?1%")
     public List<Medecin> findByClinique(String nomClinique);
 
-    @Query("SELECT m FROM Medecin m WHERE m.id_medecin = ?1 and m.password = ?2")
-    public Medecin verifierExistenceMedecin(@Param("id_medecin")String id_medecin, @Param("password") String password);
+    @Query("SELECT m FROM Medecin m WHERE m.id_medecin = ?1")
+    public Medecin verifierExistenceMedecin(@Param("id_medecin")Integer id_medecin);
 
 
     @Modifying(clearAutomatically = true)

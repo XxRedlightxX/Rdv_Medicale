@@ -33,7 +33,7 @@
                 </div> 
                 </br>
                 <div id="formuInscr">
-                    <form class="login" th:action="@{/administrateur/patient/ajouterPatient}" method="post" th:object="${patient}">
+                    <form class="login" th:action="@{/administrateur/patient/ajouterPatient}" method="post" th:object="${patient}" onsubmit="return checkUserUnique(this);">
                         <input type="hidden" name="ajouterPatient">
 
                         <label for="nom">Nom : </label>
@@ -60,7 +60,7 @@
 
 
                         <label for="passwordAJ">Mot de passe:</label>
-                        <input type="passwordAj" id="passwordAj" th:field="*{password}" required> <br><br>
+                        <input type="password" id="passwordAj" th:field="*{password}" required> <br><br>
                         <label for="idMedecinFamille">Médecin de famille:</label>
                         <select id="idMedecinFamille"  th:name="medecin">
                             <option th:value = "null">Aucun</option>
@@ -115,7 +115,7 @@
                                 <tr>
                                     <td><label for="assuranceMaladie">Numero d'assurance maladie : </label></td>
                                     <td>[[${unPatient.numero_assurance_maladie}]]</td>
-                                    <td><input type="text" th:name="numero_assurance_maladie"   th:value="${unPatient.numero_assurance_maladie}" required oninvalid="this.setCustomValidity('Veuillez entrer un numéro d\'assurance maladie')"  oninput="this.setCustomValidity('')">
+                                    <td><input type="hidden" th:name="numero_assurance_maladie"   th:value="${unPatient.numero_assurance_maladie}" >[[${unPatient.numero_assurance_maladie}]]
                                     </td>
                                 </tr>
 
@@ -269,7 +269,26 @@
         </span>
 
     </div>
+    <!--Model dialogue
+        <div class="modal fade text-center" id="modalDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalTitle">Avertissement</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
+                    <div class="modal-body">
+                        <span id="modalBody"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </body>
     <script>
         let inputNumSeq = document.getElementById('numeroSeqAj');
         inputNumSeq.oninvalid = function(event) {
@@ -289,6 +308,52 @@
 
 
     </script>
-    </body>
+
+<script>
+    function checkUserUnique(form) {
+
+        //  alert("Vérifier email");
+        // $("#modalDialog").modal();
+        //   jQuery("#modalDialog").modal();
+        // return false;
+
+        $.ajax({
+
+            type : 'POST',
+            url :  '[[@{/patient/check_id}]]',
+            data: {numassurance:$("#assuranceMaladie").val()},
+
+            success : function(data) {
+                //   alert("Reponse venant du Serveur " + data);
+
+                if(data==='OK'){
+                    form.submit();
+                }else{
+                    alert("Avertissement\n"+"Il y a déjà un patient avec ce numéro d'assurance maladie : "+$("#assuranceMaladie").val())
+                    // alert("Il y a déjà un utilisateur avec le même email : " + $("#email").val());
+                    showModalDialog("Avertissement", "Il y a déjà un patient avec ce numéro d'assurance maladie : " + $("#assuranceMaladie").val())
+                }
+            }
+        });
+
+        return false;
+    }
+
+    function showModalDialog(title, message) {
+        $("#modalTitle").text(title);
+        $("#modalBody").text(message);
+        $("#modalDialog").modal("show");
+
+    }
+    $(document).ready(function () {
+        $("#buttonCancel").on("click", function () {
+            //L'objet window.location peut être utilisé pour obtenir l'adresse de la page actuelle (URL)
+            // et pour rediriger le navigateur vers une nouvelle page
+            window.location = "[[@{/enTete/connexion/patient}]]";
+        });
+
+
+    });
+</script>
 <span th:insert="pied:: pied_de_page"></span>
 </html>

@@ -26,7 +26,6 @@ public class InscriptionController {
 
     @PostMapping("/inscription/patient")
     public String InscriptionPatient(@ModelAttribute("patient") Patient patient,HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
-        System.out.println(patient);
         patientService.ajouterPatient(patient);
         redirectAttributes.addAttribute("username",patient.getNumero_assurance_maladie());
         redirectAttributes.addAttribute("password",patient.getPassword());
@@ -35,7 +34,6 @@ public class InscriptionController {
 
     @PostMapping("/inscription/medecin")
     public String InscriptionMedecin(@ModelAttribute("medecin") Medecin medecin,HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
-        System.out.println(medecin);
         medecinService.ajouterMedecin(medecin);
         redirectAttributes.addAttribute("username",medecin.getId_medecin());
         redirectAttributes.addAttribute("password",medecin.getPassword());

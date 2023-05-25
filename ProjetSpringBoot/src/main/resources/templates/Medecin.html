@@ -109,8 +109,13 @@
                                 <h2> <a href="#" onclick="afficherMontant()">Tarif de rendez-vous:</a></h2>
                                 <div id="montant" style="display:none;">
                                     <h3>Fixer le tarif</h3>
-                                    <input type="number" id="tarif" name="tarif" min="0" max="9999">
-                                    <button onclick="validerTarif()">Valider</button>
+                                    <form th:action="@{/medecin/changerTarif}" method="get">
+                                        <input type="number" step="0.01" th:value="${MedecinService.chercherMedecinParId(session.username).facturation}" required th:name="tarif" min="0" max="9999">
+                                        <input type="hidden"th:value="${MedecinService.chercherMedecinParId(session.username).id_medecin}" th:name="id_medecin">
+                                        <input type="submit"  value="Changer le tarif" />
+                                    </form>
+
+
                                 </div>
                             </td>
                         </tr>
@@ -169,11 +174,7 @@
             }
 
 
-            function validerTarif() {
-                var tarif = document.getElementById("tarif").value;
-                alert("Le tarif a tarif fix " + tarif + " dollars.");
-                document.getElementById("montant").style.display = "none";
-            }
+
 
         </script>
 

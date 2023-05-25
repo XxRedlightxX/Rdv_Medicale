@@ -30,7 +30,6 @@ public class EmailController {
                                @RequestParam("fileImage") MultipartFile multipartFile) throws MessagingException {
         // multipartFile.getOriginalFilename();
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        System.out.println("fileName :" + fileName);
 
 
         emailService.sendMailWithAttachment(destinataire, objet, contenu, fileName);

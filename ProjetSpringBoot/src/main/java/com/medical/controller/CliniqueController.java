@@ -42,7 +42,8 @@ public class CliniqueController {
         model.addAttribute("medecinService",medecinService);
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
         model.addAttribute("cliniqueService",cliniqueService);
-        String message= "Vous avez rien selection";
+        model.addAttribute("patientService",patientService);
+        String message= "Vous n'avez rien selectioné";
         model.addAttribute("nom", nom);
         if ( nom != null && !nom.equals("")) {
             listeClinique = cliniqueService.chercherCliniqueParNom(nom);
@@ -58,23 +59,40 @@ public class CliniqueController {
         } else {
             listeClinique = cliniqueService.afficherLesCliniques();
             model.addAttribute("ListeClinique1", listeClinique);
+            model.addAttribute("ListeClinique", listeClinique);
+            model.addAttribute("medecinService",medecinService);
+            model.addAttribute("servicesCliniqueService",servicesCliniqueService);
+            model.addAttribute("cliniqueService",cliniqueService);
+            model.addAttribute("patientService",patientService);
             //model.addAttribute("nom", nom);
             return "CliniqueInfo";
         }
     }
 
+    @GetMapping("/clinique/rechercher/tout")
+    public String rechercherToutesClinique(HttpServletRequest request, RedirectAttributes redirectAttributes,Model model){
+        List<Clinique> listeClinique = cliniqueService.afficherLesCliniques();
+        String message= "Vous n'avez rien selectioné";
+        model.addAttribute("ListeClinique1", listeClinique);
+        model.addAttribute("medecinService",medecinService);
+        model.addAttribute("ListeClinique", listeClinique);
+        model.addAttribute("servicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("cliniqueService",cliniqueService);
+        model.addAttribute("patientService",patientService);
+        //model.addAttribute("nom", nom);
+        return "CliniqueInfo";
+
+    }
+
     @GetMapping("/clinique/filtre")
     public String Typeservice(Model model,@RequestParam(name = "typeService") String typeService){
-        System.out.println(typeService);
-        System.out.println("hello u work?");
         List<Clinique> listCliniqueByService = cliniqueService.chercherParService(typeService);
 
-        for (Clinique clinique : listCliniqueByService) {
-            System.out.println("Nom : " + clinique.getNom());
-            System.out.println("service : " + clinique.getServices());
-
-        }
         model.addAttribute("ListeClinique",listCliniqueByService);
+        model.addAttribute("medecinService",medecinService);
+        model.addAttribute("servicesCliniqueService",servicesCliniqueService);
+        model.addAttribute("cliniqueService",cliniqueService);
+        model.addAttribute("patientService",patientService);
         return "CliniqueInfo";
     }
 

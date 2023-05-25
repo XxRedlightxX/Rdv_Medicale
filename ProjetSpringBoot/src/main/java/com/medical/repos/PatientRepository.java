@@ -30,7 +30,8 @@ public interface PatientRepository extends CrudRepository<Patient, Integer> {
     public Patient verifierExistencePatient(@Param("numero_assurance_maladie")String username, @Param("password") String password);
 
 
-
+    @Query("SELECT p FROM Patient p WHERE p.numero_assurance_maladie = ?1")
+    public Patient verifierExistencePatientModel(@Param("numero_assurance_maladie")String username);
 
 
 
