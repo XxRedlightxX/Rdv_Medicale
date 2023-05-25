@@ -8,6 +8,7 @@
 
         <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
 
+
     </head>
     <span th:fragment="en_tete">
     <body>
@@ -15,8 +16,12 @@
         <header id="header">
 
             <div id="logo">
+                <a th:href="@{/enTete/patient/accueil}" target="_blank">
+
                 <img th:src="@{/images/logo.png}" width="60px" , height="50px">
+                </a>
             </div>
+
             <span th:if="${session.typeCompte != null}">
                 <div th:switch="${session.typeCompte}">
                     <span th:case="'patient'">
@@ -24,7 +29,7 @@
                             <a th:href="@{/enTete/patient/accueil}">Accueil Patient</a>
                             <a th:href="@{/enTete/patient/rendezVous}">Consulter mes rendez-vous</a>
                             <a th:href="@{/enTete/patient/priseRendezVous}">Prendre un rendez-vous</a>
-                            <a href="xyz.jsp">Contacter un médecin</a>
+                            <a th:href="@{/enTete/patient/contact}">Contacter un médecin</a>
                             <a th:href="@{/enTete/patient/rechercheClinique}">Recherche de cliniques</a>
                         </div>
                     </span>

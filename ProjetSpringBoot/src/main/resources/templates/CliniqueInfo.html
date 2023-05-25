@@ -5,9 +5,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/CliniqueInfo.css}"/>
+
     </head>
     <span th:insert="EnTete:: en_tete"></span>
-    
+
+    <span th:if="${message!=null}">
+    <center><b><font color=red>[[${message}]]</font><b></center>
+</span>
     
     
     
@@ -23,33 +28,31 @@
                     </select>
                     <input type="submit"  value="nomclinique" />
                 </form>
-        <h4>Chercher une clinique par son nom</h4>
+        <div class="search-bar"><h4>Chercher une clinique par son nom</h4>
                 <form th:action="@{/clinique/rechercher}" method="get">
                     <input type="search" name="nom" th:value="${nom}">
                     <input type="submit"  value="nom" />
                 </form>
         
-        
-         <div class="droite">
+        </div>
+         <div class="radio-group">
                 <h4>Filter par services</h4>
-                <form th:action="@{/clinique/rechercher}"  method="get">
-                    <input type="radio" name="typeService" value="Admin" th:value="${nom}"/> <label>Médecine général </label> <br>
-                    <input type="radio" name="typeService" value="Vendeur" th:value="${nom}"/> <label>Cardiologie</label><br>
-                    <input type="radio" name="typeService" value="Assistant" th:value="${nom}"/> <label>Dermatologie</label> <br><!-- comment -->
-                    <input type="radio" name="typeService" value="Editeur" th:value="${nom}"/> <label>Grippe, rhume</label><br><!-- comment -->
-                    <input type="radio" name="typeService" value="Expediteur" th:value="${nom}"/> <label>Dépistage d'ITSS</label> <br><!-- comment -->
+                <form th:action="@{/clinique/filtre}"  method="get">
+                    <input type="radio" th:name="typeService" value="Dermatologie"/>Dermatologie<label></label> <br>
+                    <input type="radio" th:name="typeService" value="Cardiologie"/>Cardiologie <label></label><br>
+                    <input type="radio" th:name="typeService" value="Grippe, rhume, toux, fièvre"/>Grippe, rhume, toux, fièvre <label></label> <br>
+                    <input type="radio" th:name="typeService" value="Dépistage d'ITSS"/>Dépistage d'ITSS <label></label>><br>
+                    <input type="radio" th:name="typeService" value="Médecine générale"/>Médecine générale <label></label> <br>
                     <input type="submit"  value="typeService" />
                 </form>
 
 
-             <span >
-                 <h2>Liste des utilisateurs</h2>
-            </span>
+        </div>
 
         
         
         
-         <table style="width:79%">
+         <table style="width:79%" id="customers">
             <tr>
                 <th>Nom de la clinique</th>
                 <th>Coordonnées</th>
