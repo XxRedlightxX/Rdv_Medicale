@@ -42,7 +42,7 @@ public class CliniqueController {
         model.addAttribute("medecinService",medecinService);
         model.addAttribute("servicesCliniqueService",servicesCliniqueService);
         model.addAttribute("cliniqueService",cliniqueService);
-
+        String message= "Vous avez rien selection";
         model.addAttribute("nom", nom);
         if ( nom != null && !nom.equals("")) {
             listeClinique = cliniqueService.chercherCliniqueParNom(nom);
@@ -50,6 +50,11 @@ public class CliniqueController {
             //model.addAttribute("listeClinique1", listeClinique);
             //model.addAttribute("nom", nom);
             return "CliniqueInfo";
+        }else if( nom.equals("")) {
+            model.addAttribute("message", message);
+            return "CliniqueInfo";
+
+
         } else {
             listeClinique = cliniqueService.afficherLesCliniques();
             model.addAttribute("ListeClinique1", listeClinique);

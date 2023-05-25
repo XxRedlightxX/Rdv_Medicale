@@ -73,6 +73,9 @@ public class ConnexionController {
             session.setAttribute("username",username);
             session.setAttribute("nom", medecin.getNom());
             session.setAttribute("prenom", medecin.getPrenom());
+            session.setAttribute("specialite", medecin.getspecialite());
+            session.setAttribute("cordonnes", medecin.getCoordonnees_medecin());
+            session.setAttribute("clinique", medecin.getClinique());
             session.setAttribute("typeCompte", "medecin");
 
             if (sauvegarde != null) {

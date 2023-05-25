@@ -10,7 +10,9 @@
     </head>
     <span th:insert="EnTete:: en_tete"></span>
 
-    
+    <span th:if="${message!=null}">
+    <center><b><font color=red>[[${message}]]</font><b></center>
+</span>
     
     
     

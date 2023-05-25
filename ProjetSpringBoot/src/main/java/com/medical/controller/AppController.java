@@ -173,6 +173,8 @@ public class AppController {
     public String pageRechereCliniqueAdministrateur(){ return "CliniqueInfo";
     }
 
+    @GetMapping("/enTete/patient/contact")
+    public String pageContacterMedecin(){ return "email_form";}
 
 
 
