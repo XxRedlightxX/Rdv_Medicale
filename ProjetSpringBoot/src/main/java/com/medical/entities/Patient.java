@@ -23,6 +23,7 @@ public class Patient {
     @Column (nullable = false)
     private String password;
     @ManyToOne
+    @JoinColumn(nullable = true)
     private Medecin medecin;
 
     public Patient() {

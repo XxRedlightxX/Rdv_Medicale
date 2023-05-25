@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -73,11 +73,11 @@
                                         <tr>
                                             <th>Clinique où médecin est employé:</th>
 
-                                            <span th:if="${unMedecin.clinique.id_clinique !=0}">
+                                            <span th:if="${unMedecin.clinique != null}">
                                             <td>[[${unMedecin.clinique.nom}]]</td>
                                             </span>
 
-                                            <span th:if="${unMedecin.clinique.id_clinique ==0}">
+                                            <span th:if="${unMedecin.clinique == null}">
                                             <td>Aucun</td>
                                             </span>
 

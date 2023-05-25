@@ -20,17 +20,21 @@
     <body>
         <div style="font-size: 14px;float: left">
             <div>
-                <h4>Rendez-vous avec un médecin du même GMF</h4>
-                <form th:action="@{/rendezVous/choixMedecin/filterGMF}" method="post">
+                <span th:if="${PatientService.chercherPatientParAssuranceMaladie(session.username).medecin} != null"><br>
+                    <span><b>Rendez-vous avec un médecin du même GMF</b></span><br>
+                    [[${PatientService.chercherPatientParAssuranceMaladie(session.username).medecin.clinique.nom}]] <br><br>
+
+                <form th:action="@{/rendezVous/choixMedecin/filterGMF}" method="get">
                     <input type="hidden" name="typeRecherche" value="filtrerGMF">
                     <input type="hidden" th:name="medecinGMF" th:value="${PatientService.chercherPatientParAssuranceMaladie(session.username).medecin.clinique.nom}">
                     <input type="submit"  value="Afficher les médecins" />
                 </form>
+                </span>
             </div>
 
             <div>
                 <h4 >Filter par spécialité du médecin</h4>
-                <form th:action="@{/rendezVous/choixMedecin/filtrerSpecialite}" method="post">
+                <form th:action="@{/rendezVous/choixMedecin/filtrerSpecialite}" method="get">
 
                     <span th:each="unService:${ServicesCliniqueService.afficherServicesCliniques()}">
                         <input type="radio" th:name="nomSpecialite" th:value="${unService.nom}"/> <label>[[${unService.nom}]]</label> <br>
@@ -40,7 +44,7 @@
             </div>
             <div >
                 <h4 >Filter par cliniques</h4>
-                <form th:action="@{/rendezVous/choixMedecin/filterClinique}" method="post">
+                <form th:action="@{/rendezVous/choixMedecin/filterClinique}" method="get">
                     <input type="hidden" name="typeRecherche" value="filtrerClinique">
                     <span th:each="uneClinique:${CliniqueService.afficherLesCliniques()}">
                         <input type="radio" th:name="nomClinique" th:value="${uneClinique.nom}"/> <label>[[${uneClinique.nom}]]</label> <br>
@@ -49,19 +53,17 @@
                 </form>
             </div>
             <div>
-                <h4 >Filtrer par prix</h4>
-                <form action="choixMedecinRendezVousController" method="post">
-                    <input type="hidden" name="typeRecherche" value="filtrerPrix">
-                    <input type="radio" name="prixRecherche" value="0-25"/> <label>0-25$</label> <br>
-                    <input type="radio" name="prixRecherche" value="25-50"/> <label>25-50$</label> <br>
-                    <input type="radio" name="prixRecherche" value="50-100"/> <label>50-100$</label> <br>
-                    <input type="radio" name="prixRecherche" value="100-200"/> <label>100-200$</label> <br>
-                    <input type="radio" name="prixRecherche" value="200+"/> <label>200$ et plus</label> <br><br>
-                    <input type="submit"  value="Filtrer" />
+                <span th:if="${listeMedecinRecherche.size()} != ${MedecinService.afficherLesMedecins().size()} "><br>
+                    <span><b>Afficher tous les medecins</b></span>
+                    <br><br>
+
+                <form th:action="@{/rendezVous/choixMedecin/afficherTousLesMedecins}" method="get">
+                    <input type="submit"  value="Afficher tous les médecins" />
                 </form>
+                </span>
             </div>
         </div>
-
+<div style="overflow: auto;height: 75vh;margin-top: 3px">
             <span th:if="${listeMedecinRecherche != null}">
                 <span th:each="medecinRecherche : ${listeMedecinRecherche}">
                     <div>
@@ -78,7 +80,7 @@
                                         <th>Prenom :</th>
                                         <td>[[${medecinRecherche.prenom}]]</td>
                                         <th>Spécialitée :</th>
-                                        <td>[[${medecinRecherche.specialite.nom}]]</td>
+                                        <td>[[${medecinRecherche.getspecialite().nom}]]</td>
                                     </tr>
                                     <tr>
                                         <th>Facturation :</br></th>
@@ -88,15 +90,15 @@
                                     </tr>
                                     <tr>
                                         <th style="width:150px" >Clinique où médecin est employé :</th>
-                                        <span th:if="${medecinRecherche.clinique.id_clinique != 0}">
-                                            <td>${medecinRecherche.clinique.nom}</td>
+                                        <span th:if="${medecinRecherche.clinique!= null}">
+                                            <td>[[${medecinRecherche.clinique.nom}]]</td>
                                         </span>
-                                        <span th:if="${medecinRecherche.clinique.id_clinique == 0}">
+                                        <span th:if="${medecinRecherche.clinique == null}">
                                             <td>Aucun</td>
                                         </span>
                                     </tr>
                                     <tr><td colspan="3" style="text-align: center;">
-                                            <form th:action="@{'/rendezVous/choixMedecin/prendeRendezVous/'+${medecinRecherche}}" method="post">
+                                            <form th:action="@{'/rendezVous/choixMedecin/prendeRendezVous/'+${medecinRecherche.id_medecin}}" method="get">
                                                 <input type="hidden" name="typeRecherche" value="prendreRendezVous">
                                                 <input type="hidden" name="medecinChoisi" value="${medecinRecherche.numeroProfessionel}">
                                                 <input type="submit"  value="Prendre rendez-vous" />
@@ -107,10 +109,11 @@
                         </table>
                     </div>
                     </span>
-                </span>
-            <span th:if="${listeMedecinRecherche == null}">
+            </span>
+            <span th:if="${listeMedecinRecherche.size() == 0}">
                 <h1 style="text-align: center">Aucun résultat de recherche<h1>
             </span>
+</div>
 
     </body>
     <span th:insert="pied:: pied_de_page"></span>

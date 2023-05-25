@@ -39,5 +39,5 @@ public interface MedecinRepository extends CrudRepository<Medecin, Integer> {
 
 
     @Query("SELECT m FROM Medecin m WHERE m.id_medecin = ?1 and m.password = ?2")
-    public Medecin verifierExistenceMedecin2(Integer id_medecin, String password);
+    public Medecin verifierExistenceMedecin2(@Param("id_medecin")int id_medecin, @Param("password") String password);
 }

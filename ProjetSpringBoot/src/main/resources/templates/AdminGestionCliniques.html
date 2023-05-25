@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -37,10 +37,10 @@
                         <input type="hidden" name="ajouterClinique">
 
                         <label for="nom">Nom de la clinique : </label>
-                        <input type="text" name="nom" id="nom" th:field="*{nom}"><br> <br>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')" ><br> <br>
 
                         <label for="coordonnees">Coordonnées : </label>
-                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees}"><br> <br>
+                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees}" required oninvalid="this.setCustomValidity('Veuillez indiquer les coordonnées')"  oninput="this.setCustomValidity('')" ><br> <br>
 
                         <input type="submit"  class="btn btn-primary btn-lg" value="Ajouter la clinique"  id="submits">
                     </form>
@@ -71,13 +71,13 @@
                                 <tr>
                                     <td><label for="nom">Nom : </label></td>
                                     <td>[[${uneClinique.nom}]]</td>
-                                    <td><input type="text" th:name="nom"   th:value="${uneClinique.nom}"></td>
+                                    <td><input type="text" th:name="nom"   th:value="${uneClinique.nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')"></td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="coordonnees">Coordonnées : </label></td>
                                     <td>[[${uneClinique.coordonnees}]]</td>
-                                    <td><input type="text" th:name="coordonnees"   th:value="${uneClinique.coordonnees}">
+                                    <td><input type="text" th:name="coordonnees"   th:value="${uneClinique.coordonnees}" required oninvalid="this.setCustomValidity('Veuillez indiquer les coordonnées')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 

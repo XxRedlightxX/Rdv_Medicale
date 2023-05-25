@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -27,7 +27,7 @@
 
     <div th:switch="${typeAction.toString()}">
         <span th:case="'ajouter'">
-                <div id=ls>
+                <div id=sls>
                     <h1 id="etatPatient">Ajout d'un nouveau patient</h1>
 
                 </div> 
@@ -37,31 +37,31 @@
                         <input type="hidden" name="ajouterPatient">
 
                         <label for="nom">Nom : </label>
-                        <input type="text" id="nom" th:field="*{nom}"><br> <br>
+                        <input type="text" id="nom" th:field="*{nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="prenom">Prenom : </label>
-                        <input type="text" id="prenom" th:field="*{prenom}"><br> <br>
+                        <input type="text" id="prenom" th:field="*{prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="assuranceMaladie">Numero d'assurance maladie : </label>
-                        <input type="text"id="assuranceMaladie" th:field="*{numero_assurance_maladie}"><br> <br>
+                        <input type="text"id="assuranceMaladie" th:field="*{numero_assurance_maladie}" required oninvalid="this.setCustomValidity('Veuillez entrer un numéro d\'assurance maladie')"  oninput="this.setCustomValidity('')"><br> <br>
 
-                        <label for="numeroSeq">Numero sequentiel : </label>
-                        <input type="text" id="numeroSeq" th:field="*{num_seq_numero_assurance_maladie}"><br> <br>
+                        <label for="numeroSeqAj">Numero sequentiel : </label>
+                        <input type="text" id="numeroSeqAj" name="numeroSeqAj" th:field="*{num_seq_numero_assurance_maladie}" maxlength="2" required pattern="^[0-9]*$" ><br> <br>
 
                         <label for="dateNaissance">Date de naissance : </label>
-                        <input type="date" id="dateNaissance" th:field="*{date_naissance}"><br> <br>
+                        <input type="date" id="dateNaissance" th:field="*{date_naissance}" required oninvalid="this.setCustomValidity('Veuillez indiquer votre date de naissance')" oninput="this.setCustomValidity('')"><br> <br>
 
                         <label> Sexe : </label>
 
-                        <label for="gender_male" id="labelgenderM">
-                            <input type="radio" id="gender_male" value="Homme" checked="checked" th:field="*{sexe}" >Male</label>
-                        <label for="gender_female" id="labelgenderF">
-                            <input type="radio" id="gender_female" value="Femme" th:field="*{sexe}">Female</label><br> <br>
+                        <label for="gender_male" id="labelgenderMs">
+                            <input type="radio" id="gender_males" th:checked="${true}" value="Homme" name="sexe" >Male</label>
+                        <label for="gender_female" id="labelgenderFs">
+                            <input type="radio" id="gender_females" value="Femme" th:checked="${false}" name="sexe">Female</label><br> <br>
 
 
-                        <label for="password">Mot de passe:</label>
-                        <input type="password" id="password" th:field="*{password}"> <br><br>
-                        <label for="password">Médecin de famille:</label>
+                        <label for="passwordAJ">Mot de passe:</label>
+                        <input type="passwordAj" id="passwordAj" th:field="*{password}" required> <br><br>
+                        <label for="idMedecinFamille">Médecin de famille:</label>
                         <select id="idMedecinFamille"  th:name="medecin">
                             <option th:value = "null">Aucun</option>
                             <span th:each="unMedecin : ${medecinService.afficherLesMedecins()}">
@@ -70,7 +70,7 @@
                             </span>
                         </select> <br><br> <br><br>
 
-                        <input type="submit"  class="btn btn-primary btn-lg" value="Ajouter le patient"  id="submits">
+                        <input type="submit"  class="btn btn-primary btn-lg" value="Ajouter le patient"  id="ssubmits">
                     </form>
                     <br>
                     <form style="display:inline;" th:action="@{/enTete/admin/pagePatients}" method="get">
@@ -79,13 +79,13 @@
                 </div>
         </span>
         <span th:case="'modifier'">
-                <div id=ls>
-                    <h1 id="etatPatient">Modifier un patient</h1>
+                <div id=lss>
+                    <h1 id="etatPatients">Modifier un patient</h1>
 
                 </div> <br><br><br>
             <span th:if="${unPatient != null}">
                     </br></br>
-                    <div id="formuInscr">
+                    <div id="formuInscrs">
                         <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/patient/modifierPatient/'+${unPatient.id_patient}}" th:object="${patient}" method="post">
 
 
@@ -102,34 +102,34 @@
                                 <tr>
                                     <td><label for="nom">Nom : </label></td>
                                     <td>[[${unPatient.nom}]]</td>
-                                    <td><input type="text"  th:name="nom"   th:value="${unPatient.nom}"></td>
+                                    <td><input type="text"  th:name="nom"   th:value="${unPatient.nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')" ></td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="prenom">Prenom : </label></td>
                                     <td>[[${unPatient.prenom}]]</td>
-                                    <td><input type="text" th:name="prenom"   th:value="${unPatient.prenom}">
+                                    <td><input type="text" th:name="prenom"   th:value="${unPatient.prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="assuranceMaladie">Numero d'assurance maladie : </label></td>
                                     <td>[[${unPatient.numero_assurance_maladie}]]</td>
-                                    <td><input type="text" th:name="numero_assurance_maladie"   th:value="${unPatient.numero_assurance_maladie}">
+                                    <td><input type="text" th:name="numero_assurance_maladie"   th:value="${unPatient.numero_assurance_maladie}" required oninvalid="this.setCustomValidity('Veuillez entrer un numéro d\'assurance maladie')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td><label for="numeroSeq">Numero sequentiel : </label></td>
+                                    <td><label >Numero sequentiel : </label></td>
                                     <td>[[${unPatient.getnum_seq_numero_assurance_maladie()}]]</td>
-                                    <td><input type="text"  th:name="num_seq_numero_assurance_maladie"   th:value="${unPatient.getnum_seq_numero_assurance_maladie()}">
+                                    <td><input id="verifNumSeq" type="text"  th:name="num_seq_numero_assurance_maladie"   th:value="${unPatient.getnum_seq_numero_assurance_maladie()}" maxlength="2" required pattern="^[0-9]*$" oninvalid="this.setCustomValidity('Le numéro séquentiel doit être un nombre de deux chiffres')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="dateNaissance">Date de naissance : </label></td>
                                     <td>[[${unPatient.date_naissance}]]</td>
-                                    <td><input type="date" th:name="date_naissance"   th:value="${unPatient.date_naissance}">
+                                    <td><input type="date" th:name="date_naissance"   th:value="${unPatient.date_naissance}" required oninvalid="this.setCustomValidity('Veuillez indiquer votre date de naissance')" oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 
@@ -137,32 +137,33 @@
                                     <td><label > Sexe : </label> </td>
                                     <td>[[${unPatient.sexe}]]</td>
                                     <td><label for="gender_male" id="labelgenderM">
-                                            <input type="radio" id="gender_male" th:field="*{sexe}" value="Homme" name="sexe" th:selected="${unPatient.sexe.toString() == 'Homme'}" >Male</label>
+                                            <input type="radio" id="gender_male" th:checked="${unPatient.sexe =='Homme'}" value="Homme" name="sexe" th:selected="${unPatient.sexe.toString() == 'Homme'}" >Male</label>
                                         <label for="gender_female" id="labelgenderF">
-                                            <input type="radio" id="gender_female" th:field="*{sexe}" value="Femme" name="sexe" >Female</label>
+                                            <input type="radio" id="gender_female" th:checked="${unPatient.sexe =='Femme'}" value="Femme" name="sexe" th:selected="${unPatient.sexe.toString() == 'Femme'}" >Female</label>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td><label for="password">Mot de passe:</label></td>
+                                    <td><label for="verifPass">Mot de passe:</label></td>
                                     <td>[[${unPatient.password}]]</td>
-                                    <td><input type="text" th:name="password"   th:value="${unPatient.password}">
+                                    <td><input id="verifPass" type="text" th:name="password"   th:value="${unPatient.password}" required oninvalid="this.setCustomValidity('Veuillez indiquer un mot de passe')" oninput="this.setCustomValidity('')">
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td><label >Médecin de famille :</label></td>
-                                    <span th:if="${unPatient.medecin.id_medecin != 0}">
+                                    <span th:if="${unPatient.medecin != null}">
                                         <td>Dr. [[${unPatient.medecin.prenom}]] [[${unPatient.medecin.nom}]] </td>
                                     </span>
-                                    <span th:if="${unPatient.medecin.id_medecin == 0}">
+                                    <span th:if="${unPatient.medecin == null}">
                                         <td>Aucun</td>
                                     </span>
                                     <td><select th:name="medecin">
-                                            <option th:value="null" th:selected="${unPatient.medecin.id_medecin ==null}">
+                                            <option th:value="null" th:selected="${unPatient.medecin ==null}">
                                                 Aucun</option>
+
                                         <span th:each="unMedecin : ${medecinService.afficherLesMedecins()}">
-                                            <option th:value="${unMedecin.id_medecin}" th:selected="${unPatient.medecin.id_medecin == unMedecin.id_medecin}">
+                                            <option th:value="${unMedecin.id_medecin}" th:selected="${unPatient.medecin == unMedecin}">
                                             Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
                                         </span>
                                         </select>
@@ -204,7 +205,7 @@
                         }
                     </style>
                     <div id=ls>
-                        <h1 id="etatPatient">Supression d'un patient</h1>
+                        <h1 id="etatPatiendt">Supression d'un patient</h1>
 
                     </div> <br>
 
@@ -239,10 +240,10 @@
                                             </tr>
                                             <tr>
                                                 <th>Nom du médecin de famille:</th>
-                                                <span th:if="${unPatient.medecin.id_medecin !=0}">
+                                                <span th:if="${unPatient.medecin !=null}">
                                                     <td>Dr. [[${unPatient.medecin.prenom}]] [[${unPatient.medecin.nom}]] </td>
                                                 </span>
-                                                <span th:if="${unPatient.medecin.id_medecin ==0}">
+                                                <span th:if="${unPatient.medecin ==null}">
                                                     <td>Aucun</td>
                                                 </span>
 
@@ -269,10 +270,25 @@
 
     </div>
 
+    <script>
+        let inputNumSeq = document.getElementById('numeroSeqAj');
+        inputNumSeq.oninvalid = function(event) {
+            event.target.setCustomValidity('Le numéro séquentiel doit être un nombre de deux chiffres');
+        }
+        inputNumSeq.oninput = function(event) {
+            event.target.setCustomValidity('');
+        }
+
+        let inputPass = document.getElementById('passwordAj');
+        inputPass.oninvalid = function(event) {
+            event.target.setCustomValidity('Veuillez indiquer un mot de passe');
+        }
+        inputPass.oninput = function(event) {
+            event.target.setCustomValidity('');
+        }
 
 
-    <span th:insert="pied:: pied_de_page"></span>
+    </script>
     </body>
-    <script src="javaScript/formValidation.js"></script>
-
+<span th:insert="pied:: pied_de_page"></span>
 </html>

@@ -1,8 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -38,7 +36,7 @@
                                     <label for="date">Date:</label>
                                     <input type="hidden" th:name="medecin_dispo" th:value="${MedecinService.chercherMedecinParId(session.username).id_medecin}"/>
 
-                                    <input type="date" id="date" th:name="date_dispo"><br><br>
+                                    <input type="date" id="date" th:name="date_dispo" required oninvalid="this.setCustomValidity('Veuillez choisir une journée où définir vos disponibilités')" oninput="this.setCustomValidity('')"><br><br>
                                     <label for="heureD">Heure debut: </label>
                                     <select id="heureD" name="heureD" form="calForm" th:name="heure_dispo_debut">
                                         <span th:each="uneHeureD: ${#numbers.sequence(6, 20)}" >

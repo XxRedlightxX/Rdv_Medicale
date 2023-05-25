@@ -1,7 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
+<html lang="fr">
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -40,7 +41,7 @@
 
             </br>
             <br>
-            <span th:if="${RendezVousService.chercherRendezVousParIdPatient(PatientService.chercherPatientParAssuranceMaladie(session.username)).size() != 0}">
+            <span th:if="${RendezVousService.chercherRendezVousParIdPatient(PatientService.chercherPatientParAssuranceMaladie(session.username)).size() != null}">
             <span th:each="unRendezvous:${RendezVousService.chercherRendezVousParIdPatient(PatientService.chercherPatientParAssuranceMaladie(session.username).id_patient)}">
                 <table style="border-radius: 10px;margin-left:35%">
                     <td style="width:70vh;background-color: white;"><table style="margin-left: auto;margin-right: auto;width: 100%;">

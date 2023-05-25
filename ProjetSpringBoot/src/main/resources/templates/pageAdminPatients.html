@@ -1,7 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
 
     <head>
         <meta charset="UTF-8">
@@ -72,11 +71,11 @@
                                         </tr>
                                         <tr>
                                             <th>Nom du médecin de famille:</th>
-                                            <span th:if="${unPatient.medecin.id_medecin !=0}">
+                                            <span th:if="${unPatient.medecin !=null}">
                                             <td>Dr. [[${unPatient.medecin.prenom}]] [[${unPatient.medecin.nom}]] </td>
                                             </span>
 
-                                            <span th:if="${unPatient.medecin.id_medecin ==0}">
+                                            <span th:if="${unPatient.medecin ==null}">
                                             <td>Aucun</td>
                                             </span>
                              

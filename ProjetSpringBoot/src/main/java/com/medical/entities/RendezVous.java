@@ -9,8 +9,10 @@ public class RendezVous {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id_rendez_vous;
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Patient patient_rv;
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Medecin medecin_rv;
     @Column(nullable = false)
     private String date_rv;

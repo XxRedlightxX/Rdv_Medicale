@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -77,7 +77,7 @@
             </div> <br>
             <div >
                 <div style="text-align:left;margin-left: auto;margin-right: auto;width: 15%;">
-                    Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
+                    Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]]  [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
                     Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
                     Date du rendez-vous : [[${unRendezVous.date_rv}]] </br></br>
                     Heure : [[${unRendezVous.heure_rv}]]:00</br></br>
@@ -85,18 +85,18 @@
 
 
 
-                        <a th:href="@{/rendezVous/action/changerTemps}">Changer la date et l'heure du rendez-vous</a><br><br>
+                        <button onclick="sauvegarderChangements()">Changer la date et l'heure du rendez-vous</button><br><br>
 
 
 
-                    <form th:action="@{/rendezVous/action/modifier}" th:object="${rendezVous}">
-                        <input type="hidden" th:value="${unRendezVous.id_rendez_vous}" th:name="id_rendez_vous">
-                        <input type="hidden" th:value="${unRendezVous.patient_rv.id_patient}" th:name="patient_rv">
-                        <input type="hidden" th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="medecin_rv">
-                        <input type="hidden" th:value="${unRendezVous.date_rv}" th:name="date_rv">
-                        <input type="hidden" th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
+                    <form th:action="@{/rendezVous/action/modifier}" th:object="${rendezVous}" method="post">
+                        <input type="hidden" id="saveidRendezVous" th:value="${unRendezVous.id_rendez_vous}" th:name="id_rendez_vous">
+                        <input type="hidden" id="saveidPatient" th:value="${unRendezVous.patient_rv.id_patient}" th:name="patient_rv">
+                        <input type="hidden"  id="saveidMedecin"th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="medecin_rv">
+                        <input type="hidden"  id="savedateRv" th:value="${unRendezVous.date_rv}" th:name="date_rv">
+                        <input type="hidden"  id="saveheureRv"th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
                         <label for="raisonConsult">Raison de la consultation :</label></br></br>
-                        <select name="raisonConsult" th:field="*{raison_consult}">
+                        <select name="raisonConsult" id="saveraisonConsult" th:name="raison_consult">
                             <option value="Urgence mineure"th:selected="${unRendezVous.raison_consult == 'Urgence mineure'}">Urgence mineure</option>
                             <option value="Consultation propriétaire" th:selected="${unRendezVous.raison_consult == 'Consultation propriétaire'}">Consultation propriétaire</option>
                             <option value="Suivi périodique ou préventif"th:selected="${unRendezVous.raison_consult == 'Suivi périodique ou préventif'}">Suivi périodique ou préventif</option>
@@ -105,7 +105,7 @@
                             <option value="Suivi d’un enfant 0 à 5 ans" th:selected="${unRendezVous.raison_consult == 'Suivi d’un enfant 0 à 5 ans'}">Suivi d’un enfant 0 à 5 ans</option>
                         </select></br></br>
                         <label for="descriptionConsult">Description de la raison :</label></br></br>
-
+                        <textarea style="width:25vh;height:15vh;" th:name="description_consult" id="savedescriptionConsult"  th:value="${unRendezVous.description_consult}" th:text="${unRendezVous.description_consult}"></textarea>
 
                 </div>
 
@@ -117,7 +117,7 @@
                 <input style="width:100px;" type="submit" value="Sauvegarder">
                 </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <form style="display:inline;" th:action="@{/enTete/patient/priseRendezVous}" method="get">
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="get">
                     <input style="width:100px;" type="submit" value="Annuler">
                 </form>
             </div>
@@ -184,6 +184,19 @@
 <span th:insert="pied:: pied_de_page"></span>
     </body>
 <script src="javaScript/formValidation.js"></script>
+<script>
+    function sauvegarderChangements(){
+        var idRendezVous = document.getElementById("saveidRendezVous").value;
+        var idPatient = document.getElementById("saveidPatient").value;
+        var idMedecin = document.getElementById("saveidMedecin").value;
+        var dateRv = document.getElementById("savedateRv").value;
+        var heureRv = document.getElementById("saveheureRv").value;
+        var raisonConsult = document.getElementById("saveraisonConsult").value;
+        var descriptionConsult = document.getElementById("savedescriptionConsult").value;
 
+        window.location.href = "/rendezVous/action/changerTemps?idRendezVous="+idRendezVous+"&idPatient="+idPatient+"&idMedecin="+idMedecin+"&dateRv="+
+            dateRv+"&heureRv="+heureRv+"&raisonConsult="+raisonConsult+"&descriptionConsult="+descriptionConsult;
+    }
+</script>
 
 </html>

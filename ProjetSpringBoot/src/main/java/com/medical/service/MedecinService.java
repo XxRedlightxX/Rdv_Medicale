@@ -43,9 +43,14 @@ public class MedecinService {
         return repo.findByClinique(nomClinique);
     }
 
-    public Medecin verifierExistenceMedecin(String username, String password){
-        Medecin unMedecin = repo.verifierExistenceMedecin2(Integer.parseInt(username),password);
-        return unMedecin;
+    public Medecin verifierExistenceMedecin2(String username, String password){
+        try {
+            Medecin unMedecin = repo.verifierExistenceMedecin2(Integer.parseInt(username),password);
+            return unMedecin;
+        } catch (Exception ex){
+            return null;
+        }
+
     }
 
     public Medecin ajouterMedecin(Medecin medecin){
@@ -63,6 +68,7 @@ public class MedecinService {
     public boolean Num_Assurance_password_Medecin_Unique(String email, String password, Integer id) {
         //On cherche un utilisateur à partir de son email
         Medecin userByEmail = repo.verifierExistenceMedecin(email, password);
+
 
         if (userByEmail == null) return true;
 

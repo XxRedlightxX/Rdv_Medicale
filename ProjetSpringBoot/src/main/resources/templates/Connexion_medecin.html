@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -38,37 +38,37 @@
         <center><b><font color=red>[[${message}]]</font></b></center>
         </span>
                 <div id="formuInscr" style="display:none">
-                    <form id="signupForm"  class="login" action="inscriptionController" method="post" th:object="${medecin}">
+                    <form id="signupForm"  class="login" th:action="@{/inscription/medecin}" method="post" th:object="${medecin}">
                         <input type="hidden" name="typeCompte" value="medecin">
 
                         <label for="nom">Nom : </label>
-                        <input type="text" name="nom" id="nom" th:field="*{nom}"><br> <br>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')" ><br> <br>
 
                         <label for="prenom">Prenom : </label>
-                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}"><br> <br>
+                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="specialite">Specialite : </label>
-                        <select id="specialite" name="specialite" th:field="*{specialite}">
+                        <select id="specialite" th:name="specialite">
                             <span th:each="uneSpecialite : ${servicesCliniqueService.afficherServicesCliniques()}">
-                                <option value="${uneSpecialite.nom}">
+                                <option th:value="${uneSpecialite.id_service}" >
                                     [[${uneSpecialite.nom}]]</option>
                             </span>
                         </select> <br> <br>
 
                         <label for="numeroProfessionel">Numéro de professionel : </label>
-                        <input type="text" name="numeroProfessionel" id="numeroProfessionel" th:field="*{id_medecin}"><br> <br>
+                        <input type="text" name="numeroProfessionel" id="numeroProfessionel" th:field="*{id_medecin}" required pattern="^[0-9]*$"><br> <br>
 
                         <label for="facturation">Facturation : </label>
-                        <input type="text" name="facturation" id="facturation" th:field="*{facturation}"><br> <br>
+                        <input type="text" name="facturation" id="facturation" th:field="*{facturation}" required pattern="^[0-9]?[0-9]?(\.[0-9][0-9]?)?$"><br> <br>
 
                         <label for="coordonnees">Coordonnées : </label>
-                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees_medecin}"><br> <br>
+                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees_medecin}" required oninvalid="this.setCustomValidity('Veuillez indiquer vos coordonnées')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="password">Mot de passe:</label>
-                        <input type="password" name="password" id="password" th:field="*{password}"> <br><br>
+                        <input type="password" name="password" id="password" th:field="*{password}" required > <br><br>
 
                         <label for="passwordConfirm">Confirmation du mot de passe:</label>
-                        <input type="password" name="passwordConfirm" id="passwordConfirm"> <br><br>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" required> <br><br>
 
                         <label for="idClinique">Clinique : </label>
                         <select id="idClinique" name="idClinique" th:field="*{clinique}">
@@ -96,7 +96,7 @@
                         <input type="text" th:name="username" id="username"><br> <br>
 
                         <label for="password">Mot de passe:</label>
-                        <input type="password" th:name="password" id="password"> <br><br>
+                        <input type="password" th:name="password" id="passwords"> <br><br>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">
                             Se connecter</button>
@@ -141,6 +141,43 @@
                             document.getElementById("btnInscription").style.cursor = "default";
                         }
                     }
+
+                    let inputNumProf = document.getElementById('numeroProfessionel');
+                    inputNumProf.oninvalid = function(event) {
+                        event.target.setCustomValidity('Le numéro de professionnel doit être composé seulement de chiffres');
+                    }
+                    inputNumProf.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+
+                    let inputFactu = document.getElementById('facturation');
+                    inputFactu.oninvalid = function(event) {
+                        event.target.setCustomValidity('Votre facturation doit être un nombre');
+                    }
+                    inputFactu.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+                    let inputPass = document.getElementById('password');
+                    inputPass.oninvalid = function(event) {
+                        event.target.setCustomValidity('Veuillez indiquer un mot de passe');
+                    }
+                    inputPass.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+
+                    let password = document.getElementById("password")
+                        , confirm_password = document.getElementById("passwordConfirm");
+
+                    function validatePassword(){
+                        if(password.value != confirm_password.value) {
+                            confirm_password.setCustomValidity("Les mots mot passe doivent être identiques");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
+                    }
+
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
                 </script>
                 <span th:insert="pied:: pied_de_page"></span>
                 <script src="javaScript/formValidation.js"></script>

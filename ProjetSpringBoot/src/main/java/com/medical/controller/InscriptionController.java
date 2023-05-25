@@ -26,13 +26,19 @@ public class InscriptionController {
 
     @PostMapping("/inscription/patient")
     public String InscriptionPatient(@ModelAttribute("patient") Patient patient,HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
+        System.out.println(patient);
         patientService.ajouterPatient(patient);
-        return "connexionController?typeCompte=" + "patient" + "&username=" + patient.getNumero_assurance_maladie() + "&password=" + patient.getPassword();
+        redirectAttributes.addAttribute("username",patient.getNumero_assurance_maladie());
+        redirectAttributes.addAttribute("password",patient.getPassword());
+        return "redirect:/connexion/patient";
     }
 
     @PostMapping("/inscription/medecin")
     public String InscriptionMedecin(@ModelAttribute("medecin") Medecin medecin,HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
+        System.out.println(medecin);
         medecinService.ajouterMedecin(medecin);
-        return "connexionController?typeCompte=" + "medecin" + "&username=" + medecin.getId_medecin() + "&password=" + medecin.getPassword();
+        redirectAttributes.addAttribute("username",medecin.getId_medecin());
+        redirectAttributes.addAttribute("password",medecin.getPassword());
+        return "redirect:/connexion/medecin";
     }
 }

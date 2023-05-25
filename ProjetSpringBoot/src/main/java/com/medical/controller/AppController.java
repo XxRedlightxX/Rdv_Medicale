@@ -91,7 +91,7 @@ public class AppController {
         HttpSession session = request.getSession(true);
         String unNom = (String) session.getAttribute("username");
         RendezVous rendezVous = new RendezVous();
-        Medecin medecinRv = new Medecin();
+        Medecin medecinRv = null;
         model.addAttribute("medecinChoisi", medecinChoisi);
         model.addAttribute("typeRecherche", "prendreRendezVous");
         model.addAttribute("MedecinService",medecinService);
@@ -104,7 +104,18 @@ public class AppController {
         if (medecinChoisi != null){
             medecinRv = medecinChoisi;
         } else {
-            medecinRv = medecinService.chercherMedecinParId(patientService.chercherPatientParAssuranceMaladie(unNom).getMedecin().getId_medecin());
+            if(patientService.chercherPatientParAssuranceMaladie(unNom).getMedecin() != null){
+                medecinRv = medecinService.chercherMedecinParId(patientService.chercherPatientParAssuranceMaladie(unNom).getMedecin().getId_medecin());
+            }
+
+            if (medecinRv == null){
+                model.addAttribute("listeMedecinRecherche", medecinService.afficherLesMedecins());
+                model.addAttribute("MedecinService",medecinService);
+                model.addAttribute("PatientService",patientService);
+                model.addAttribute("ServicesCliniqueService",servicesCliniqueService);
+                model.addAttribute("CliniqueService",cliniqueService);
+                return "RechercherMedecinRv";
+            }
         }
         model.addAttribute("medecinRv",medecinRv);
         return "PriseRendezVous";

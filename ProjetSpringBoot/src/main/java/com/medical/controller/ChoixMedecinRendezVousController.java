@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,10 +39,8 @@ public class ChoixMedecinRendezVousController {
     @Autowired
     CliniqueService cliniqueService;
 
-    @PostMapping("/rendezVous/choixMedecin/filtrerSpecialite")
+    @GetMapping("/rendezVous/choixMedecin/filtrerSpecialite")
     public String filtrerParSpecialite(@Param("nomSpecialite") String nomSpecialite, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model){
-        byte[] bytes = nomSpecialite.getBytes(StandardCharsets.ISO_8859_1);
-        nomSpecialite = new String(bytes, StandardCharsets.UTF_8);
         model.addAttribute("listeMedecinRecherche", medecinService.chercherParSpecialite(nomSpecialite));
         model.addAttribute("MedecinService",medecinService);
         model.addAttribute("PatientService",patientService);
@@ -50,7 +49,7 @@ public class ChoixMedecinRendezVousController {
         return "RechercherMedecinRv";
     }
 
-    @PostMapping("/rendezVous/choixMedecin/filterGMF")
+    @GetMapping("/rendezVous/choixMedecin/filterGMF")
     public String filtrerParGMF(@Param("medecinGMF") String medecinGMF, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
         model.addAttribute("listeMedecinRecherche", medecinService.chercherNomClinique(medecinGMF));
         model.addAttribute("MedecinService",medecinService);
@@ -60,7 +59,7 @@ public class ChoixMedecinRendezVousController {
         return "RechercherMedecinRv";
     }
 
-    @PostMapping("/rendezVous/choixMedecin/afficherTousLesMedecins")
+    @GetMapping("/rendezVous/choixMedecin/afficherTousLesMedecins")
     public String afficherTousLesMedecins(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
         model.addAttribute("listeMedecinRecherche", medecinService.afficherLesMedecins());
         model.addAttribute("MedecinService",medecinService);
@@ -70,7 +69,7 @@ public class ChoixMedecinRendezVousController {
         return "RechercherMedecinRv";
     }
 
-    @PostMapping("/rendezVous/choixMedecin/filterClinique")
+    @GetMapping("/rendezVous/choixMedecin/filterClinique")
     public String filtrerParClinique(@Param("nomClinique") String nomClinique, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
         model.addAttribute("listeMedecinRecherche", medecinService.chercherNomClinique(nomClinique));
         model.addAttribute("MedecinService",medecinService);
@@ -81,13 +80,10 @@ public class ChoixMedecinRendezVousController {
     }
 
 
-    @PostMapping("/rendezVous/choixMedecin/prendeRendezVous/{medecinChoisi}")
-    public String prendreRendezVousAvecMedecinChoisi(@PathVariable(name = "medecinChoisi") Medecin medecinChoisi, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
-        HttpSession session = request.getSession(true);
-        String unNom = (String) session.getAttribute("nom");
+    @GetMapping("/rendezVous/choixMedecin/prendeRendezVous/{id}")
+    public String prendreRendezVousAvecMedecinChoisi(@PathVariable(name = "id") Integer id, HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model){
         RendezVous rendezVous = new RendezVous();
-        Medecin medecinRv = new Medecin();
-        model.addAttribute("medecinChoisi", medecinChoisi);
+        Medecin medecinRv = medecinService.chercherMedecinParId(id);
         model.addAttribute("typeRecherche", "prendreRendezVous");
         model.addAttribute("MedecinService",medecinService);
         model.addAttribute("PatientService",patientService);
@@ -96,11 +92,6 @@ public class ChoixMedecinRendezVousController {
         model.addAttribute("rendezVous",rendezVous);
         model.addAttribute("dispomedecinService",dispoMedecinService);
         model.addAttribute("rendezVousService",rendezVousService);
-        if (medecinChoisi != null){
-            medecinRv = medecinChoisi;
-        } else {
-            medecinRv = patientService.chercherPatientParAssuranceMaladie(unNom).getMedecin();
-        }
         model.addAttribute("medecinRv",medecinRv);
         return "PriseRendezVous";
     }

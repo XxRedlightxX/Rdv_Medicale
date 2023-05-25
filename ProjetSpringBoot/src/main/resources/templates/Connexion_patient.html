@@ -1,26 +1,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="fr">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Connexion</title>
-        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script
-        src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.2/jquery.validate.min.js"></script>
 
         <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
-        <style>
-            .error{
-                color:red;
-            }
-            input.error{
-                border:1px solid red;
-            }
 
-        </style>
     </head>
     <span th:insert="EnTete:: en_tete"></span>
 
@@ -34,53 +24,53 @@
     <body id="body">
         </br></br>
         <span th:if="${message != null}">
-        <center><b><font color=red>[[${message}]]</font><b></center>
+        <span style="text-align: center;color: red;"><b>[[${message}]]</b></span>
         </span>
                 <div id="formuInscr" style="display:none">
-                    <form id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}">
+                    <form lang="es" id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}">
                         <input type="hidden" name="typeCompte" value="patient" >
 
                         <label for="nom">Nom : </label>
-                        <input type="text" name="nom" id="nom" th:field="*{nom}"><br> <br>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')" ><br> <br>
 
                         <label for="prenom">Prenom : </label>
-                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}"><br> <br>
+                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')" ><br> <br>
 
                         <label for="assuranceMaladie">Numero d'assurance maladie : </label>
-                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" th:field="*{numero_assurance_maladie}"><br> <br>
+                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" th:field="*{numero_assurance_maladie}" required oninvalid="this.setCustomValidity('Veuillez entrer un numéro d\'assurance maladie')"  oninput="this.setCustomValidity('')" ><br> <br>
 
                         <label for="numeroSeq">Numero sequentiel : </label>
-                        <input type="text" name="numeroSeq" id="numeroSeq" th:field="*{num_seq_numero_assurance_maladie}"><br> <br>
+                        <input type="text" name="numeroSeq" id="numeroSeq" th:field="*{num_seq_numero_assurance_maladie}" maxlength="2" required pattern="^[0-9]*$" ><br> <br>
 
                         <label for="dateNaissance">Date de naissance : </label>
-                        <input type="date" name="dateNaissance" id="dateNaissance" th:field="*{date_naissance}"><br> <br>
+                        <input type="date" name="dateNaissance" id="dateNaissance" th:field="*{date_naissance}" required oninvalid="this.setCustomValidity('Veuillez indiquer votre date de naissance')" oninput="this.setCustomValidity('')"><br> <br>
 
                         <label> Sexe : </label>
 
-                        <label for="gender_male" id="labelgenderM"> 
-                            <input type="radio" id="gender_male" value="Homme" name="sexe" th:field="*{sexe}">Male</label>
-                        <label for="gender_female" id="labelgenderF"> 
-                            <input type="radio" id="gender_female" value="Femme" name="sexe" th:field="*{sexe}">Female</label><br> <br>
+                        <label for="gender_male" id="labelgenderM">
+                            <input type="radio" id="gender_male" value="Homme" name="sexe" th:checked="${true}">Male</label>
+                        <label for="gender_female" id="labelgenderF">
+                            <input type="radio" id="gender_female" value="Femme" name="sexe" th:checked="${false}">Female</label><br> <br>
 
 
                         <label for="password">Mot de passe:</label>
-                        <input type="password" name="password" id="password" th:field="*{password}"> <br><br>
+                        <input type="password" name="password" id="password" th:field="*{password}" required> <br><br>
 
                         <label for="passwordConfirm">Confirmation du mot de passe:</label>
-                        <input type="password" name="passwordConfirm" id="passwordConfirm"> <br><br>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" required> <br><br>
 
                         <label for="password">Médecin de famille:</label>
-                        <select id="idMedecinFamille" name="idMedecinFamille" th:field="*{medecin}">
-                            <option value = "0">Aucun</option>
+                        <select id="idMedecinFamille"  th:name="medecin">
+                            <option th:value = "null">Aucun</option>
                             <span th:each="unMedecin:${medecinService.afficherLesMedecins()}">
-                                <option value="${unMedecin.id_medecin}">
+                                <option th:value="${unMedecin.id_medecin}"  >
                                     Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
                             </span>
                         </select> <br><br>
 
 
-                        <input type="submit"  class="btn btn-primary btn-lg" 
-                               value="Inscription"  id="submits"  />
+                        <input type="submit"  class="btn btn-primary btn-lg"
+                               value="Inscription"  id="submit"  />
                         <label class="checkbox pull-left">
                             <input type="checkbox" th:name="sauvegarde" th:value="true">
                             Se souvenir </br>
@@ -94,7 +84,7 @@
                         <input type="text" th:name="username" id="username"><br> <br>
 
                         <label for="password">Mot de passe:</label>
-                        <input type="password" th:name="password" id="password"> <br><br>
+                        <input type="password" th:name="password" id="passwords"> <br><br>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">
                             Se connecter</button>
@@ -103,10 +93,7 @@
                         </label>
                     </form>
                 </div>
-                </body>
                 <script>
-
-
                     function myFunction(choix) {
                         if (choix === "connection") {
                             document.getElementById("formuInscr").style.display = "none";
@@ -139,7 +126,39 @@
                             document.getElementById("btnInscription").style.cursor = "default";
                         }
                     }
+
+                    let inputNumSeq = document.getElementById('numeroSeq');
+                    inputNumSeq.oninvalid = function(event) {
+                        event.target.setCustomValidity('Le numéro séquentiel doit être un nombre de deux chiffres');
+                    }
+                    inputNumSeq.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+
+                    let inputPass = document.getElementById('password');
+                    inputPass.oninvalid = function(event) {
+                        event.target.setCustomValidity('Veuillez indiquer un mot de passe');
+                    }
+                    inputPass.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+
+                    let password = document.getElementById("password")
+                        , confirm_password = document.getElementById("passwordConfirm");
+
+                    function validatePassword(){
+                        if(password.value != confirm_password.value) {
+                            confirm_password.setCustomValidity("Les mots mot passe doivent être identiques");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
+                    }
+
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+
                 </script>
                 <span th:insert="pied:: pied_de_page"></span>
-                <script src="javaScript/formValidation.js"></script> 
-                </html>
+    </body>
+
+</html>

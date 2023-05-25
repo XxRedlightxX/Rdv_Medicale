@@ -1,7 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
 
     <head>
         <meta charset="UTF-8">
@@ -48,13 +47,14 @@
         </style>
 
     </head>
-
+<body id="body">
     <span th:insert="EnTete:: en_tete"></span>
 
-    <div >
 
 
-        <h2 >Prendre un rendez-vous a un autre moment <form th:action="@{/rendezVous/page/modifier}" style="display:inline;float:right;margin-right: 49%" th:object="${unRendezVousModifier}">
+        <h2 style="float: left;" >Prendre un rendez-vous a un autre moment</h2><br>
+    <div style="text-align: center">
+        <form th:action="@{/rendezVous/page/modifierDateHeure}" style="margin-left:auto;margin-right: auto;width: 50%;" th:object="${unRendezVousModifier}">
                             <input type="hidden" th:name="id_rendez_vous" th:value="${unRendezVousModifier.id_rendez_vous}">
                             <input type="hidden" th:name="patient_rv" th:value="${unRendezVousModifier.patient_rv.id_patient}">
                             <input type="hidden" th:name="medecin_rv" th:value="${unRendezVousModifier.medecin_rv.id_medecin}">
@@ -62,12 +62,11 @@
                             <input type="hidden" th:name="description_consult" th:value="${unRendezVousModifier.description_consult}">
                             <input type="hidden" th:name="date_rv" th:value="${unRendezVousModifier.date_rv}">
                             <input type="hidden" th:name="heure_rv" th:value="${unRendezVousModifier.heure_rv}">
-                            <input type="hidden" name="etape1Rv" value="modifier2">
                             <input style="all:revert" type="submit" value="Annuler le changement">
-                        </form> </h2>
+        </form>
     </div>
-    <body id="body">
-        <div style="overflow: auto;height:70vh">
+
+    <div style="overflow: auto;height:70vh">
             <table>
                 <tr>
                     <th></th>
@@ -81,13 +80,13 @@
                 </tr>
                 <tr>
                     <th></th>
-                    <th>${jourSemaine.plusDays(0)}</th>
-                    <th>${jourSemaine.plusDays(1)}</th>
-                    <th>${jourSemaine.plusDays(2)}</th>
-                    <th>${jourSemaine.plusDays(3)}</th>
-                    <th>${jourSemaine.plusDays(4)}</th>
-                    <th>${jourSemaine.plusDays(5)}</th>
-                    <th>${jourSemaine.plusDays(6)}</th>
+                    <th>[[${jourSemaine.plusDays(0)}]]</th>
+                    <th>[[${jourSemaine.plusDays(1)}]]</th>
+                    <th>[[${jourSemaine.plusDays(2)}]]</th>
+                    <th>[[${jourSemaine.plusDays(3)}]]</th>
+                    <th>[[${jourSemaine.plusDays(4)}]]</th>
+                    <th>[[${jourSemaine.plusDays(5)}]]</th>
+                    <th>[[${jourSemaine.plusDays(6)}]]</th>
                 </tr>
                 <span th:each="i: ${#numbers.sequence(6, 20)}" >
                 <tr>
@@ -102,7 +101,7 @@
                         <span th:with="heureDansDispo=${false}">
                             <span th:if="${uneDispo != null}">
                             <span th:if="${i >= uneDispo.convertirHeure_dispo_debut() && i <= uneDispo.convertirHeure_dispo_fin() && unRendezVous == null}">
-                                <form th:action="@{/rendezVous/page/modifierDateHeure}"  th:object="${unRendezVousModifier}" style="display: block;margin:auto;width: 80%;" method="post">
+                                <form th:action="@{/rendezVous/page/modifierDateHeure}"  th:object="${unRendezVousModifier}" style="display: block;margin:auto;width: 80%;" method="get">
                                     <input type="hidden" th:value="${unRendezVousModifier.id_rendez_vous}" th:name="id_rendez_vous">
                                     <input type="hidden" th:value="${unRendezVousModifier.patient_rv.id_patient}" th:name="patient_rv">
                                     <input type="hidden" th:value="${unRendezVousModifier.medecin_rv.id_medecin}" th:name="medecin_rv">
@@ -120,6 +119,7 @@
                         </span>
                         </span>
                         </span>
+                        </span>
                     </td>
                     </span>
                 </tr>
@@ -127,8 +127,9 @@
 
             </table>
         </div>
-    </body>
+
 
     <span th:insert="pied:: pied_de_page"></span>
+    </body>
 
 </html>

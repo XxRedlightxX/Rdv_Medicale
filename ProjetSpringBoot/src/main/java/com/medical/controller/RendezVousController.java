@@ -1,5 +1,7 @@
 package com.medical.controller;
 
+import com.medical.entities.Medecin;
+import com.medical.entities.Patient;
 import com.medical.entities.RendezVous;
 import com.medical.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 @Controller
 public class RendezVousController {
@@ -47,6 +52,7 @@ public class RendezVousController {
     @GetMapping("/rendezVous/page/modifier/{id}")
     public String envoiPageModifierRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@PathVariable(name = "id") Integer id){
         RendezVous rendezVous = rendezVousService.chercherRendezVousParId(id);
+        model.addAttribute("PatientService",patientService);
         model.addAttribute("unRendezVous",rendezVous);
         model.addAttribute("typeAction","modifier");
         return "PatientGestionRendezVous";
@@ -60,21 +66,24 @@ public class RendezVousController {
         return "PatientGestionRendezVous";
     }
 
-    @PostMapping("/rendezVous/page/modifierDateHeure")
+    @GetMapping("/rendezVous/page/modifierDateHeure")
     public String sauvegarderChangementsRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@ModelAttribute("unRendezVousModifier") RendezVous rendezVous){
         model.addAttribute("unRendezVous",rendezVous);
+        model.addAttribute("PatientService",patientService);
         model.addAttribute("typeAction","modifier");
         return "PatientGestionRendezVous";
     }
 
     @GetMapping("/rendezVous/action/ajouter")
     public String ajouterRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@ModelAttribute("rendezVous") RendezVous rendezVous){
-        System.out.println(rendezVous);
         rendezVousService.ajouterRendezVous(rendezVous);
+        String message = "Le rendez-vous à été ajouté";
+        redirectAttributes.addFlashAttribute("message", message);
         model.addAttribute("MedecinService",medecinService);
         model.addAttribute("PatientService",patientService);
         model.addAttribute("RendezVousService",rendezVousService);
         model.addAttribute("CliniqueService",cliniqueService);
+
         return "pagePatientRendezVous";
     }
 
@@ -101,8 +110,16 @@ public class RendezVousController {
         return "pagePatientRendezVous";
     }
 
-    @PostMapping("/rendezVous/action/changerTemps")
-    public String changerTempsRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model, @ModelAttribute("rendezVous") RendezVous rendezVous){
+    @GetMapping("/rendezVous/action/changerTemps")
+    public String changerTempsRendezVous(HttpServletRequest request, RedirectAttributes redirectAttributes,  Model model,@RequestParam("idRendezVous") String idRendezVous,@RequestParam("idPatient") String idPatient,@RequestParam("idMedecin") String idMedecin,@RequestParam("dateRv") String dateRv,@RequestParam("heureRv") String heureRv,@RequestParam("raisonConsult") String raisonConsult, @RequestParam("descriptionConsult") String descriptionConsult) {
+        RendezVous rendezVous = new RendezVous(patientService.chercherPatientParId(Integer.parseInt(idPatient)),medecinService.chercherMedecinParId(Integer.parseInt(idMedecin)), dateRv, heureRv, raisonConsult, descriptionConsult);
+        rendezVous.setId_rendez_vous(Integer.parseInt(idRendezVous));
+        System.out.println(rendezVous);
+        LocalDate date = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        model.addAttribute("jourSemaine", date);
+        model.addAttribute("medecinRv",rendezVous.getMedecin_rv());
+        model.addAttribute("rendezVousService",rendezVousService);
+        model.addAttribute("dispomedecinService",dispoMedecinService);
         model.addAttribute("unRendezVousModifier", rendezVous);
         return "ModifierTempsRendezVous";
     }

@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 
-<html lang="en">
+
 
     <head>
         <meta charset="UTF-8">
@@ -26,8 +26,8 @@
 
     <div th:switch="${typeAction.toString()}">
             <span th:case="'ajouter'">
-                <div id=ls>
-                    <h1 id="etatMedecin">Ajout d'un nouveau médecin</h1>
+                <div id=sls>
+                    <h1 id="asetatMedecin">Ajout d'un nouveau médecin</h1>
 
                 </div> 
                 </br>
@@ -35,10 +35,10 @@
                     <form class="login" th:action="@{/administrateur/medecin/ajouterMedecin}" method="post" th:object="${medecin}">
 
                         <label for="nom">Nom : </label>
-                        <input type="text" th:field="*{nom}" id="nom"><br> <br>
+                        <input type="text" th:field="*{nom}" id="nom" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="prenom">Prenom : </label>
-                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}"><br> <br>
+                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="specialite">Spécialité : </label>
                         <select id="specialite" th:name="specialite">
@@ -49,16 +49,16 @@
                         </select> <br> <br>
 
                         <label for="numeroProfessionel">Numéro de professionel : </label>
-                        <input type="text" name="numeroProfessionel"  th:field="*{id_medecin}"><br> <br>
+                        <input type="text" name="numeroProfessionel" id="numeroProfessionel"  th:field="*{id_medecin}" required pattern="^[0-9]*$"><br> <br>
 
                         <label for="facturation">Facturation : </label>
-                        <input type="text" name="facturation" id="facturation" th:field="*{facturation}"><br> <br>
+                        <input type="text" name="facturation" id="facturation" th:field="*{facturation}" required pattern="^[0-9]?[0-9]?(\.[0-9][0-9]?)?$"><br> <br>
 
                         <label for="coordonnees">Coordonnées : </label>
-                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees_medecin}"><br> <br>
+                        <input type="text" name="coordonnees" id="coordonnees" th:field="*{coordonnees_medecin}" required oninvalid="this.setCustomValidity('Veuillez vos coordonnées')"  oninput="this.setCustomValidity('')"><br> <br>
 
                         <label for="password">Mot de passe:</label>
-                        <input type="password" name="password" id="password" th:field="*{password}"> <br><br>
+                        <input type="password" name="password" id="password" th:field="*{password}" required > <br><br>
 
                         <label for="password">Clinique : </label>
                         <select name="idClinique" th:name="clinique">
@@ -84,13 +84,13 @@
             </span>
 
             <span th:case="'modifier'">
-                <div id=ls>
+                <div id=wsls>
                     <h1 id="etatMedecin">Modifier un médecin</h1>
 
                 </div> <br><br><br>
                 <span th:if="${unMedecin != null}">
                     </br></br>
-                    <span id="formuInscr">
+                    <span id="aformuInscr">
                         <form style="display:inline;" id="signupForm" class="login" th:action="@{'/administrateur/medecin/modifierMedecin/'+${unMedecin.id_medecin}}" method="post" th:object="${medecin}">
 
 
@@ -107,13 +107,13 @@
                                 <tr>
                                     <td><label for="nom">Nom : </label></td>
                                     <td>[[${unMedecin.nom}]]</td>
-                                    <td><input type="text" th:name="nom"   th:value="${unMedecin.nom}"></td>
+                                    <td><input type="text" th:name="nom"   th:value="${unMedecin.nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')"></td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="prenom">Prenom : </label></td>
                                     <td>[[${unMedecin.prenom}]]</td>
-                                    <td><input type="text" th:name="prenom"   th:value="${unMedecin.prenom}">
+                                    <td><input type="text" th:name="prenom"   th:value="${unMedecin.prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
                                 <tr>
@@ -132,45 +132,45 @@
                                 <tr>
                                     <td><label for="numeroProfessionel">Numéro de professionel : </label></td>
                                     <td>[[${unMedecin.id_medecin}]]</td>
-                                    <td><input type="hidden" name="numeroProfessionel" id="numeroProfessionel" value="${unMedecin.numeroProfessionel}" th:field="*{id_medecin}">
+                                    <td><input type="hidden" name="numeroProfessionel" id="numeroProfessionelverif" value="${unMedecin.numeroProfessionel}" th:field="*{id_medecin}" required pattern="^[0-9]*$" oninvalid="this.setCustomValidity('Le numéro de professionnel doit être composé seulement de chiffres')"  oninput="this.setCustomValidity('')" >
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="facturation">Facturation : </label></td>
                                     <td>[[${unMedecin.facturation}]]</td>
-                                    <td><input type="text" th:name="facturation"   th:value="${unMedecin.facturation}">
+                                    <td><input type="text" th:name="facturation"   th:value="${unMedecin.facturation}" required pattern="^[0-9]?[0-9]?(\.[0-9][0-9]?)?$" oninvalid="this.setCustomValidity('Votre facturation doit être un nombre')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="coordonnees">Coordonnées : </label></td>
                                     <td>[[${unMedecin.coordonnees_medecin}]]</td>
-                                    <td><input type="text" th:name="coordonnees_medecin"   th:value="${unMedecin.coordonnees_medecin}">
+                                    <td><input type="text" th:name="coordonnees_medecin"   th:value="${unMedecin.coordonnees_medecin}" required oninvalid="this.setCustomValidity('Veuillez indiquer vos coordonnées')"  oninput="this.setCustomValidity('')">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="password">Mot de passe:</label></td>
                                     <td>[[${unMedecin.password}]]</td>
-                                    <td><input type="text" th:name="password"   th:value="${unMedecin.password}">
+                                    <td><input type="text" th:name="password"   th:value="${unMedecin.password}" required oninvalid="this.setCustomValidity('Veuillez indiquer un mot de passe')"  oninput="this.setCustomValidity('')">
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td><label >Clinique où médecin<br> est employé : </label></td>
-                                            <span th:if="${unMedecin.clinique.id_clinique != 0}">
+                                            <span th:if="${unMedecin.clinique != null}">
                                             <td>[[${unMedecin.clinique.nom}]]</td>
                                             </span>
-                                    <span th:if="${unMedecin.clinique.id_clinique == 0}">
+                                    <span th:if="${unMedecin == null}">
                                         <td>Aucun</td>
                                     </span>
 
                                     <td><select th:name="clinique">
-                                            <option th:value="null" th:selected="${unMedecin.clinique.id_clinique ==null}">
+                                            <option th:value="null" th:selected="${unMedecin.clinique ==null}">
                                                     Aucun</option>
                                             <span th:each="uneClinique : ${cliniqueService.afficherLesCliniques()}">
-                                                <option th:value="${uneClinique.id_clinique}" th:selected="${unMedecin.clinique.id_clinique == uneClinique.id_clinique}">[[${uneClinique.nom}]]</option>
+                                                <option th:value="${uneClinique.id_clinique}" th:selected="${unMedecin.clinique == uneClinique}">[[${uneClinique.nom}]]</option>
                                             </span>
                                         </select>
                                     </td>
@@ -209,7 +209,7 @@
                         }
                     </style>
                     <div id=ls>
-                        <h1 id="etatMedecin">Supression d'un médecin</h1>
+                        <h1 id="setatMedecin">Supression d'un médecin</h1>
 
                     </div> <br>
 
@@ -241,11 +241,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Clinique où médecin est employé:</th>
-                                                <span th:if="${unMedecin.clinique.id_clinique != 0}">
+                                                <span th:if="${unMedecin.clinique != null}">
                                                     <td>[[${unMedecin.clinique.nom}]]</td>
                                                 </span>
 
-                                                <span th:if="${unMedecin.clinique.id_clinique == 0}">
+                                                <span th:if="${unMedecin.clinique == null}">
                                                     <td>Aucun</td>
                                                 </span>
 
@@ -274,6 +274,29 @@
 
     <span th:insert="pied:: pied_de_page"></span>
     </body>
+            <script>let inputNumProf = document.getElementById('numeroProfessionel');
+                inputNumProf.oninvalid = function(event) {
+                    event.target.setCustomValidity('Le numéro de professionnel doit être composé seulement de chiffres');
+                }
+                inputNumProf.oninput = function(event) {
+                    event.target.setCustomValidity('');
+                }
+
+                let inputFactu = document.getElementById('facturation');
+                inputFactu.oninvalid = function(event) {
+                    event.target.setCustomValidity('Votre facturation doit être un nombre');
+                }
+                inputFactu.oninput = function(event) {
+                    event.target.setCustomValidity('');
+                }
+                let inputPass = document.getElementById('password');
+                inputPass.oninvalid = function(event) {
+                    event.target.setCustomValidity('Veuillez indiquer un mot de passe');
+                }
+                inputPass.oninput = function(event) {
+                    event.target.setCustomValidity('');
+                }
+            </script>
     <script src="javaScript/formValidation.js"></script>
 
 </html>
