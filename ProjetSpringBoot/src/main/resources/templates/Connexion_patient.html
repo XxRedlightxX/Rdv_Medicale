@@ -1,13 +1,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
-<html lang="fr">
+
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Connexion</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.2/jquery.validate.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" ></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
         <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
 
@@ -27,7 +31,7 @@
         <span style="text-align: center;color: red;"><b>[[${message}]]</b></span>
         </span>
                 <div id="formuInscr" style="display:none">
-                    <form lang="es" id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}" onsubmit="return checkUserUnique(this);">
+                    <form  id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}" onsubmit="return checkUserUnique(this);">
                         <input type="hidden" name="typeCompte" value="patient" >
 
                         <label for="nom">Nom : </label>
@@ -70,7 +74,7 @@
 
 
                         <input type="submit"  class="btn btn-primary btn-lg"
-                               value="Inscription"  id="submit"  />
+                               value="Inscription"    />
                         <label class="checkbox pull-left">
                             <input type="checkbox" th:name="sauvegarde" th:value="true">
                             Se souvenir </br>
@@ -178,7 +182,8 @@
                     confirm_password.onkeyup = validatePassword;
 
                 </script>
-                <span th:insert="pied:: pied_de_page"></span>
+    <span th:insert="pied:: pied_de_page"></span>
+    <script src="javaScript/formValidation.js"></script>
 
     <script>
         function checkUserUnique(form) {
