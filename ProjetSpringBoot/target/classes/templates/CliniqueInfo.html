@@ -1,0 +1,98 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/CliniqueInfo.css}"/>
+
+    </head>
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <span th:if="${message!=null}">
+    <center><b><font color=red>[[${message}]]</font><b></center>
+</span>
+    
+    
+    
+    <body>
+         <form th:action="@{/clinique/rechercher/tout}" method="get">
+
+                    <input type="submit"  value="Afficher toutes les cliniques" />
+                </form>
+        <div class="search-bar"><h4>Chercher une clinique par son nom</h4>
+                <form th:action="@{/clinique/rechercher}" method="get">
+                    <input type="search" name="nom" th:value="${nom}">
+                    <input type="submit"  value="Chercher par nom" />
+                </form>
+        
+        </div>
+         <div class="radio-group">
+                <h4>Filter par services</h4>
+                <form th:action="@{/clinique/filtre}"  method="get">
+                    <input type="radio" th:name="typeService" value="Dermatologie" checked="checked"/>Dermatologie<label></label> <br>
+                    <input type="radio" th:name="typeService" value="Cardiologie"/>Cardiologie <label></label><br>
+                    <input type="radio" th:name="typeService" value="Grippe, rhume, toux, fièvre"/>Grippe, rhume, toux, fièvre <label></label> <br>
+                    <input type="radio" th:name="typeService" value="Dépistage d'ITSS"/>Dépistage d'ITSS <label></label><br>
+                    <input type="radio" th:name="typeService" value="Médecine générale"/>Médecine générale <label></label> <br>
+                    <input type="submit"  value="Filtrer" />
+                </form>
+
+
+        </div>
+
+        
+        
+        <div style="overflow: auto;height:60vh;">
+         <table style="width:79%" id="customers">
+            <tr>
+                <th>Nom de la clinique</th>
+                <th>Coordonnées</th>
+                <th>services offerts</th>
+                <th> Médecins associés à la clinique</th>
+                <th> les patients de la clinique en indiquant le médecin et le service</th>
+
+
+                
+                
+            </tr>
+            <span>
+                <tr th:each="user : ${ListeClinique}">
+                    <td>[[${user.nom}]]</td>
+                    <td>[[${user.coordonnees}]]</td>
+                    <td>
+                    <span th:each="unService :${user.getServices()}">
+                        <ul><li>[[${unService.nom}]]</li></ul>
+                    </span>
+                        </td>
+
+                    <td>
+                        <span th:each="unMedecin :${medecinService.chercherNomClinique(user.nom)}">
+                           Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]<li>[[${unMedecin.coordonnees_medecin}]]</li><br>
+                        </span>
+                    </td>
+                    <td><span th:each="unMedecin :${medecinService.chercherNomClinique(user.nom)}">
+                       <span th:each="unPatient :${patientService.afficherLesPatients()}">
+                           <span th:if="${unPatient.medecin == unMedecin}">
+                                [[${unPatient.prenom}]] [[${unPatient.nom}]] : Dr.[[${unPatient.medecin.nom}]] : [[${unMedecin.getspecialite().nom}]]<br>
+                           </span>
+                           </span>
+
+                       </span>
+                    </td>
+
+                </tr>
+
+
+
+                        
+
+
+                        
+            </table>
+        </div>
+         </div>
+    </body>
+    <span th:insert="pied:: pied_de_page"></span>
+</html>

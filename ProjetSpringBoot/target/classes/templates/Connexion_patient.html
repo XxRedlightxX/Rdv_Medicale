@@ -1,0 +1,234 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Connexion</title>
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" ></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+
+    </head>
+    <span th:insert="EnTete:: en_tete"></span>
+
+    <div id=ls>
+        <h1 id="etatPatient">Connexion patient</h1>
+
+    </div> <br>
+    <a style="color:black" onclick="myFunction('connection')" id="btnConnexion">Connexion</a>&nbsp;&nbsp;&nbsp;
+    <a onclick="myFunction('inscription')" alt="Passe" id="btnInscription" style="text-decoration:underline;cursor:pointer;">Inscription</a>
+
+    <body id="body">
+        </br></br>
+        <span th:if="${message != null}">
+        <span style="text-align: center;color: red;"><b>[[${message}]]</b></span>
+        </span>
+                <div id="formuInscr" style="display:none">
+                    <form  id="signupForm" class="login" th:action="@{/inscription/patient}" method="post" th:object="${patient}" onsubmit="return checkUserUnique(this);">
+                        <input type="hidden" name="typeCompte" value="patient" >
+
+                        <label for="nom">Nom : </label>
+                        <input type="text" name="nom" id="nom" th:field="*{nom}" required oninvalid="this.setCustomValidity('Veuillez entrer un nom')"  oninput="this.setCustomValidity('')" ><br> <br>
+
+                        <label for="prenom">Prenom : </label>
+                        <input type="text" name="prenom" id="prenom" th:field="*{prenom}" required oninvalid="this.setCustomValidity('Veuillez entrer un prénom')"  oninput="this.setCustomValidity('')" ><br> <br>
+
+                        <label for="assuranceMaladie">Numero d'assurance maladie : </label>
+                        <input type="text" name="assuranceMaladie" id="assuranceMaladie" th:field="*{numero_assurance_maladie}" required oninvalid="this.setCustomValidity('Veuillez entrer un numéro d\'assurance maladie')"  oninput="this.setCustomValidity('')" ><br> <br>
+
+                        <label for="numeroSeq">Numero sequentiel : </label>
+                        <input type="text" name="numeroSeq" id="numeroSeq" th:field="*{num_seq_numero_assurance_maladie}" maxlength="2" required pattern="^[0-9]*$" ><br> <br>
+
+                        <label for="dateNaissance">Date de naissance : </label>
+                        <input type="date" name="dateNaissance" id="dateNaissance" th:field="*{date_naissance}" required oninvalid="this.setCustomValidity('Veuillez indiquer votre date de naissance')" oninput="this.setCustomValidity('')"><br> <br>
+
+                        <label> Sexe : </label>
+
+                        <label for="gender_male" id="labelgenderM">
+                            <input type="radio" id="gender_male" value="Homme" name="sexe" th:checked="${true}">Male</label>
+                        <label for="gender_female" id="labelgenderF">
+                            <input type="radio" id="gender_female" value="Femme" name="sexe" th:checked="${false}">Female</label><br> <br>
+
+
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" name="password" id="password" th:field="*{password}" required> <br><br>
+
+                        <label for="passwordConfirm">Confirmation du mot de passe:</label>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" required> <br><br>
+
+                        <label for="password">Médecin de famille:</label>
+                        <select id="idMedecinFamille"  th:name="medecin">
+                            <option th:value = "null">Aucun</option>
+                            <span th:each="unMedecin:${medecinService.afficherLesMedecins()}">
+                                <option th:value="${unMedecin.id_medecin}"  >
+                                    Dr. [[${unMedecin.prenom}]] [[${unMedecin.nom}]]</option>
+                            </span>
+                        </select> <br><br>
+
+
+                        <input type="submit"  class="btn btn-primary btn-lg"
+                               value="Inscription"    />
+                        <label class="checkbox pull-left">
+                            <input type="checkbox" th:name="sauvegarde" th:value="true">
+                            Se souvenir </br>
+                        </label>
+                    </form>
+                </div>
+                <div id="formuLog" >
+                    <form class="login" th:action="@{/connexion/patient}" method="post">
+                        <input type="hidden" name="typeCompte" value="patient">
+                        <label for="username">Numero d'assurance maladie: </label>
+                        <input type="text" th:name="username" id="username"><br> <br>
+
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" th:name="password" id="passwords"> <br><br>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            Se connecter</button>
+                        <label class="checkbox pull-left">
+                            <input type="checkbox" th:name="sauvegarde" th:value="true">Se souvenir </br>
+                        </label>
+                    </form>
+                </div>
+        <!--Model dialogue
+        <div class="modal fade text-center" id="modalDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalTitle">Avertissement</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <span id="modalBody"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </body>
+                <script>
+                    function myFunction(choix) {
+                        if (choix === "connection") {
+                            document.getElementById("formuInscr").style.display = "none";
+                            document.getElementById("formuLog").style.display = "block";
+                            document.getElementById("etatPatient").innerHTML = "Connexion patient";
+
+                            document.getElementById("btnConnexion").style.color = "black";
+                            document.getElementById("btnInscription").style.color = "white";
+
+                            document.getElementById("btnInscription").style.textDecoration = "underline";
+                            document.getElementById("btnConnexion").style.textDecoration = "none";
+
+                            document.getElementById("btnInscription").style.cursor = "pointer";
+                            document.getElementById("btnConnexion").style.cursor = "default";
+
+
+                        }
+                        if (choix === "inscription") {
+                            document.getElementById("formuLog").style.display = "none";
+                            document.getElementById("formuInscr").style.display = "block";
+                            document.getElementById("etatPatient").innerHTML = "Inscription d'un patient";
+
+                            document.getElementById("btnInscription").style.color = "black";
+                            document.getElementById("btnConnexion").style.color = "white";
+
+                            document.getElementById("btnConnexion").style.textDecoration = "underline";
+                            document.getElementById("btnInscription").style.textDecoration = "none";
+
+                            document.getElementById("btnConnexion").style.cursor = "pointer";
+                            document.getElementById("btnInscription").style.cursor = "default";
+                        }
+                    }
+
+                    let inputNumSeq = document.getElementById('numeroSeq');
+                    inputNumSeq.oninvalid = function(event) {
+                        event.target.setCustomValidity('Le numéro séquentiel doit être un nombre de deux chiffres');
+                    }
+                    inputNumSeq.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+
+                    let inputPass = document.getElementById('password');
+                    inputPass.oninvalid = function(event) {
+                        event.target.setCustomValidity('Veuillez indiquer un mot de passe');
+                    }
+                    inputPass.oninput = function(event) {
+                        event.target.setCustomValidity('');
+                    }
+
+                    let password = document.getElementById("password")
+                        , confirm_password = document.getElementById("passwordConfirm");
+
+                    function validatePassword(){
+                        if(password.value != confirm_password.value) {
+                            confirm_password.setCustomValidity("Les mots mot passe doivent être identiques");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
+                    }
+
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+
+                </script>
+    <span th:insert="pied:: pied_de_page"></span>
+    <script src="javaScript/formValidation.js"></script>
+
+    <script>
+        function checkUserUnique(form) {
+
+            //  alert("Vérifier email");
+            // $("#modalDialog").modal();
+            //   jQuery("#modalDialog").modal();
+            // return false;
+
+            $.ajax({
+
+                type : 'POST',
+                url :  '[[@{/patient/check_id}]]',
+                data: {numassurance:$("#assuranceMaladie").val()},
+
+                success : function(data) {
+                    //   alert("Reponse venant du Serveur " + data);
+
+                    if(data==='OK'){
+                        form.submit();
+                    }else{
+                        alert("Avertissement\n"+"Il y a déjà un patient avec ce numéro d'assurance maladie : "+$("#assuranceMaladie").val())
+                        // alert("Il y a déjà un utilisateur avec le même email : " + $("#email").val());
+                        showModalDialog("Avertissement", "Il y a déjà un patient avec ce numéro d'assurance maladie : " + $("#assuranceMaladie").val())
+                    }
+                }
+            });
+
+            return false;
+        }
+
+        function showModalDialog(title, message) {
+            $("#modalTitle").text(title);
+            $("#modalBody").text(message);
+            $("#modalDialog").modal("show");
+
+        }
+        $(document).ready(function () {
+            $("#buttonCancel").on("click", function () {
+                //L'objet window.location peut être utilisé pour obtenir l'adresse de la page actuelle (URL)
+                // et pour rediriger le navigateur vers une nouvelle page
+                window.location = "[[@{/enTete/connexion/patient}]]";
+            });
+
+
+        });
+    </script>
+</html>

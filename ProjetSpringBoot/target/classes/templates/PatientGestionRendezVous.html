@@ -1,0 +1,202 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Connexion</title>
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            .error {
+                color: red;
+            }
+
+            input.error {
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+    <body id="body">
+    <span th:insert="EnTete:: en_tete"></span>
+
+
+
+
+    <div th:switch="${typeAction.toString()}">
+        <span th:case="'ajouter'">
+            <div id=ls>
+                <h1 id="etatPatient">Confirmation du rendez-vous</h1>
+
+            </div> <br>
+            <div>
+                <div style="text-align:left;margin-left: auto;margin-right: auto;width: 13%;">
+                    Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]] [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
+                    Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
+                    Date du rendez-vous : [[${unRendezVous.date_rv}]] </br></br>
+                    Heure : [[${unRendezVous.heure_rv}]]:00</br></br>
+                    <form th:action="@{/rendezVous/action/ajouter}" th:object="${rendezVous}" method="get">
+                        <input type="hidden" th:value="${unRendezVous.patient_rv.id_patient}" th:name="patient_rv">
+                        <input type="hidden" th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="medecin_rv">
+                        <input type="hidden" th:value="${unRendezVous.date_rv}" th:name="date_rv">
+                        <input type="hidden" th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
+                        <label for="raisonConsult">Raison de la consultation :</label></br></br>
+                        <select name="raisonConsult" id="raisonConsult" th:field="*{raison_consult}">
+                            <option value="Urgence mineure">Urgence mineure</option>
+                            <option value="Consultation propriétaire">Consultation propriétaire</option>
+                            <option value="Suivi périodique ou préventif">Suivi périodique ou préventif</option>
+                            <option value="Suivi régulier">Suivi régulier</option>
+                            <option value="Suivi de grossesse">Suivi de grossesse</option>
+                            <option value="Suivi d’un enfant 0 à 5 ans">Suivi d’un enfant 0 à 5 ans</option>
+                        </select></br></br>
+                        <label for="descriptionConsult">Description de la raison :</label></br></br>
+                        <textarea style="width:25vh;height:15vh;" id="descriptionConsult" name="descriptionConsult" placeholder="Description de la raison.." th:field="*{description_consult}"></textarea>
+
+                </div>
+                </br>
+                <h2 style="text-align:center"> Voulez confirmer ce rendez-vous ?</h2></br>
+
+
+                <input type="hidden" name="actionRv" value="ajouter">
+                <input style="width:100px;" type="submit" value="Réserver">
+                </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <form style="display:inline;" th:action="@{/enTete/patient/priseRendezVous}" method="get">
+                    <input style="width:100px;" type="submit" value="Annuler">
+                </form>
+            </div>
+        </span>
+        <span th:case="'modifier'">
+            <div id=ls>
+                <h1 id="etatPatient">Modification du rendez-vous</h1>
+
+            </div> <br>
+            <div >
+                <div style="text-align:left;margin-left: auto;margin-right: auto;width: 15%;">
+                    Pour : [[${PatientService.chercherPatientParAssuranceMaladie(session.username).prenom}]]  [[${PatientService.chercherPatientParAssuranceMaladie(session.username).nom}]]</br></br>
+                    Médecin : Dr.[[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</br></br>
+                    Date du rendez-vous : [[${unRendezVous.date_rv}]] </br></br>
+                    Heure : [[${unRendezVous.heure_rv}]]:00</br></br>
+
+
+
+
+                        <button onclick="sauvegarderChangements()">Changer la date et l'heure du rendez-vous</button><br><br>
+
+
+
+                    <form th:action="@{/rendezVous/action/modifier}" th:object="${rendezVous}" method="post">
+                        <input type="hidden" id="saveidRendezVous" th:value="${unRendezVous.id_rendez_vous}" th:name="id_rendez_vous">
+                        <input type="hidden" id="saveidPatient" th:value="${unRendezVous.patient_rv.id_patient}" th:name="patient_rv">
+                        <input type="hidden"  id="saveidMedecin"th:value="${unRendezVous.medecin_rv.id_medecin}" th:name="medecin_rv">
+                        <input type="hidden"  id="savedateRv" th:value="${unRendezVous.date_rv}" th:name="date_rv">
+                        <input type="hidden"  id="saveheureRv"th:value="${unRendezVous.heure_rv}" th:name="heure_rv">
+                        <label for="raisonConsult">Raison de la consultation :</label></br></br>
+                        <select name="raisonConsult" id="saveraisonConsult" th:name="raison_consult">
+                            <option value="Urgence mineure"th:selected="${unRendezVous.raison_consult == 'Urgence mineure'}">Urgence mineure</option>
+                            <option value="Consultation propriétaire" th:selected="${unRendezVous.raison_consult == 'Consultation propriétaire'}">Consultation propriétaire</option>
+                            <option value="Suivi périodique ou préventif"th:selected="${unRendezVous.raison_consult == 'Suivi périodique ou préventif'}">Suivi périodique ou préventif</option>
+                            <option value="Suivi régulier"th:selected="${unRendezVous.raison_consult == 'Suivi régulier'}">Suivi régulier</option>
+                            <option value="Suivi de grossesse"th:selected="${unRendezVous.raison_consult == 'Suivi de grossesse'}">Suivi de grossesse</option>
+                            <option value="Suivi d’un enfant 0 à 5 ans" th:selected="${unRendezVous.raison_consult == 'Suivi d’un enfant 0 à 5 ans'}">Suivi d’un enfant 0 à 5 ans</option>
+                        </select></br></br>
+                        <label for="descriptionConsult">Description de la raison :</label></br></br>
+                        <textarea style="width:25vh;height:15vh;" th:name="description_consult" id="savedescriptionConsult"  th:value="${unRendezVous.description_consult}" th:text="${unRendezVous.description_consult}"></textarea>
+
+                </div>
+
+                </br>
+                <h2 style="text-align:center"> Voulez vous modifier ce rendez-vous ?</h2></br>
+
+
+                <input type="hidden" name="actionRv" value="modifier">
+                <input style="width:100px;" type="submit" value="Sauvegarder">
+                </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="get">
+                    <input style="width:100px;" type="submit" value="Annuler">
+                </form>
+            </div>
+        </span>
+        <span th:case="'supprimer'">
+            <div id=ls>
+                <h1 id="etatPatient">Annulation du rendez-vous</h1>
+
+            </div> <br>
+            <span th:if="${unRendezVous != null}">
+                <div>
+                    <table style="margin-left: auto;margin-right: auto;width: 100%;">
+                        <tr>
+                        <tr>
+                            <th>Nom du Médecin :</th>
+                            <td>Dr. [[${unRendezVous.medecin_rv.prenom}]] [[${unRendezVous.medecin_rv.nom}]]</td>
+                        </tr>
+                        <tr>
+                            <th>Date du rendez-vous</th>
+                            <td>[[${unRendezVous.date_rv}]]</td>
+                        </tr>
+                        <tr>
+                            <th>Clinique</th>
+                            <td>[[${unRendezVous.medecin_rv.clinique.nom}]]</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>[[${unRendezVous.medecin_rv.clinique.coordonnees}]]</td>
+                        </tr>
+                        <tr>
+                            <th>Heure :</th>
+                            <td>[[${unRendezVous.heure_rv}]]:00</td>
+                        </tr>
+                        <tr>
+                            <th>Raison de la Consultation :</th>
+                            <td>[[${unRendezVous.raison_consult}]]</td>
+
+                        </tr>
+                        <tr>
+                            <th>Description de la consultation :</th>
+                            <td>[[${unRendezVous.description_consult}]]</td>
+                        </tr>
+                    </table>
+                </div>
+                </br>
+
+                <h2 style="text-align:center"> Voulez vous supprimer ce rendez-vous ?</h2></br>
+                <form th:action="@{'/rendezVous/action/supprimer/'+${unRendezVous.id_rendez_vous}}" method="post">
+                    <input type="hidden" name="idRendezVous" value="${unRendezVous.idRendezVous}">
+                    <input type="hidden" name="actionRv" value="supprimer">
+                    <input style="width:100px;" type="submit" value="Supprimer">
+                </form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <form style="display:inline;" th:action="@{/enTete/patient/rendezVous}" method="get">
+                    <input style="width:100px;" type="submit" value="Annuler">
+                </form>
+            </span>
+        </span>
+    </div>
+
+
+
+
+<span th:insert="pied:: pied_de_page"></span>
+    </body>
+<script src="javaScript/formValidation.js"></script>
+<script>
+    function sauvegarderChangements(){
+        var idRendezVous = document.getElementById("saveidRendezVous").value;
+        var idPatient = document.getElementById("saveidPatient").value;
+        var idMedecin = document.getElementById("saveidMedecin").value;
+        var dateRv = document.getElementById("savedateRv").value;
+        var heureRv = document.getElementById("saveheureRv").value;
+        var raisonConsult = document.getElementById("saveraisonConsult").value;
+        var descriptionConsult = document.getElementById("savedescriptionConsult").value;
+
+        window.location.href = "/rendezVous/action/changerTemps?idRendezVous="+idRendezVous+"&idPatient="+idPatient+"&idMedecin="+idMedecin+"&dateRv="+
+            dateRv+"&heureRv="+heureRv+"&raisonConsult="+raisonConsult+"&descriptionConsult="+descriptionConsult;
+    }
+</script>
+
+</html>

@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Admin</title>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            th {
+                text-align: left;
+                width: 500px;
+            }
+            tr tr td {
+                text-align: left;
+                padding-left:5%;
+                width:25%;
+            }
+            td input {
+                width:100px;
+                margin-right: 15px;
+            }
+        </style>
+
+    </head>
+
+    <span th:insert="EnTete:: en_tete"></span>
+    <span th:if="${message != null}">
+        <div id=ls>
+            <h1 id="etatMedecin">[[${message}]]</h1>
+        </div>
+    </span>
+
+    <body id="body">
+        <div></br>
+            <form th:action="@{/administrateur/patient/envoiPageAjouter}" method="post">
+                <input type="hidden" name="gestionAction" value="ajouter">
+                <input type="hidden" name="idPatient" value="00">
+                <input type="submit" value="Ajouter un Patient">
+            </form>
+        </div>
+        <br>
+        <div id="containerListe" style="height:60vh;overflow:auto;">   
+            <h1 style="margin-right: 50%">Patients: </h1>
+            <span th:if="${session.listePatients != null}">
+                    <div>
+                        <span th:each="unPatient : ${session.listePatients}">
+                        <table style="border: 1px solid black;border-radius: 10px;width:60%;margin: auto;background-color: white">
+                            <tr>
+                                <td rowspan="2"><img th:src="@{/images/patient_icon.png}" alt="Trulli" width="125" height="125"></td>
+                                <td rowspan="2"><table>
+                                        <tr>
+                                            <th>Nom:</th>
+                                            <td>[[${unPatient.nom}]]</td>
+                                            <th>Numero d'assurance maladie:</th>
+                                            <td>[[${unPatient.numero_assurance_maladie}]]</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Prenom:</th>
+                                            <td>[[${unPatient.prenom}]]</td>
+                                            <th>Numéro séquentiel:</th>
+                                            <td>[[${unPatient.getnum_seq_numero_assurance_maladie()}]]</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date de naissance:</br></th>
+                                            <td>[[${unPatient.date_naissance}]]</td>
+                                            <th>Sexe:</th>
+                                            <td>[[${unPatient.sexe}]]</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nom du médecin de famille:</th>
+                                            <span th:if="${unPatient.medecin !=null}">
+                                            <td>Dr. [[${unPatient.medecin.prenom}]] [[${unPatient.medecin.nom}]] </td>
+                                            </span>
+
+                                            <span th:if="${unPatient.medecin ==null}">
+                                            <td>Aucun</td>
+                                            </span>
+                             
+
+                                       
+                                        </tr>
+                                    </table></td>
+                                <td><form th:action="@{'/administrateur/patient/envoiPageModifier/'+${unPatient.id_patient}}" method="post">
+                                        <input type="hidden" name="gestionAction" value="modifier">
+                                        <input type="hidden" name="idPatient" value="${unPatient.id}">
+                                        <input type="submit" value="Modifier">
+                                    </form> </td>
+                            <tr>
+                                <td><form th:action="@{'/administrateur/patient/envoiPageSupprimer/'+${unPatient.id_patient}}" method="post">
+                                        <input type="hidden" name="gestionAction" value="supprimer">
+                                        <input type="hidden" name="idPatient" value="${unPatient.id}">
+                                        <input type="submit" value="Supprimer">
+                                    </form> </td></td>
+                            </tr>
+
+                            </tr>
+                        </table>
+                        </br>
+                        </span>
+                        </div>
+            </span>
+            <span th:if="${session.listePatients == null}">
+                    </br></br>
+                    <H1 style="text-align:center;">Il n'y a aucun patient dans la liste </H1>
+            </span>
+        </div>
+
+
+
+    </body>
+
+    <span th:insert="pied:: pied_de_page"></span>
+
+</html>

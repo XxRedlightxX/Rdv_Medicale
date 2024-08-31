@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Accueil</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+
+</head>
+
+<span th:insert="EnTete:: en_tete"></span>
+<body id="body" class="background-image">
+<span th:if="${deconnexion != null}">
+<div id=ls>
+  <h1 id="etatPatient">[[${deconnexion}]]</h1>
+</div>
+</span>
+
+
+</body>
+<span th:insert="pied:: pied_de_page"></span>
+</html>

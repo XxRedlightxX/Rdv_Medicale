@@ -1,0 +1,135 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Admin</title>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/images/css/style.css}"/>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: white;
+            }
+
+            td {
+                border: 1px solid #dddddd;
+                text-align: center;
+                height: 33px;
+            }
+
+            th {
+                border: 1px solid #dddddd;
+                text-align: center;
+                padding: 8px;
+                height: 20px;
+            }
+            input[type=submit] {
+                background-color: #0E86D4;
+                font-size: 15px;
+                border: none;
+                color: white;
+                padding: 8px;
+                width: 100%;
+                text-decoration: none;
+
+                cursor: pointer;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+
+        </style>
+
+    </head>
+<body id="body">
+    <span th:insert="EnTete:: en_tete"></span>
+
+
+
+        <h2 style="float: left;" >Prendre un rendez-vous a un autre moment</h2><br>
+    <div style="text-align: center">
+        <form th:action="@{/rendezVous/page/modifierDateHeure}" style="margin-left:auto;margin-right: auto;width: 50%;" th:object="${unRendezVousModifier}">
+                            <input type="hidden" th:name="id_rendez_vous" th:value="${unRendezVousModifier.id_rendez_vous}">
+                            <input type="hidden" th:name="patient_rv" th:value="${unRendezVousModifier.patient_rv.id_patient}">
+                            <input type="hidden" th:name="medecin_rv" th:value="${unRendezVousModifier.medecin_rv.id_medecin}">
+                            <input type="hidden" th:name="raison_consult" th:value="${unRendezVousModifier.raison_consult}">
+                            <input type="hidden" th:name="description_consult" th:value="${unRendezVousModifier.description_consult}">
+                            <input type="hidden" th:name="date_rv" th:value="${unRendezVousModifier.date_rv}">
+                            <input type="hidden" th:name="heure_rv" th:value="${unRendezVousModifier.heure_rv}">
+                            <input style="all:revert" type="submit" value="Annuler le changement">
+        </form>
+    </div>
+
+    <div style="overflow: auto;height:70vh">
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Dimanche</th>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                    <th>Samedi</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>[[${jourSemaine.plusDays(0)}]]</th>
+                    <th>[[${jourSemaine.plusDays(1)}]]</th>
+                    <th>[[${jourSemaine.plusDays(2)}]]</th>
+                    <th>[[${jourSemaine.plusDays(3)}]]</th>
+                    <th>[[${jourSemaine.plusDays(4)}]]</th>
+                    <th>[[${jourSemaine.plusDays(5)}]]</th>
+                    <th>[[${jourSemaine.plusDays(6)}]]</th>
+                </tr>
+                <span th:each="i: ${#numbers.sequence(6, 20)}" >
+                <tr>
+                    <td>[[${i}]]:00</td>
+                    <span th:each="j: ${#numbers.sequence(0, 6)}" >
+                    <td>
+                        <span th:with="idMedecinFamille=${medecinRv.id_medecin}">
+
+                        <span th:with="unRendezVous=${rendezVousService.verifierExistenceRendezVous(medecinRv,jourSemaine.plusDays(j).toString(),i.toString())}">
+                        <span th:with="uneDispo=${dispomedecinService.verifierExistenceDispo(medecinRv.id_medecin,jourSemaine.plusDays(j).toString())}">
+
+                        <span th:with="heureDansDispo=${false}">
+                            <span th:if="${uneDispo != null}">
+                            <span th:if="${i >= uneDispo.convertirHeure_dispo_debut() && i <= uneDispo.convertirHeure_dispo_fin() && unRendezVous == null}">
+                                <form th:action="@{/rendezVous/page/modifierDateHeure}"  th:object="${unRendezVousModifier}" style="display: block;margin:auto;width: 80%;" method="get">
+                                    <input type="hidden" th:value="${unRendezVousModifier.id_rendez_vous}" th:name="id_rendez_vous">
+                                    <input type="hidden" th:value="${unRendezVousModifier.patient_rv.id_patient}" th:name="patient_rv">
+                                    <input type="hidden" th:value="${unRendezVousModifier.medecin_rv.id_medecin}" th:name="medecin_rv">
+                                    <input type="hidden" th:value="${jourSemaine.plusDays(j).toString()}" th:name="date_rv">
+                                    <input type="hidden" th:value="${i}" th:name="heure_rv">
+                                    <input type="hidden" th:value="${unRendezVousModifier.raison_consult}" th:name="raison_consult">
+                                    <input type="hidden" th:value="${unRendezVousModifier.description_consult}" th:name="description_consult">
+                                    <input type="submit" value="Disponible">
+                                </form>
+                            </span>
+                                <span th:if="${unRendezVous != null}">
+                                Déja réservé
+                            </span>
+                            </span>
+                        </span>
+                        </span>
+                        </span>
+                        </span>
+                    </td>
+                    </span>
+                </tr>
+                </span>
+
+            </table>
+        </div>
+
+
+    <span th:insert="pied:: pied_de_page"></span>
+    </body>
+
+</html>
